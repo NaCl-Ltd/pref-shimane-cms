@@ -1,6 +1,6 @@
-# PrefShimaneChecker
+# pref-shimane-checker
 
-本アプリケーションはHTMLのアクセシビリティチェック機能を提供します。
+pref-shimane-checkerはHTMLのアクセシビリティチェック機能(JIS X 8341-3:2010 AA基準)を提供します。
 
 ## miChecker
 

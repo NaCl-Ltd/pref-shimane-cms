@@ -1,7 +1,6 @@
-# 島根県CMS　PrefShimaneCMS
+# pref-shimane-cms
 
-## 島根県CMSとは？
-　島根県CMSは、2008年に公開された島根県庁で使用されている、Ruby on Railsで作られた行政機関向けのCMSです。
+pref-shimane-cmsは以下の機能を提供します。
 
 ## 機能一覧
 * フォルダ管理機能
@@ -18,9 +17,3 @@
 * 音声ファイル作成機能
 * 一括ページ取り込み機能
 * アクセシビリティチェック機能(JIS X 8341-3:2010 AA基準)
-
-# システム構成
-　島根県CMSは、CMS本体（pref-shimane-cms）とアクセシビリティチェックツール（pref-shimane-checker）の２つのシステムに別れています。アクセシビリティチェックツールでは、JIS X 8341-3:2010のAA基準に沿ってコンテンツのチェックを行うことが可能です。アクセシビリティチェックツールではWebAPIを提供し、CMS本体とhttp経由で連携し、動作します。
-
-## お問い合わせ先
-　pref-shimane-cms at netlab.jp
