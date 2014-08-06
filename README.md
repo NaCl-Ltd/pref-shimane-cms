@@ -8,3 +8,7 @@
 
 ## お問い合わせ先
 　pref-shimane-cms at netlab.jp
+
+## 旧島根県CMS
+
+  http://projects.netlab.jp/PrefShimaneCMS/
