@@ -1,4 +1,4 @@
-# 島根県CMS　PrefShimaneCMS
+# 島根県CMS バージョン2　PrefShimaneCMS
 
 ## 島根県CMSとは？
 　島根県CMSは、2008年に公開された島根県庁で使用されている、Ruby on Railsで作られた行政機関向けのCMSです。

@@ -1,4 +1,4 @@
-# pref-shimane-cms
+# pref-shimane-cms バージョン2
 
 pref-shimane-cmsは以下の機能を提供します。
 
