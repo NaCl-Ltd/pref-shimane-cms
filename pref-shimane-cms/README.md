@@ -1,6 +1,6 @@
-# pref-shimane-cms バージョン2
+# pref-shimane-cms
 
-pref-shimane-cmsは以下の機能を提供します。
+pref-shimane-cms バージョン2は以下の機能を提供します。
 
 ## 機能一覧
 * フォルダ管理機能
@@ -17,3 +17,11 @@ pref-shimane-cmsは以下の機能を提供します。
 * 音声ファイル作成機能
 * 一括ページ取り込み機能
 * アクセシビリティチェック機能(JIS X 8341-3:2010 AA基準)
+
+## インストール方法
+
+doc/install.mdを参照ください。
+
+## 操作マニュアル
+
+doc/manual/以下を参照ください。
