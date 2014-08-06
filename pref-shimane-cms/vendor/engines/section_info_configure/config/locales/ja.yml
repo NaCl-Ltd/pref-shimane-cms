@@ -1,0 +1,14 @@
+ja:
+  engines:
+    section_info_configure: 連絡先設定
+
+  section_info_configure:
+    susanoo:
+      authoriser:
+        sections:
+          edit_info:
+            title: 連絡先設定
+          update:
+            success: 連絡先を設定しました
+          form:
+            apply: 適用

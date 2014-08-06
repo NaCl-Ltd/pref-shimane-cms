@@ -1,0 +1,13 @@
+<%= form_for([:susanoo, :authoriser, @section], html: {class: 'well'}) do |f| %>
+
+  <div class="control-group">
+    <%= f.label :info, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_area :info, rows: 10, cols: 60, class: "span5" %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit t(".apply"), class: 'btn btn-primary' %>
+  </div>
+<% end %>

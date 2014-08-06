@@ -1,0 +1,53 @@
+<ul class='nav nav-tabs'>
+  <li>
+    <%= link_to t('.consult_management'), susanoo_admin_consults_path %>
+  </li>
+
+  <li class='active'>
+    <%= link_to t('.consult_category_management'), susanoo_admin_consult_categories_path %>
+  </li>
+</ul>
+
+<div id='consult-category-form-area'>
+  <%= render 'new' %>
+</div>
+
+<hr />
+<p class='text-center'><%= t('.list') %></p>
+
+<table class='table table-striped table-bordered'>
+  <thead>
+    <tr>
+      <th><%= t('.no') %></th>
+      <th><%= ConsultManagement::ConsultCategory.human_attribute_name(:name) %></th>
+      <th><%= t('.window_count') %></th>
+      <th><%= t('.operation') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% ConsultManagement::ConsultCategory.all.each.with_index(1) do |consult_category, idx| %>
+      <tr>
+        <td><%= idx %></td>
+        <td><%= consult_category.name %></td>
+        <td><%= consult_category.consults.count %><%= t('.consult_count') %></td>
+        <td>
+          <%= link_to_edit edit_susanoo_admin_consult_category_path(consult_category), remote: true %>
+          <%= link_to_remove susanoo_admin_consult_category_path(consult_category) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% content_for :javascript_contents do %>
+  <script>
+    $(document).on('ajax:success', "#consult-category-form", function(e, data, status, xhr){
+      if (data.status){
+        location.href = '<%= susanoo_admin_consult_categories_path %>'
+      }else{
+        $('#consult-category-form-area').html(data.html)
+      }
+    })
+  </script>
+<% end %>

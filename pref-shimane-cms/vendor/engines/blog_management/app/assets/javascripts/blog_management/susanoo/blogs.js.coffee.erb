@@ -1,0 +1,38 @@
+<% url_helpers = BlogManagement::Engine.routes.url_helpers %>
+
+#
+# ページ管理クラス
+#
+class BlogIndex
+  init: (datasource) =>
+    $("#treeview").fancytree({
+      source: datasource
+      activate: (event, data) ->
+        node = data.node
+        if !node.data.no_permission
+          $.get("<%= url_helpers.select_genre_susanoo_blogs_path %>", {genre_id: node.data.id})
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_susanoo_blogs_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    $(document).on("submit", ".form-search", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.searching')%>" })
+      return true
+    )
+
+    $(document).on("click", ".pagination a", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.loading')%>" })
+      return true
+    )
+
+    return
+
+this.Susanoo ||= {}
+this.Susanoo.Blog ||= {}
+this.Susanoo.ExploreTimer = false
+this.Susanoo.Blog.Index = new BlogIndex

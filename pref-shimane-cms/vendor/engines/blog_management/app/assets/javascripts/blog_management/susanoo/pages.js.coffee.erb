@@ -1,0 +1,18 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+class PageForm
+  init: =>
+    # テンプレートプレビューボタン
+    $("#link-template-preview").click( ->
+      template_id = $("#page_template_id").val()
+      if template_id
+        url = "<%= url_helpers.preview_virtual_susanoo_visitors_path %>"
+        window.open(url+"?mode=template&template_id=" + template_id, '', 'toolbar=yes,status=no,menubar=yes,scrollbars=yes,resizable')
+      return false
+    )
+
+    return
+
+this.Susanoo ||= {}
+this.Susanoo.Page ||= {}
+this.Susanoo.Page.Form  = new PageForm

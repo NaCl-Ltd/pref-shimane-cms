@@ -1,0 +1,15 @@
+#
+# 管理者向け機能 緊急お知らせ管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      emergency_infos:
+        edit:
+          title: 緊急お知らせ編集
+          button:
+            stop_public: 公開停止
+        update:
+          success: 緊急お知らせを更新しました
+        stop_public:
+          success: 緊急お知らせを更新しました

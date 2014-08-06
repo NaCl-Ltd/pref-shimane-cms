@@ -1,0 +1,21 @@
+<div class="row-fluid explore">
+  <div class="col-left col-md-3">
+    <div id="treeview" class="treeview col-content">
+    </div>
+  </div>
+
+  <div class="col-center col-md-9">
+    <div class="col-content">
+      <%= render partial: 'pages'%>
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+  $(function () {
+    Susanoo.Page.Index.init(<%= raw @genre_tree.to_json %>)
+  });
+<% end %>
+<% end -%>
+

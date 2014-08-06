@@ -1,0 +1,26 @@
+</div><!-- end wrapper -->
+
+<div id="footer">
+  <div class="container">
+    <div class="pull-right">
+      <%= link_to t('susanoo.visitors.footer.link.back_to_top'), '#skip' %>
+    </div>
+    <div id="footer-content" class="row">
+      <div class="span12">
+        <p><strong><%= t('susanoo.visitors.footer.title') %></strong></p>
+        <p><%= t('susanoo.visitors.footer.label.address') %>&nbsp;〒<%= t('susanoo.visitors.footer.postcode') %>&nbsp;<%= t('susanoo.visitors.footer.address') %><br />
+        <%= t('susanoo.visitors.footer.label.tel') %>&nbsp;<%= t('susanoo.visitors.footer.tel') %></p>
+      </div>
+    </div>
+    <div id="footer-copyright" class="row">
+      <div class="span12">
+      <p>Copyright (C) <%= t('susanoo.visitors.footer.copyright') %></p>
+      </div>
+    </div>
+<% unless !@preview && (c = @page_view.page.try(:analytics_code)).blank? -%>
+  <%= raw c %>
+<% end -%>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<%
+# 説明：個別のルビを指定する
+# 引数：漢字（など）, 読み
+ruby_base, ruby_text = args
+-%>
+<% if rubi? -%>
+<p><ruby><rb><%= h(ruby_base) %></rb><rp>(</rp><rt><%= h(ruby_text) %></rt><rp>)</rp></ruby></p>
+<% else -%>
+<p><%= h(ruby_base) %></p>
+<% end -%>

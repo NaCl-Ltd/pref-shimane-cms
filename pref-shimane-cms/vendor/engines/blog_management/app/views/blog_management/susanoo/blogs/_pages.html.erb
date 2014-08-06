@@ -1,0 +1,61 @@
+<!-- フォルダパスパネル -->
+<div class="panel-folder">
+  <%= genre_fullpath(@genre) %>
+  <div class="pull-right">
+    <%= link_to_new new_susanoo_page_path, id: "new-page-button" %>
+    <%= link_to_new new_susanoo_genre_path(parent_id: @genre.id), label: t(".new_genre"), class: "btn btn-success" %>
+  </div>
+</div>
+
+<!-- 検索フォーム -->
+<%= form_for @search_form, as: "search",
+    url: susanoo_blogs_path, method: 'get', remote: true,
+    html: { class: "form-search" } do |f| %>
+  <%= hidden_field_tag 'genre_id', @genre.id %>
+
+  <table class="table-page-search">
+    <!-- ログインユーザが所属している部署のブログフォルダ一覧を表示 -->
+    <tr>
+      <td><label class="control-label"><%= t(".label.blog_folders") %></label></td>
+      <td>
+        <%= ::Genre.blog_top_in_section(current_user.section).map do |genre|
+              genre_title_with_fullpath(genre)
+            end.join(", ") %>
+       </td>
+    </tr>
+
+    <tr>
+      <td><label class="control-label"><%= t(".search.keyword") %></label></td>
+      <td>
+        <%= f.text_field :keyword %>
+      </td>
+    </tr>
+    <tr>
+      <td><label class="control-label"><%= t(".search.admission") %></label></td>
+      <td>
+        <%= f.select :admission, ::PageContent.page_status.map {|k, v| [t("shared.admission.#{k}"), v] }, include_blank: true %>
+      </td>
+    </tr>
+    <tr>
+     <td><label class="control-label"><%= t(".search.blog_date") %></label></td>
+      <td>
+        <%= f.date_select :start_at, {include_blank: true}, style: "width: 80px;"%> 〜
+        <%= f.date_select :end_at, {include_blank: true}, style: "width: 80px;"%>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= f.submit t("shared.search"), class: "btn btn-primary" %>
+        <label class="checkbox" style="margin-left:10px;" for="search_recursive">
+          <%= f.check_box(:recursive, {}, "1", "0") %><%= t(".search.recursive") %>
+        </label>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<!-- 検索結果 -->
+<div id="result-search">
+  <%= render(partial: "page_list") %>
+</div>
+

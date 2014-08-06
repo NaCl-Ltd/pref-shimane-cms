@@ -1,0 +1,29 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= User.human_attribute_name(:name) %></th>
+      <th><%= User.human_attribute_name(:login) %></th>
+      <th><%= User.human_attribute_name(:authority) %></th>
+      <th><%= User.human_attribute_name(:mail) %></th>
+      <th><%= t('shared.label.operation') %></th>
+    </tr>
+  </thead>
+
+  <% authority_display = t("shared.authorities") %>
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.login %></td>
+        <td><%= authority_display[user.authority] %></td>
+        <td><%= user.mail%></td>
+        <td>
+          <%= link_to_edit main_app.edit_susanoo_admin_user_path(user) %>
+          <%= link_to_remove main_app.susanoo_admin_user_path(user) %>
+        </td>
+      </tr>
+    <% end  %>
+  </tbody>
+</table>
+
+<%= paginate users %>

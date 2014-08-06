@@ -1,0 +1,15 @@
+#
+# 管理者向け機能 部局管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      engines:
+        index:
+          title: "オプション管理"
+          change_enable: "有効化する"
+          change_disable: "無効化する"
+
+        change_state:
+          success: "変更に成功しました。"
+          alert: "変更に失敗しました。"

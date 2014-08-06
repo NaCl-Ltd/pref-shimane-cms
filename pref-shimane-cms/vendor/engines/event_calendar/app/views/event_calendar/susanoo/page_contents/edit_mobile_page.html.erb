@@ -1,0 +1,38 @@
+<%= render partial: "/classic/shared/load_tiny_mce", locals: {edit_mode: :mobile} %>
+
+<% display_page_contens_round_box do %>
+  <%= error_messages_for "page_content" %>
+  <div>
+    [<%= link_to('PC向けコンテンツから変換する', copy_to_mobile_page_contents_path(page_id: @page)) %>]
+  </div>
+  <% unless @page_content.errors.empty? -%>
+    <div class="errorExplanation" id="errorExplanation">
+      <h2>アクセシビリティチェックの結果</h2>
+      <p>以下の警告／エラーがありました。</p>
+      <ul>
+        <% (@page_content.errors[:conv_char] || []).each do |e| -%>
+          <li><%= e %></li>
+        <% end -%>
+        <% (@page_content.errors[:char] || []).each do |e| -%>
+          <li><%= e %></li>
+        <% end -%>
+        <% (@page_content.errors[:alt] || []).each do |e| -%>
+          <li><%= e %></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>
+  <%= form_for(@page_content, url: update_mobile_page_page_contents_path(page_id: @page), html: {name: 'EditPage', method: :patch})  do |f| -%>
+    <div>
+      <%= f.submit('   保存   ', onclick: 'document.EditPage.target = ""') %>
+      <%= f.submit('キャンセル', name: 'cancel', onclick: 'document.EditPage.target = "";return confirm("作業内容が破棄されます。よろしいですか？")') %>
+      <% if @page_content.errors[:char].present? -%>
+        <%= f.submit('機種依存文字の自動変換', name: 'convert_char', onclick: 'document.EditPage.target = ""') %>
+      <% end -%>
+    </div>
+    <div style="width: 100%;">
+      <%= f.text_area(:mobile, id: "elm1", rows: "25", cols: "25") %>
+    </div>
+    <div></div>
+  <% end -%>
+<% end -%>

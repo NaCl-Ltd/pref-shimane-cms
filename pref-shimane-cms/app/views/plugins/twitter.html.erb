@@ -1,0 +1,22 @@
+<%
+# 説明：Twitterのタイムラインを表示する
+#
+#       plugin('twitter', 'go.kitagawa', '4', '250', '300',
+#                             '#333333', '#ffffff', '#000000', '#ffffff',
+#                             '#3aed05')
+# 引数：アカウント名, 表示件数, 横幅サイズ、縦幅サイズ,
+#       背景色, 枠文字色, Tweetの背景色, Tweetの文字色
+#       リンク文字色
+# 参考: https://twitter.com/about/resources/widgets
+
+  if args && args.size > 1
+    account = args[0]
+    widget_id = args[1]
+  else
+    account = nil
+  end
+%>
+<% if account -%>
+<a class="twitter-timeline" href="https://twitter.com/<%= account %>" data-widget-id="<%= widget_id %>">@<%= account %> からのツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<% end -%>

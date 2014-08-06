@@ -1,0 +1,15 @@
+<%
+# 説明：アクセスカウンタ
+# 引数：初期カウント数
+start_count = args.first.to_i
+-%>
+<% if @preview -%>
+<img alt="アクセスカウンタ" src="/images/count.gif" />(カウント数はサンプルです)
+<% else -%>
+<% if start_count -%>
+<% url = Settings[:counter][:url] + "count.cgi?id=#{@page_view.page.id}&start=#{start_count}" %>
+<% else -%>
+<% url = Settings[:counter][:url] + "count.cgi?id=#{@page_view.page.id}" %>
+<% end -%>
+<img alt="アクセスカウンタ" src="<%= url %>" />
+<% end -%>

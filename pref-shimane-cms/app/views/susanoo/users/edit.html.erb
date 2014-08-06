@@ -1,0 +1,49 @@
+<%= form_for([:susanoo, @user], html: {class: 'form-horizontal well'}) do |f| %>
+  <% if @user.errors.any? -%>
+    <%= error_messages(
+      @user.errors.full_messages.map { |msg|
+        msg.gsub(%r{^#{@user.class.human_attribute_name(:password_confirmation)}}, t('.label.new_password_confirmation')).
+            gsub(%r{^#{@user.class.human_attribute_name(:password)}}, t('.label.new_password'))
+      })
+    %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :login, t('.label.login'), class: "control-label"%>
+    <div class="controls">
+      <div style="padding:5px 6px;"><%= @user.login %></div>
+    </div>
+  </div>
+
+  <%= f.fields_for :now do |ff| %>
+    <div class="control-group">
+      <%= ff.label :password, t('.label.now_password'), class: "control-label"%>
+      <div class="controls">
+        <%= ff.password_field :password, class: "span3"  %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :new do |ff| %>
+    <div class="control-group">
+      <%= ff.label :password, t('.label.new_password'), class: "control-label"%>
+      <div class="controls">
+        <%= ff.password_field :password, class: "span3"  %>
+        <span class="help-block"><%= t(".description.password") %></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= ff.label :password_confirmation, t('.label.new_password_confirmation'), class: "control-label"%>
+      <div class="controls">
+        <%= ff.password_field :password_confirmation, class: "span3"  %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+    </div>
+  </div>
+<% end %>

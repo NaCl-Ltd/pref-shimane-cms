@@ -1,0 +1,54 @@
+# 自動でcontenteditableのブロックにエディターを反映しないよう設定する
+CKEDITOR.disableAutoInline = true
+
+# 編集要素のクラスによりツールバーやプラグインを設定する
+CKEDITOR.on( 'instanceCreated', (event)->
+  editor     = event.editor
+  element    = editor.element
+
+  # エディター作成時に、エディターにフォーカスする
+  editor.config.startupFocus = true
+
+  editor.config.toolbarLocation = "top"
+
+  # エディターのフォーカスが外れた際のイベント
+  editor.on( 'blur', (e) ->
+    false
+  )
+
+  if element.hasClass("data-type-h")
+    editor.config.toolbarGroups = [
+      { name: 'editing', groups: [ 'basicstyles'] }
+      { name: 'styles'}
+    ]
+  else if element.hasClass("data-type-block")
+    editor.config.toolbarGroups = [
+      { name: 'clipboard'  , groups: [ 'clipboard', 'undo' ] }
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }
+      { name: 'paragraph'  , groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] }
+      { name: 'links' }
+      { name: 'styles' }
+      { name: 'colors' }
+    ]
+  else if element.hasClass("data-type-text")
+    editor.config.toolbarGroups = [
+      { name: 'clipboard'  , groups: [ 'clipboard', 'undo' ] }
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }
+      { name: 'paragraph'  , groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] }
+      { name: 'links' }
+      { name: 'styles' }
+      { name: 'colors' }
+    ]
+  else
+    editor.config.toolbar= [
+     { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] }
+     { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] }
+     { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+      '/'
+     { name: 'links', items : [ 'Link','Unlink','Anchor' ] }
+     { name: 'insert', items : [ 'Image','Table','HorizontalRule'] }
+     { name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] }
+     { name: 'colors', items : [ 'TextColor','BGColor' ] }
+    ]
+    return
+  )

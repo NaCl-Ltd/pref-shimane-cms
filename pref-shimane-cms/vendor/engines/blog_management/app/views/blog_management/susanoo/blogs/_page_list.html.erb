@@ -1,0 +1,89 @@
+<% if @pages.present? -%>
+  <div class="alert alert-info" style="margin:0 5px 5px 5px">
+    <%= t(".found", count: @pages.total_count) %>
+  </div>
+
+  <table class="table table-striped table-hover table-condensed table-pages">
+    <thead>
+      <tr>
+        <th rowspan="2" class="genre"><%= t(".blog_genre") %></th>
+        <th rowspan="2" class="title"><%= t(".title") %></th>
+        <th rowspan="2" class="blog_date"><%= t(".blog_date") %></th>
+        <th colspan="2" class="latest"><%= t(".latest") %></th>
+        <th colspan="2" class="private"><%= t(".private") %></th>
+        <th rowspan="2" class="operation"><%= t("shared.label.operation") %></th>
+      </tr>
+      <tr>
+        <th class="admission"><%= t(".admission") %></th>
+        <th class="preview"><%= t("shared.preview") %></th>
+        <th class="admission"><%= t(".admission") %></th>
+        <th class="preview"><%= t("shared.preview") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+        @pages.each do |page|
+          published_content = page.published_content
+          private_content = page.unpublished_content
+      -%>
+        <tr>
+          <td><%= link_to page.blog_top_folder.title, susanoo_blogs_path(genre_id: page.genre_id) %></td>
+
+          <td class="title"><%= page.title %><span style='margin-left:10px;'>( <%= page.name %> )<span></td>
+
+          <td style="text-align:center">
+            <%= date_text page.blog_date %>
+          </td>
+
+          <td class="admission" style="text-align:center">
+            <% if published_content.present? -%>
+              <%= t("shared.admission.#{published_content.admission_key}") %><%= page.original.present? ? "(#{t("shared.admission.copy")})" : '' %>
+            <% else %>
+              <%= t("shared.empty") %>
+            <% end %>
+          </td>
+
+          <td class='preview'>
+            <% if published_content.present? %>
+              <%= link_to main_app.preview_susanoo_visitor_path(published_content), class: 'btn btn-small btn-success', target: '_blank' do%>
+                <%= t('shared.preview') %>
+              <% end %>
+            <% end %>
+          </td>
+
+          <td class="admission" style="text-align:center">
+            <% if private_content.present? -%>
+              <%= t("shared.admission.#{private_content.admission_key}") %><%= page.original.present? ? "(#{t("shared.admission.copy")})" : '' %>
+            <% else %>
+              <%= t("shared.empty") %>
+            <% end %>
+          </td>
+
+          <td class='preview'>
+            <% if private_content.present? %>
+              <%= link_to main_app.preview_susanoo_visitor_path(private_content), class: 'btn btn-small btn-success', target: '_blank' do%>
+                <%= t('shared.preview') %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="operation" style="text-align:center">
+            <% if page.original.present? -%>
+              <%= link_to_show susanoo_page_path(page.original) %>
+            <% else -%>
+              <%= link_to_show susanoo_page_path(page) %>
+            <% end -%>
+          </td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+
+  <%= paginate @pages,
+        params: {controller: "susanoo/blogs", action: "index", genre_id: @genre.id},
+        remote: true %>
+
+<% else -%>
+  <div class="alert alert-info" style="margin: 5px">
+    <%= t(".not_found")%>
+  </div>
+<% end -%>

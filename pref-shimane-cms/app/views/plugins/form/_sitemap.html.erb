@@ -1,0 +1,31 @@
+<div id="sitemap">
+  <div class="editable-plugin bootstrap">  
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <div class="controls">
+              <p class="text">
+                <%= raw t("plugins.descriptions.sitemap") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.sitemap.name") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:name, "", "data-arg" => 1, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.sitemap.name") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,40 @@
+<div class="row-fluid explore">
+  <div class="col-left col-md-2">
+    <div id="treeview" class="treeview col-content"></div>
+  </div>
+
+  <div class="col-center col-md-7">
+    <div class="col-content">
+      <%= render(partial: "resources") %>
+    </div>
+  </div>
+
+  <div class="col-right col-md-3">
+    <div class="col-content">
+      <%= render(partial: "genre") %>
+    </div>
+  </div>
+</div>
+
+<%# フォルダ選択モーダルダイアログ %>
+<div id="modal-folder-select" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t(".modal.select_genre") %></h3>
+  </div>
+  <div class="modal-body" style="height:300px;" >
+    <div id="treeview-modal" class="treeview"></div>
+  </div>
+  <div class="modal-footer">
+    <button id="button-folder-select" class="btn btn-primary btn-small"><%= t(".modal.select") %></button>
+    <button class="btn btn-small" data-dismiss="modal" aria-hidden="true"><%= t(".modal.close") %></button>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+  $(function () {
+    Susanoo.Genre.Index.init(<%= raw @genre_tree.to_json %>);
+  });
+<% end %>
+<% end -%>

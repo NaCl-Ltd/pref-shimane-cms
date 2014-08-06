@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      consult_management/consult: 相談窓口
+
+    attributes:
+      consult_management/consult:
+        name: 名称
+        link: リンク先
+        work_content: 業務内容
+        contact: 問い合わせ先
+        consult_categories: 分類

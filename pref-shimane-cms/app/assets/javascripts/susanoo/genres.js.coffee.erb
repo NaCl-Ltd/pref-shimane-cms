@@ -1,0 +1,145 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+#
+# フォルダ管理クラス
+#
+class GenreIndex
+
+  link_to: null
+  message: null
+  selected_genre: null
+  button_folder_select: $("#button-folder-select")
+
+  # フォルダ一覧用
+  init: (datasource)=>
+    treeview_url = "<%= url_helpers.treeview_susanoo_genres_path %>"
+    select_url = "<%= url_helpers.select_genre_susanoo_genres_path %>"
+
+    $("#treeview").fancytree({
+      autoActivate: false
+      source: datasource
+      activate: (event, data) ->
+        node = data.node
+        if !node.data.no_permission
+          $.get(select_url, {genre_id: node.data.id})
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: treeview_url
+          data: { id: node.data.id }
+        }
+    })
+
+    $("#treeview-modal").fancytree({
+      source: $.ajax({
+        url: treeview_url
+      })
+      activate: (event, data) =>
+        node = data.node
+        if !node.data.no_permission
+          @selected_genre = { id: node.data.id, title: node.title }
+          $(@button_folder_select).attr("disabled", false)
+        else
+          @selected_genre = null
+          $(@button_folder_select).attr("disabled", true)
+        return @selected_genre
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: treeview_url
+          data: { id: node.data.id }
+        }
+    })
+
+    # フォルダ・ページ一覧のクリックイベントを設定する
+    $(document).on("click", "#file-index > tbody > tr", (e) ->
+      target = e.target
+      if target.tagName != 'TD'
+        return false
+
+      selected = $(".resource-selected")
+      selected.removeClass("info")
+      selected.removeClass("resource-selected")
+
+      element = $(this);
+      element.addClass("info")
+      element.addClass("resource-selected")
+
+      $.ajax(
+        url: "<%= url_helpers.select_resource_susanoo_genres_path %>",
+        data: {
+          type: element.attr("data-type")
+          id  : element.attr("data-id")
+        },
+        dataType: 'script'
+      )
+    )
+
+    $(document).on("click", "#button-move-genre", (e)=>
+      @link_to = $(e.currentTarget).attr("data-url")
+      @message = $(e.currentTarget).attr("data-message")
+      @selected_genre = null
+      return
+    )
+
+    $(document).on("click", "#button-copy-genre", (e)=>
+      @link_to = $(e.currentTarget).attr("data-url")
+      @message = $(e.currentTarget).attr("data-message")
+      @selected_genre = null
+      return
+    )
+
+    $(document).on("click", "#button-move-page", (e)=>
+      @link_to = $(e.currentTarget).attr("data-url")
+      @message = $(e.currentTarget).attr("data-message")
+      @selected_genre = null
+      return
+    )
+
+    # モーダルダイアログフォルダ選択ボタン
+    $(@button_folder_select).click( (e) =>
+      $('#modal-folder-select').modal('hide')
+
+      if !@selected_genre
+        return
+
+      if @message
+        if !confirm(@message)
+          return
+
+      if @selected_genre && @link_to
+        $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" })
+        window.location = @link_to + "?genre_id=" + @selected_genre.id
+      return
+    ).attr("disabled", true)
+
+    $(document).on("submit", ".form-search", (e)=>
+      $.isLoading({ text: "<%= I18n.t('shared.label.searching')%>" })
+    )
+
+    $(document).on("click", "div.move-link > a", (e)=>
+      $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" })
+    )
+    return
+
+#
+# フォルダ管理クラス
+#
+class GenreForm
+  init: ->
+    $('#division_id').change( (e) ->
+      division_id = $("#division_id").val()
+      if division_id
+        $.ajax(
+          url: "<%= url_helpers.select_division_susanoo_genres_path %>",
+          data: { division_id: division_id},
+          dataType: 'script'
+        )
+    )
+
+this.Susanoo ||= {}
+this.Susanoo.Genre ||= {}
+Susanoo.Genre.Index = new GenreIndex
+Susanoo.Genre.Form = new GenreForm

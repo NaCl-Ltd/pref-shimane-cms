@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName <%= @genre.name %>
+AuthUserFile <%= File.join(Settings.export.public_htpasswd_dir, @genre.id.to_s) %>
+Require valid-user

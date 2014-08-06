@@ -1,0 +1,28 @@
+# メールマガジンの設定
+mailmagazine:
+  domain        : "example.com"
+  default_e_mail: "default_e_mail@example.com"
+
+# Export用
+export:
+  docroot: <%= Rails.root.join('spec', 'rails_root','public.') %>
+  servers:
+    - localhost
+  sync_counter_servers:
+    - localhost
+
+# アクセシビリティチェック
+accessibility:
+  #
+  # 例外設定
+  # パス単位で、アクセシビリティチェックエラーの例外扱いにするIDを設定する
+  #
+  exceptions:
+    - path: '/'
+      id:
+        - E_1_6
+
+    - path: '/life'
+      level: 3
+      id:
+        - E_1_6

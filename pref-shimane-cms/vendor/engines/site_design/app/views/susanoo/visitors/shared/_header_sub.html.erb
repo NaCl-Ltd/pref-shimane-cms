@@ -1,0 +1,14 @@
+  <div id="navigation" class="navbar navbar-static-top">
+    <div class="container">
+      <div id="skip">
+        <p class="skiplink" id="skiplink"><a href="#honbun"><%= t('susanoo.visitors.header_sub.link.skip') %></a></p>
+      </div>
+      <a class="brand" href="/"><%= t('susanoo.visitors.header_sub.link.top_page') %></a>
+      <div class="pull-right nav-control">
+        <%= render partial: "/susanoo/visitors/browsing_support/content"  if EngineMaster.enable?('browsing_support') %>
+        <div class="pull-right">
+          <%= render partial: "/susanoo/visitors/advertisement_management/random_corp_ads"  if EngineMaster.enable?('advertisement_management') && !@page_view.top? && !@page_view.edit %>
+        </div>
+      </div>
+    </div>
+  </div>

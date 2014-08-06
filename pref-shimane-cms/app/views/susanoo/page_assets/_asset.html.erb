@@ -1,0 +1,26 @@
+<%= content_tag(:div, :id => asset.id, :class => "gal-item", "data-url" => asset.url_content ) do %>
+  <%= link_to main_app.susanoo_page_assets_path(id: asset.id, page_id: asset.page.id),
+    remote: true,
+    method: :delete,
+    data: { confirm: t('shared.confirm.delete') },
+    class: 'fileupload-cancel gal-del' do %>
+    <i class="icon-remove-sign icon-white"></i>
+  <% end -%>
+
+  <div class="fileupload-file gal-inner-holder">
+    <div class="img">
+      <% if asset.image? -%>
+        <%= image_tag(asset.url, title: asset.data_file_name) %>
+      <% else -%>
+        <%= image_tag('icons/doc.png', title: asset.data_file_name) %>
+      <% end%>
+    </div>
+    <div class="img-data">
+      <div class="img-name"><%= asset.data_file_name %></div>
+      <div class="time-size">
+        <div class="time"><%= date_text(asset.data_updated_at) %></div>
+        <div class="fileupload-size size"><%= number_to_human_size(asset.data_file_size) if asset.data_file_size %></div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new main_app.new_susanoo_admin_info_path, pull_right: true %>
+<% end -%>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('activerecord.attributes.info.title')%></th>
+      <th><%= t('activerecord.attributes.info.last_modified')%></th>
+      <th><%= t('shared.label.operation')%></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @infos.each do |info| %>
+      <tr>
+        <td class="title"><%= info.title %></td>
+        <td><%= info.last_modified.strftime(t('date.formats.default')) %></td>
+        <td>
+          <%= link_to_show main_app.susanoo_admin_info_path(info) %>
+          <%= link_to_edit main_app.edit_susanoo_admin_info_path(info) %>
+          <%= link_to_remove main_app.susanoo_admin_info_path(info) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @infos %>

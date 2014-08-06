@@ -1,0 +1,40 @@
+<div class="row-fluid" style="margin-top:50px;">
+  <div class="span3"></div>
+  <div class="span6">
+    <% if EmergencyInfo.public_info %>
+    <div style="color: red;">
+      <%= raw EmergencyInfo.public_info.content %>
+    </div>
+    <% end %>
+
+    <%= form_for @user, url: authenticate_susanoo_users_path, html: {class: 'form-horizontal well'} do |f| %>
+    <legend><%= t(".title") %></legend>
+
+    <%= bootstrap_flash %>
+
+    <div class="control-group">
+      <%= f.label :login, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :login, placeholder: t(".placeholder.login")%>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :password, t(".label.password"), class: "control-label" %>
+      <div class="controls">
+        <%= f.password_field :password, placeholder: t(".placeholder.password") %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit t(".button.login"), class: "btn btn-primary" %>
+      </div>
+    </div>
+    <% end %>
+
+    <%= render partial: "shared/infos/index", locals: {infos: @infos} %>
+
+  </div>
+  <div class="span3"></div>
+</div>

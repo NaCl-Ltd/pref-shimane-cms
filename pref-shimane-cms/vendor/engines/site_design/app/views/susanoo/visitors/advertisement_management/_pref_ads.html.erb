@@ -1,0 +1,15 @@
+<div class="row">
+  <h4><%= t('advertisement_management.susanoo.visitors.pref_title') %></h4>
+  <ul class="thumbnails">
+    <% @pref_ads.each do |ad| -%>
+      <li class="span3">
+        <div class="thumbnail">
+          <%= link_to ad.url, target: '_blank' do %>
+            <%= image_tag ad_image_path(ad.image), alt: ad.alt %>
+          <% end %>
+          <p><%= link_to ad.description, ad.description_link if ad.description %></p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

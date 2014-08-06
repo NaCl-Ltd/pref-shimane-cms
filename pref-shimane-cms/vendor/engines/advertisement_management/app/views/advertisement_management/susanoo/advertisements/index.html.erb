@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span12">
+    <% if Advertisement.state_editable? %>
+      <%= link_to(t(".edit_state"), edit_state_susanoo_advertisements_path, class: "btn btn-info") %>
+    <% end %>
+    <%= link_to_new(new_susanoo_advertisement_path) %>
+    <div id="result"></div>
+    <%= render partial: "list", locals: {advertisements: @toppage_ads, side_type: Advertisement::TOPPAGE_TYPE} %>
+    <%= render partial: "list", locals: {advertisements: @corp_ads, side_type: Advertisement::OUTSIDE_TYPE} %>
+    <%= render partial: "list", locals: {advertisements: @pref_ads, side_type: Advertisement::INSIDE_TYPE} %>
+  </div>
+</div>
+

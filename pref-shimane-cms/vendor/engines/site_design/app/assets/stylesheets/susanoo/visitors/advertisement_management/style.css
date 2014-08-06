@@ -1,0 +1,58 @@
+/* ##################################
+ * HEAD AD
+ * ################################## */
+#banner img{
+  width: 16px;
+  height: 48px;
+}
+
+#banner #header_banner_image {
+  width: 187px;
+  height: 48px;
+}
+
+/* ##################################
+ * TOPBAR
+ * ################################## */
+
+#tbcontent {
+  margin: 0px;
+  padding: 0px;
+}
+
+#tbcontent .pickup-img {
+  float: left;
+  width: 600px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#tbcontent .pickup-img img{
+  height: 300px;
+}
+
+#tbcontent .pickup-bnr {
+  float: right;
+  width: 234px;
+  margin: 10px 0 0 0;
+  padding: 0px;
+}
+
+#tbcontent .pickup-bnr img{
+  width: 320px;
+  height: 90px;
+}
+
+#tbcontent .pickup-bnr ul {
+  margin: 0 0 -5px 0;
+  padding: 0px;
+  list-style: none;
+  overflow: hidden;
+  zoom: 1
+  _zoom: 1;
+}
+
+#tbcontent .pickup-bnr ul li {
+  margin: 0 0 5px 0;
+  padding: 0px;
+}

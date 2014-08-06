@@ -1,0 +1,31 @@
+  <div id="content-wrapper" class="container">
+    <div id="content">
+      <div class="row">
+        <div class="span12">
+          <%= render partial: '/susanoo/visitors/shared/topic_path', locals: {page: @page_view.page} %>
+        </div>
+        <div id="honbun">
+          <!-- begin page-content -->
+          <div id="page-content">
+            <div class="span3" id="leftmenu">
+              <div id="pagelist">
+                <h4>ページの一覧</h4>
+                <%= plugin('page_list') %>
+              </div>
+            </div>
+            <div class="span9" id="main">
+              <%= render partial: '/susanoo/visitors/shared/content' %>
+              <div class="alert">
+                <h2>カスタムページです</h2>
+                <p>
+                  通常適用されるデザイン以外を使用する場合のサンプルテンプレートです。このサンプルでは２段組みのページを表示します。
+                </p>
+              </div>
+            </div>
+            <div style="clear: both;"></div>
+          </div> <!-- end page-content -->
+        </div><!-- end honbun -->
+      </div><!-- end .row -->
+      <%= render partial: '/susanoo/visitors/section_info_configure/content'  if EngineMaster.enable?('section_info_configure') %>
+    </div>
+  </div>

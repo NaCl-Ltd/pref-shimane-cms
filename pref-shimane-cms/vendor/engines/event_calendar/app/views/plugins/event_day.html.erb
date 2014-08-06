@@ -1,0 +1,24 @@
+<%
+  # 説明：イベント日ページを表示する
+  # 引数：event_calendarフォルダのパス, 表示する日付
+  events, categories = PluginHelper.event_day(@args)
+  date = @args[1].split(/-/)
+-%>
+
+<p>&nbsp;</p>
+<h1 class="emg"><%= h(date[1]) %>月<%= h(date[2]) %>日 <%= @genre.parent.title %></h1>
+<% unless categories.empty? -%>
+  <% for category in categories -%>
+    <h2 class="news">&nbsp;<%= h(category) %></h2><p>&nbsp;</p>
+    <ul>
+    <% for event in events["#{category}"] -%>
+      <% htmlstr="<a href='#{event[1]}'>#{event[0]}</a>" %>
+      <li><%= htmlstr %></li>
+    <% end -%>
+    </ul><br />
+  <% end -%>
+<% else -%>
+  本日のイベントはありません
+  <br /><br />
+  <% raise Susanoo::VisitorsController::PageNotFound -%>
+<% end -%>

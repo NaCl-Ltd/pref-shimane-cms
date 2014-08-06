@@ -1,0 +1,31 @@
+#
+# 管理者向け機能 部局管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      divisions:
+        index:
+          title: 部局一覧
+          display_organization_information:
+          sort_division: 部局の並び替え
+          new: 部局新規作成
+
+        sort:
+          save_in_the_following_order: 以下の順で保存しました。
+
+        new:
+          title: 部局新規作成
+
+        edit:
+          title: 部局編集
+
+        destroy:
+          success: 部局%{name}を削除しました
+          cant_destroy_current: ログインユーザの所属する部局は削除できません.
+
+        create:
+          success: 部局を作成しました
+
+        update:
+          success: 部局を更新しました

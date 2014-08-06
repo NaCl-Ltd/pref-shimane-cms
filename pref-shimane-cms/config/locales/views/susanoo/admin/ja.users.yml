@@ -1,0 +1,35 @@
+#
+# 管理者向け機能 ユーザ管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      users:
+        index:
+          title: ユーザ一覧
+          button:
+            create: ユーザー作成
+          submit:
+            search: に所属するユーザの表示
+          option:
+            all: 全員
+          new: ユーザ作成
+
+        new:
+          title: ユーザ作成
+
+        edit:
+          title: ユーザ編集
+
+        create:
+          success: ユーザを作成しました
+
+        destroy:
+          success: ユーザの削除の成功しました
+
+        update:
+          success: ユーザの更新に成功しました
+
+        user_row:
+          button:
+            delete_confirm: ユーザを削除します。よろしいですか?

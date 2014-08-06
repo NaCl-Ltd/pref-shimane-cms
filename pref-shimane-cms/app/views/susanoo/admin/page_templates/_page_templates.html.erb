@@ -1,0 +1,28 @@
+<% @page_templates.each_slice(3) do |page_templates| -%>
+  <div class="row-fluid">
+    <% page_templates.each do |page_template|%>
+      <div class="span4 thumbnail well">
+        <div class="caption">
+          <h3><%= page_template.name %></h3>
+        </div>
+        <iframe src="<%= main_app.preview_virtual_susanoo_visitors_path(mode: "template", template_id: page_template.id) %>"></iframe>
+        <br/>
+        <%= link_to_show main_app.preview_virtual_susanoo_visitors_path(mode: "template", template_id: page_template.id),
+          label: t(".preview"), data: { popup: true } %>
+        <%= link_to_edit main_app.edit_susanoo_admin_page_template_path(page_template) %>
+        <%= link_to_remove main_app.susanoo_admin_page_template_path(page_template) %>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>
+<%= paginate @page_templates, remote: true %>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+  $(function(){
+    $(window).load(function(){
+      $("iframe").contents().find('body').css({zoom: "0.5"});
+    });
+  });
+<% end %>
+<% end %>

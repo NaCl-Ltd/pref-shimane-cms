@@ -1,0 +1,144 @@
+<!-- top icon -->
+<div id="to_top_image">
+  <a href="/">
+    <%= image_tag 'susanoo/visitors/basic/symbol/pref_symbol_s.gif', alt: "島根県公式ウェブサイト(トップに戻る)", width: "87", height: "87" %>
+  </a>
+</div>
+
+<p class="anchor_link"><a href="#skip_content">ヘッダを飛ばして本文へ</a></p>
+<!-- top icon end -->
+
+<!-- susanoo/visitors/basic/panel -->
+<div id="normal_panel">
+  <ul>
+    <li>
+      <a href="http://www.bousai-shimane.jp">
+        <%= image_tag "susanoo/visitors/basic/panel/emergency_s.gif", alt: "防災・気象", width:"40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/section.html">
+        <%= image_tag "susanoo/visitors/basic/panel/section_s.gif", alt: "組織別情報(各部局の公開情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/environment/">
+        <%= image_tag "susanoo/visitors/basic/panel/environment_s.gif", alt: "環境(リサイクルや景観に関する情報)", width:"40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="http://www.kankou-shimane.com/ja/">
+        <%= image_tag "susanoo/visitors/basic/panel/sightseeing_s.gif", alt: "観光(観光とアクセス情報 しまね観光ナビ)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/admin/">
+        <%= image_tag "susanoo/visitors/basic/panel/admin_s.gif", alt: "県の取組み・一般(財政や政策等、県政の骨格に関する情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/life/">
+        <%= image_tag "susanoo/visitors/basic/panel/life_s.gif", alt: "くらし(健康・福祉や教育・文化に関する情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/top_news.html">
+        <%= image_tag "susanoo/visitors/basic/panel/news_s.gif", alt: "新着情報(サイト全般の新着情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/infra/">
+        <%= image_tag "susanoo/visitors/basic/panel/infra_s.gif", alt: "県土づくり(道路整備や河川・治水等、社会基盤情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+
+    <li>
+      <a href="/industry/">
+        <%= image_tag "susanoo/visitors/basic/panel/industry_s.gif", alt: "産業・雇用(農林水産業、商工業に関する情報)", width: "40", height: "28" %>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- susanoo/visitors/basic/panel end -->
+
+<div id="head_navi"><!-- HEAD NAVI START -->
+  <div id="navi_contents">
+    <div id="mail">
+      <p><a id="mail_to_admin" href="mailto:<%= Settings.super_user_mail -%>">HP管理者にメールする</a></p>
+      <p><a id="sitemap"  href="http://www.pref.shimane.lg.jp/sitemap.html">サイトマップ</a></p>
+    </div>
+
+    <div id="search"><!-- SEARCH START -->
+      <ul id="lang">
+        <li>
+          <a href="http://www1.pref.shimane.lg.jp/contents/kokusai/kokusai-e/index.html">English</a> /
+        </li>
+        <li>
+          <a href="http://www1.pref.shimane.lg.jp/contents/kokusai/kokusai-c/index.html">Chinese</a> /
+        </li>
+        <li>
+          <a href="http://www1.pref.shimane.lg.jp/contents/kokusai/kokusai-k/index.html">Korean</a> /
+        </li>
+        <li>
+          <a href="http://www1.pref.shimane.lg.jp/contents/kokusai/kokusai-r/index.html">Russian</a>
+        </li>
+        <li>
+          <a href="/usage.html">使い方</a>
+          <a href="/rss.html">RSS</a>
+        </li>
+      </ul>
+
+      <div id="search_form" style="font-size:8pt;">
+        <form method="get" action="/cgi-bin/search.cgi">
+          <input type="text" id="keyword" tabindex="1" accesskey="K" name="query" size="30" value="" maxlength="1991" />
+          <% unless genre.path == "/" %>
+            <input type="radio" id="search_top" tabindex="2" accesskey="T" name="uri" value="/" checked/>全体で検索
+            <input type="radio" id="search_dir" tabindex="2" accesskey="S" name="uri" value="<%=  genre.path %>" />フォルダ以下から検索
+          <% end %>
+
+          <input type="submit" id="submit" tabindex="2" accesskey="D" style="width: 4em;"  value="検索" />
+        </form>
+      </div>
+    </div><!-- SEARCH END -->
+  </div>
+</div><!-- HEAD NAVI END -->
+
+<div id="banner"><!-- BANNER START -->
+  <div class="ad">
+    <a target="_blank" href="/seisaku/ad1.html">
+      <img src="/index.data/banner_title.jpg" alt="" />
+    </a>
+
+    <a id="header_banner_anchor" target="_blank">
+      <img id="header_banner_image" style="margin-top: 0px;" src="/index.data/banner.jpg" alt="" height="48" width="187" />
+    </a>
+  </div>
+
+<% if defined?(noscript) && noscript == true -%>
+  <script type="text/javascript">udMenu('<%= page.path_base -%>');</script>
+<% end -%>
+
+  <noscript>
+    <p id="ud_menu">
+      <a href="<%= genre.path %><%= page.name %>.m3u">
+        <%= image_tag('univ/speak.gif', :alt => 'よみあげ', :size => '39x39') %>
+      </a>
+
+      <a href="<%= genre.path %><%= page.name %>.html.r">
+        <%= image_tag('univ/ruby_off.gif', :alt => 'ふりがなをつける', :size => '39x39') %>
+      </a>
+    </p>
+  </noscript>
+</div><!-- BANNER END -->
+
+<p class="skip_anchor">
+  <a name="skip_content">ここから本文</a>
+</p>
+<div style="clear: both;"></div>

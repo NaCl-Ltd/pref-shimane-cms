@@ -1,0 +1,76 @@
+<%= form_for @genre, url: update_auth_susanoo_genre_web_monitors_path(@genre), html: {class: 'form-horizontal well'} do |f| -%>
+  <fieldset>
+    <legend><%= t('.caption.auth') %></legend>
+
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls">
+        <p style="padding-top: 6px; margin-bottom: 0px"><%= f.object.title %></p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :auth, class: "control-label" %>
+      <div class="controls">
+        <p style="padding-top: 6px"><%= t(".label.auth.#{f.object.auth?}") %></p>
+        <%=
+          f.collection_radio_buttons :auth?, [[true, t('.label.auth.enable')], [false, t('.label.auth.disable')]], :first, :last do |b|
+            content_tag(:div, class: 'radio') { b.label { b.radio_button + b.text } }
+          end
+        -%>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit t("shared.save"), class: "btn btn-primary btn-small" %>
+        <%= link_to_back susanoo_genres_path(genre_id: @genre.id) %>
+      </div>
+    </div>
+  </fieldset>
+<% end -%>
+
+<% if @genre.auth? && @genre.web_monitors.eq_edited.exists? -%>
+  <div class="alert alert-danger">
+    <p><strong><%= t('.caption.reflect') %></strong></p>
+    <p><%= t('.description.reflect') %></p>
+    <%= button_to t('.label.reflect'), reflect_susanoo_genre_web_monitors_path(@genre), method: :patch, class: 'btn btn-primary btn-small', form_class: 'modal-form' %>
+  </div>
+<% end -%>
+
+<fieldset>
+  <legend><%= t('.caption.web_monitors') %></legend>
+  <div style="margin-bottom: 20px">
+    <%= link_to_new new_susanoo_genre_web_monitor_path(@genre), label: t('.label.web_monitors.new') %>
+    <% if @web_monitors.any? -%>
+      <%= link_to_remove destroy_all_susanoo_genre_web_monitors_path(@genre), label: t('.label.web_monitors.all_remove'), data: {confirm: t('.confirm.web_monitors.all_remove') } %>
+    <% end -%>
+  </div>
+
+  <% if @web_monitors.any? -%>
+    <table class="table table-striped table-condensed table-web-monitors">
+      <thead>
+        <tr>
+          <th class="name"><%= WebMonitor.human_attribute_name(:name) %></th>
+          <th class="login"><%= WebMonitor.human_attribute_name(:login) %></th>
+          <th class="operation"><%= t('.label.operation') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @web_monitors.each do |web_monitor| -%>
+          <tr>
+            <td class="name"><%= web_monitor.name %></td>
+            <td class="login"><%= web_monitor.login %></td>
+            <td class="operation">
+              <%= link_to_edit main_app.edit_susanoo_genre_web_monitor_path(@genre, web_monitor) %>
+              <%= link_to_remove main_app.susanoo_genre_web_monitor_path(@genre, web_monitor) %>
+            </td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
+    <%= paginate @web_monitors %>
+  <% else -%>
+    <p><%= t('.label.web_monitors.none') %></p>
+  <% end -%>
+</fieldset>

@@ -1,0 +1,105 @@
+@charset "utf-8";
+
+div#blogsubmenu {
+        width: 150pt;
+        margin: 0px 0px 10px;
+        padding: 0px;
+/*      float: left;
+        display: block;
+*/
+        font-size: medium !important;
+        word-break: break-all;
+        word-wrap:  break-word;
+}
+
+#blogsubmenu .blogcalendar {
+        padding: 7px 0px;
+}
+
+#blogsubmenu .bloglist {
+        margin: auto;
+        padding: 5px 10px 10px;
+}
+
+.bloglist ul {
+        padding: 0;
+}
+
+div#content {
+        display: block;
+}
+
+div#footer {
+        clear: both;
+}
+
+div.topic {
+        clear: none;
+}
+
+.bloglayout {
+        width: 100%;
+}
+
+.blogcalendar td {
+        border-width: 0;
+        vertical-align: top;
+}
+
+.blogcalendar td.blogsubmenu {
+        width: 150pt;
+}
+
+/* Calendar */
+.calendar {
+  margin: auto;
+  border: 2px solid black;
+  font-size: 90%;
+}
+
+.monthName th {
+  font-weight: normal;
+  text-align: right;
+  padding-top: 1em;
+  padding-bottom: 0.7em;
+}
+
+.dayName th {
+  font-size: 0.7em;
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+}
+
+.otherMonth, .day, .specialDay {
+  padding: 0.0em 0.2em;
+  border-right: 1px solid white;
+}
+
+.otherMonth {
+  color: #eeeeee;
+}
+
+.weekendDay {
+}
+
+.day, .specialDay {
+  text-align: center;
+}
+
+.specialDay {
+  background-color: #d10a21;
+  color: white;
+}
+.specialDay a, .specialDay a:visited, .specialDay a:hover {
+  color: white;
+  text-decoration: none;
+  padding: 1em;
+}
+.specialDay a:hover {
+  color: white;
+  background-color: black;
+}
+.today {
+        background-color: #1e90ff;
+        color: white;
+}

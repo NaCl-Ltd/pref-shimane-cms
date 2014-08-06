@@ -1,0 +1,4 @@
+    <div id="ad">
+      <%= render partial: "/susanoo/visitors/advertisement_management/corp_ads" unless @corp_ads.empty? %>
+      <%= render partial: "/susanoo/visitors/advertisement_management/pref_ads" unless @pref_ads.empty? %>
+    </div><!-- end ad -->

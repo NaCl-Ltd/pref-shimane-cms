@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>pref-shimane-cms:<%= @page_view.title %></title>
+<% if @page_view.edit -%>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag 'editor.iframe', media: 'all' %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "editor.iframe" %>
+<% end -%>
+</head>
+<body>
+  <div class='mobile'>
+  <a href="/">TOP</a>
+  <hr />
+  <div id='page-content'>
+    <%= render partial: '/susanoo/visitors/shared/content' %>
+  </div>
+  <hr />
+  </div>
+  <%= render partial: '/susanoo/visitors/mobiles/footer' %>
+</body>
+</html>

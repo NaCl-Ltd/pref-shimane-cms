@@ -1,0 +1,39 @@
+<div class="row-fluid">
+  <div class="span12 well">
+    <%= form_for([:susanoo, @page], html: {class: "form-horizontal"}) do |f| %>
+      <% if @page.errors.any? -%>
+        <%= error_messages_for(@page) %>
+      <% end -%>
+
+      <div class="control-group">
+        <%= f.label :title, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :title, class: "input-xxlarge" %>
+          <span class="help-block"><%= t(".description.title") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :begin_event_date, class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :begin_event_date, {}, style: "width: 80px;" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :end_event_date, class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :end_event_date, {}, style: "width: 80px;" %>
+          <span class="help-block"><%= t(".description.event_date") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit t('.submit'), class: "btn btn-primary btn-small" %>
+          <%= link_to_back susanoo_page_path(@page) %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>

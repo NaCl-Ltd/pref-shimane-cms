@@ -1,0 +1,56 @@
+<table id="list" class="table">
+  <thead>
+    <tr>
+      <th><%= t("activerecord.attributes.section.code") %></th>
+      <th><%= t("activerecord.attributes.section.name") %></th>
+      <th><%= t(".label.feature") %></th>
+      <th><%= t(".label.link_short") %></th>
+      <th><%= t(".label.user_count") %></th>
+      <th><%= t("shared.label.operation") %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sections.each do |section| -%>
+      <tr class="draggble" id="item_<%= section.id %>">
+        <td><%= section.code %></td>
+        <td><%= section.name %></td>
+        <td><%= section.feature_key %></td>
+        <td style="width: 400px; word-break: break-all;"><a href="<%= section.link %>" target="_blank"><%= section.link %></a></td>
+        <td style="width: 60px;"><div style="text-align: right;"><%= section.users.size %></div></td>
+        <td>
+          <%= link_to_edit main_app.edit_susanoo_admin_section_path(section) %>
+          <%= link_to_remove main_app.susanoo_admin_section_path(section) %>
+          <%= link_to main_app.susanoo_admin_users_path(section_id: section.id), class: "btn btn-info btn-small" do %>
+            <%= t(".label.user_list") %>
+          <% end %>
+          <% if !@display_navigation -%>
+            <a class="btn btn-info btn-position" href="#" title="<%= t("shared.description.position") %>">
+              <%= t("shared.position")%>
+            </a>
+          <% end %>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+<% if @display_navigation -%>
+  <%= paginate @sections %>
+<% else %>
+  <script type="text/javascript">
+    $( '#list tbody' ).sortable({
+      cursor: 'move',
+      opacity: 0.7,
+      containment: "parent",
+      handle: ".btn-position",
+      update: function(){
+        jQuery( '#list tbody' ).effect( 'highlight', '', 2000 );
+        jQuery.post('<%= main_app.update_sort_susanoo_admin_sections_path %>', $(this).sortable( 'serialize'), function(html){
+          $("#result").html(html)
+        }, 'text');
+      }
+    });
+  </script>
+<% end -%>
+
+

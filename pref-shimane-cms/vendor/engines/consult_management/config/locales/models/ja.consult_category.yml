@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      consult_management/consult_category: 分類
+
+    attributes:
+      consult_management/consult_category:
+        name: 名称
+        description: 説明

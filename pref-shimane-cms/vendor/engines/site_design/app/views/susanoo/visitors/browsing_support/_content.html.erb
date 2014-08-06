@@ -1,0 +1,15 @@
+<ul class="nav">
+  <li><input type="button" value="<%= t('susanoo.visitors.header_sub.btn.read_aloud') %>" onclick="window.location.href='<%= @page_view.page.genre.path %><%= @page_view.page.name %>.m3u'" class='btn btn-small' />&nbsp;</li>
+  <li><input type="button" value="<%= t('susanoo.visitors.header_sub.btn.link_to_rubi') %>" onclick="changeRuby();" class='btn btn-small' /></li>
+  <li>
+    &nbsp; <%= t('susanoo.visitors.header_sub.label.background_color') %>
+    <input type="button" value="<%= t('susanoo.visitors.header_sub.btn.background_color_to_white') %>" onclick="setActiveStyleSheet('style'); return false;" class='btn btn-small' />
+    <input type="button" value="<%= t('susanoo.visitors.header_sub.btn.background_color_to_black') %>" onclick="setActiveStyleSheet('black'); return false;" class='btn btn-small' />
+    <input type="button" value="<%= t('susanoo.visitors.header_sub.btn.background_color_to_beige') %>" onclick="setActiveStyleSheet('beige'); return false;" class='btn btn-small' />
+  </li>
+  <li>
+     &nbsp; <%= t('susanoo.visitors.header_sub.label.font_size') %>
+     <input type="button" value="<%= t('susanoo.visitors.header_sub.btn.font_size_to_normal') %>" onclick="normal()" class='btn btn-small' />
+    <input type="button" value="<%= t('susanoo.visitors.header_sub.btn.font_size_to_large') %>" onclick="large()" class='btn btn-small' />
+  </li>
+</ul>

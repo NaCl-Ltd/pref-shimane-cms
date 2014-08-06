@@ -1,0 +1,5 @@
+<% if @category_folders %>
+$("#category_folder_id").html(
+  "<%= escape_javascript(options_from_collection_for_select(@category_folders, :id, :title)) %>"
+);
+<% end %>

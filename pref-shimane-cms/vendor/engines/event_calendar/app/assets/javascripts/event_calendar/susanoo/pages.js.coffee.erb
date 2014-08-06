@@ -1,0 +1,64 @@
+<% url_helpers = EventCalendar::Engine.routes.url_helpers %>
+
+#
+# ページ管理クラス
+#
+class PageIndex
+  init: (datasource) =>
+    $("#treeview").fancytree({
+      source: datasource
+      activate: (event, data) ->
+        node = data.node
+        if !node.data.no_permission
+          $.get("<%= url_helpers.select_susanoo_pages_path %>", {genre_id: node.data.id})
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_susanoo_genres_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    $(document).on("submit", ".form-search", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.searching')%>" })
+      return true
+    )
+
+    $(document).on("click", ".pagination a", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.loading')%>" })
+      return true
+    )
+
+    return
+
+#
+# フォルダ管理クラス
+#
+class PageForm
+  init: ->
+    $('#event_top_id').change( (e) ->
+      event_top_id = $("#event_top_id").val()
+      if event_top_id
+        $.ajax(
+          url: "<%= url_helpers.select_event_top_susanoo_pages_path %>",
+          data: { event_top_id: event_top_id},
+          dataType: 'script'
+        )
+    )
+    $('input[name="select_use_categroy_folder"]:radio').change( (e) ->
+      if this.value == "1"
+        $("#category_folder_id").removeAttr("disabled")
+      else
+        $("#category_folder_id").attr("disabled", "disabled")
+    )
+    $('document').ready( (e) ->
+      if $('input[name="select_use_categroy_folder"]:checked').val() == "2"
+        $("#category_folder_id").attr("disabled", "disabled")
+    )
+
+this.Susanoo ||= {}
+this.Susanoo.Page ||= {}
+this.Susanoo.ExploreTimer = false
+this.Susanoo.Page.Index = new PageIndex
+Susanoo.Page.Form = new PageForm

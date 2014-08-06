@@ -1,0 +1,2 @@
+$.isLoading('hide')
+

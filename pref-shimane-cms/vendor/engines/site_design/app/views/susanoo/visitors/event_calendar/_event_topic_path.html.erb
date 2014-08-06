@@ -1,0 +1,14 @@
+<% unless @page_view.page.new_record? -%>
+  <% event_page = @page_view.page -%>
+  <% if event_page.name != 'index' && (event_page.begin_event_date && event_page.end_event_date) -%>
+    <% event_top = event_page.event_top -%>
+    <%= link_to "#{event_page.begin_event_date.month.to_s}月 #{event_top.title}",
+                event_top.event_index_path(year: event_page.begin_event_date.year, month: event_page.begin_event_date.month) %>
+    <% if event_page.begin_event_date && event_page.begin_event_date.month != event_page.end_event_date.month -%>
+      &nbsp;
+     <%= link_to "#{event_page.end_event_date.month.to_s}月 #{event_top.title}",
+                  event_top.event_index_path(year: event_page.end_event_date.year, month: event_page.end_event_date.month) %>
+    <% end %>
+    <br />
+  <% end -%>
+<% end -%>

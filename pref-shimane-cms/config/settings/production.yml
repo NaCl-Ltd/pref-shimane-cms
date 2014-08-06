@@ -1,0 +1,7 @@
+
+# micheckerのアプリケーション情報（tomcat想定）
+accessibility:
+  https: false
+  host : localhost
+  port : 8080
+  api  : '/michecker/api/validate'

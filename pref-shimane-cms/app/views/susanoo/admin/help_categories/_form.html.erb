@@ -1,0 +1,21 @@
+<%= form_for([:susanoo, :admin, help_category], remote: true, html: {class: 'form-inline new_help_category'}) do |f| %>
+  <%= f.hidden_field(:parent_id) %>
+
+  <% if help_category.errors.any? -%>
+    <%= error_messages_for(help_category) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, class: "span4" %>
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+    </div>
+  </div>
+
+  <% content_for :javascript_contents do %>
+    <script type="text/javascript">
+    </script>
+  <% end %>
+<% end %>
+

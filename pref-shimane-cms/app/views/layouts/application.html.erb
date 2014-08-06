@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pref-shimane-cms</title>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag "application", media: "all"%>
+    <%= stylesheet_link_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.css") %>
+    <%= content_for?(:stylesheet_contents) ? yield(:stylesheet_contents) : "" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body id="<%= template_uniq_id %>">
+    <div id="wrap">
+      <%= render partial: "/shared/navigation"%>
+
+      <div id="header" class="container-fluid">
+        <% if page_header_required? -%>
+          <div class="row-fluid page-title">
+            <div class="span6">
+              <h1><%= t('title', scope: template_scope ) %></h1>
+            </div>
+            <% if content_for?(:page_top_menu) -%>
+              <div class="span6 menu-top-right">
+                <%= yield(:page_top_menu) %>
+              </div>
+            <% end -%>
+          </div>
+        <% end -%>
+      </div>
+
+      <div class="container-fluid container-main">
+        <% if page_header_required? -%>
+        <%= bootstrap_flash %>
+        <% end -%>
+        <%= yield %>
+      </div> <!-- /container -->
+
+      <% if footer_required? -%>
+        <div id="push"></div>
+      <% end -%>
+    </div>
+
+    <% if footer_required? -%>
+      <footer id="footer">
+        <div class="container-fluid">
+          <p>&copy; NaCl 2013.</p>
+        </div>
+      </footer> <!-- /footer -->
+    <% end -%>
+
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "ckeditor/init" %>
+    <%= javascript_include_tag_nodigest "ckeditor/ckeditor"%>
+    <%= javascript_include_tag "ckeditor/config.toolbar" %>
+    <%= javascript_include_tag "ckeditor/config.allowed_content" %>
+    <%= javascript_include_tag "ckeditor/config.remove_empty_tags" %>
+    <%= javascript_include_tag "ckeditor/config.language_list" %>
+    <%= javascript_include_tag "bootstrap.ckeditor.modal.fix" %>
+
+    <%= javascript_include_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+    <%= content_for?(:javascript_contents) ? yield(:javascript_contents) : "" %>
+  </body>
+</html>

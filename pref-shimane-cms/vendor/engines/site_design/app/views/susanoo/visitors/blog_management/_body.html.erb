@@ -1,0 +1,33 @@
+  <div id="content-wrapper" class="container">
+    <div id="content">
+      <div class="row">
+        <div class="span12">
+          <%= render partial: '/susanoo/visitors/shared/topic_path', locals: {page: @page_view.page} %>
+          <div id="honbun">
+          <% if @page_view.page.blog_date? %>
+            <%= render(partial: '/susanoo/visitors/blog_management/blog_back_path') %>
+          <% else -%>
+            <div style="width: 100%;">
+              <div class="table_div_left">
+                <%= render(:partial => '/susanoo/visitors/blog_management/blog_submenu') %>
+              </div>
+              <div class="table_div_left" style="margin-left: 10px;">
+          <% end -%>
+          <!-- begin_content -->
+          <div id="page-content">
+            <%= render partial: '/susanoo/visitors/shared/content' %>
+          </div><!-- end page-content -->
+          <!-- end_content -->
+          <% if @page_view.page.blog_date? %>
+            <%= render(partial: '/susanoo/visitors/blog_management/blog_back_path') %>
+          <% else -%>
+              </div>
+            </div>
+          <% end -%>
+          </div><!-- end honbun -->
+          <br style="clear: both;" /><br />
+        </div>
+      </div>
+    </div>
+    <%= render partial: '/susanoo/visitors/section_info_configure/content'  if EngineMaster.enable?('section_info_configure') %>
+  </div>

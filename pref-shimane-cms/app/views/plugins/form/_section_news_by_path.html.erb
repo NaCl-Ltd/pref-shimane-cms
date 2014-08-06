@@ -1,0 +1,59 @@
+<div id="section_news_by_path">
+  <div class="editable-plugin bootstrap">  
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <div class="controls">
+              <p class="text">
+                <%= raw t("plugins.descriptions.section_news_by_path") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.section_news_by_path.limit") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:limit, nil, "data-arg" => 1, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.section_news_by_path.limit") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.section_news_by_path.path") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:path, nil, "data-arg" => 2, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.section_news_by_path.path") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.section_news_by_path.date") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:date, nil, "data-arg" => 3, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.section_news_by_path.date") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

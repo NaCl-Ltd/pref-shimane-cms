@@ -1,0 +1,43 @@
+<%
+  # 説明：イベント情報ピックアップを表示させる
+  # 引数：event_calendarファルダのパス
+  path = args[0]
+  max_display_num = args[1].to_i
+  range_begin = Date.today
+  range_end = range_begin + 6
+
+  wdays = ["日", "月", "火", "水", "木", "金", "土"]
+-%>
+
+<div>
+<% num_event = 0 -%>
+<% displayed_event = Array.new -%>
+<% date = range_begin %>
+<% while date <= range_end -%>
+  <% if num_event >= max_display_num -%><% break -%><% end -%>
+  <% events = ::EventCalendar::PluginHelper.event_pickup(path, date, date) -%>
+  <% for event in events -%>
+    <% if num_event >= max_display_num -%><% break -%><% end -%>
+    <% if displayed_event.include?(event.id) -%><% next -%><% end -%>
+    <% displayed_event.push(event.id) -%>
+    <% category = event.page.genre.event_category.title -%>
+    <% address = event.page.path -%>
+    <% begin_date = event.page.begin_event_date -%>
+    <% end_date = event.page.end_event_date -%>
+    <% if @page_view.page.shoushika_top_page? -%><dt><% end -%>
+    [<%= category %>]&nbsp;<a href="<%= address %>"><%= event.page.title %></a><br />
+    <%= begin_date.year %>年<%= begin_date.month %>月<%= begin_date.day %>日(<%= wdays[begin_date.wday] %>)
+    <% if begin_date != end_date -%>
+      &nbsp;～&nbsp;<%= end_date.year %>年<%= end_date.month %>月<%= end_date.day %>日(<%= wdays[end_date.wday] %>)
+    <% end -%>
+    <% if @page_view.page.shoushika_top_page? -%></dt><% else -%><br /><% end -%>
+    <% num_event += 1 -%>
+  <% end -%>
+  <% date += 1 -%>
+<% end %>
+<% if num_event == 0 -%>
+今週の情報はありません
+<% end -%>
+</div>
+
+

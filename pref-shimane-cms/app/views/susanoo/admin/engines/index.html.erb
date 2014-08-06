@@ -1,0 +1,33 @@
+<div id="result"></div>
+<div id="engine_master">
+  <table id="list" class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.attributes.engine_master.name") %></th>
+        <th><%= t("activerecord.attributes.engine_master.enable") %></th>
+        <th><%= t("shared.label.operation") %></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @engines.each do |engine| -%>
+        <tr>
+          <td style="width: 30%"><%= t("engines.#{engine.name}") %></td>
+          <td style="width: 30%"><%= engine.enable_label -%></td>
+          <td>
+            <% url = main_app.change_state_susanoo_admin_engine_path(engine) %>
+            <% if engine.enable? %>
+              <%= link_to(url, class: "btn btn-warning btn-small") do %>
+                <%= t(".change_disable") %>
+              <% end %>
+            <% else %>
+              <%= link_to(url, class: "btn btn-info btn-small") do %>
+                <%= t(".change_enable") %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,129 @@
+<div id="<%= 'search-form' unless @mobile %>" style="width: 20%; float: left; margin: 5px;">
+  <% url = @mobile ? "#{Settings.consult_management.data.dir}#{Settings.consult_management.data.cgi.path}" : '' %>
+  <%= form_tag(url, id: 'search-consult-form') do %>
+    <h3>キーワード入力</h3>
+    <p>下記にキーワードを入力し、検索ボタンを押してください。</p>
+    <div>
+      <%= text_field_tag :'consult[keyword]' %>
+    </div>
+    <div>
+      <%= submit_tag t('shared.search') %>
+    </div>
+
+    <h3>分類で絞り込む</h3>
+    <p>分類で検索結果を絞り込む際は、下の分類をチェックしてください。</p>
+    <% ConsultManagement::ConsultCategory.all.each_with_index do |consult_category, idx| %>
+      <% content_for :"checkbox#{consult_category.id}" do %>
+        <%= check_box_tag(:"consult[consult_category_ids][]", consult_category.id, false, id: "consult_category_ids_#{consult_category.id}",class: 'consult-category-ids') %>
+        <%= consult_category.name %>
+      <% end %>
+      <% if @mobile %>
+        <%= '/' if idx != 0 %>
+        <%= yield(:"checkbox#{consult_category.id}") %>
+      <% else %>
+        <div>
+          <%= yield(:"checkbox#{consult_category.id}") %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<% unless @mobile %>
+  <div id="search-result" style="display: none; width: 70%; float: left; margin-top: 5px;">
+    <h3>検索結果</h3>
+    <br />
+    <table id="search-result-table" style="width: 100%">
+      <thead>
+        <tr>
+          <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:name) %></th>
+          <th style="text-align: center;"> <%= ConsultManagement::Consult.human_attribute_name(:link) %></th>
+          <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:work_content) %></th>
+          <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:contact) %></th>
+        </tr>
+      </thead>
+
+      <tbody id="result-body">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script type="text/javascript">
+    /* <![CDATA[ */
+
+    var consults = [];
+
+    $(document).ready(function(){
+      $.getJSON('<%= Settings.consult_management.data.dir %><%= Settings.consult_management.data.json.path %>', function(json){
+        consults = json;
+      })
+
+      $("#search-consult-form").on('submit', function(){
+        var ids = select_ids();
+        var keyword = $('#consult_keyword').val()
+
+        var find_consults = searchConsults(ids, keyword);
+        appendResult(find_consults);
+        $("#search-result").show()
+
+        return false;
+      })
+    });
+
+    function select_ids(){
+      var select_ids = [];
+
+      $.each($('.consult-category-ids:checked'), function(){
+        select_ids.push($(this).val())
+      })
+
+      return select_ids;
+    }
+
+
+    function searchConsults(ids, keyword){
+      var find_consults = []
+      $.each(consults, function(){
+        var _this = this
+
+        if (ids.length == 0){
+          if (_this.name.indexOf(keyword) != -1 || _this.work_content.indexOf(keyword) != -1){
+            find_consults.push(_this);
+            return;
+          }
+        } else {
+          $.each(ids, function(){
+            if ($.inArray(parseInt(this), _this.consult_category_ids) >= 0 && (_this.name.indexOf(keyword) != -1 || _this.work_content.indexOf(keyword) != -1)){
+              find_consults.push(_this);
+              return;
+            }
+          })
+        }
+      })
+      return $.unique(find_consults);
+    }
+
+
+
+    function appendResult(consults){
+      $("#search-result-table > tbody").empty()
+      $.each(consults, function(){
+        $("#search-result-table > tbody").append(
+            $("<tr></tr>")
+                .append($("<td></td>").text(this.name))
+                .append($("<td></td>").append($("<a></a>").text('詳細ページ').attr('href', this.link)))
+                .append($("<td></td>").text(this.work_content))
+                .append($("<td></td>").text(this.contact))
+        );
+      })
+    }
+
+    /* ]]> */
+  </script>
+<% end %>

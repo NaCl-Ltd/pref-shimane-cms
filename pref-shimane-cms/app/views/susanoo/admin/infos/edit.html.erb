@@ -1,0 +1,10 @@
+<%# 作成画面テンプレートの描画 %>
+<%= render 'form' %>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Admin.Info.Form.init();
+});
+<% end %>
+<% end -%>

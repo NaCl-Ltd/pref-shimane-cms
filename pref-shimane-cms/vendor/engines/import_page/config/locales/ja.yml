@@ -1,0 +1,113 @@
+ja:
+  engines:
+    import_page: 一括ページ取り込み
+  import_page:
+    import:
+      show:
+        title: 一括ページ取り込み
+      form:
+        genre_not_select: フォルダ未選択
+        label:
+          select_genre: フォルダ選択
+          upload: アップロード
+        description:
+          genre_id: フォルダを選択してください
+          file: 圧縮ファイルを選択してください
+        modal_folder_select:
+          title: フォルダ選択
+          label:
+            submit: 選択
+            close: 閉じる
+      stored:
+        line_1: "%{user}によって「%{genre}」フォルダに圧縮ファイル(%{file})がアップロードされています。"
+        line_2: 圧縮ファイルのアップロードは、1所属につき1日1ファイルまでに制限されています。
+        line_3: 圧縮ファイルをアップロードし直す場合は、下のリンクを押して一度削除してから再度アップロードしてください。
+        deleted_user: 既に削除されたユーザ
+        deleted_genre: 既に削除されたフォルダ
+        delete_file: 圧縮ファイルの削除
+      results:
+        section_1:
+          title: ページ取り込み結果
+          line_1: 圧縮ファイルをアップロードする場合は以下の取り込み結果を下の「取り込み結果削除」リンクをクリックし、結果を削除してからアップロードしてください。
+        has_no_messages: エラーはありませんでした。
+        delete: 取り込み結果削除
+      description:
+        title: 一括ページ取り込み機能について
+        section_1:
+          title: 【概要】
+          line_1: 一括ページ取り込み機能は、パソコン上のHTML形式のファイル群を元にしてＣＭＳ上に一括してページ作成するものです。例えば、HTML形式で作成された報告書ＣＤなどをＣＭＳで公開したい場合などに使用します。
+        section_2:
+          title: 【手順】
+          line_1: <b>圧縮ファイルの作成</b> - ＣＭＳに取り込もうとするパソコン上のHTML形式のファイルや画像ファイル、添付ファイル等は、事前にZIP形式で圧縮して一つのファイルにしておきます。圧縮方法についてはマニュアル等を参照してください。
+          line_2: <b>ページを取り込むフォルダの選択</b> - 「フォルダ選択」ボタンを押して、ページを作成するフォルダを選択します。
+          line_3: <b>圧縮ファイルのアップロード</b> - 手順１で作成したZIP形式の圧縮ファイルを「参照」ボタンを押して指定し、「アップロード」を押します。
+        section_3:
+          title: 【注意事項等】
+          line_1: アップロードできる圧縮ファイルのサイズは%{size}までです。また、1所属につき1ファイルまでです。
+          line_2: ＣＭＳに取り込もうとするパソコン上のファイルやフォルダの名前に半角英数字以外の文字が使用されているとＣＭＳに取り込むことができません。圧縮ファイルを作成する前にファイル名やフォルダ名を半角英数字だけの名前にしておく必要があります。
+          line_3: パソコン上のフォルダ構成やページのリンク関係はそのままＣＭＳ上に再現されます。
+          line_4: 取り込まれたページは「編集中」の状態になります。公開処理を行う時は編集画面を開き、アクセシビリティチェックを行ってください。
+          line_5: 取り込むファイル、フォルダに問題がありますと、取り込まれたファイル、フォルダも含め、圧縮ファイルが持つ全ファイル、全フォルダはＣＭＳに取り込まれません。「ページ取り込み結果」にファイル、フォルダの問題点が表示されますので、当該のファイル、フォルダを修正し、再度アップロードしてください。
+          line_6: ブログ管理、イベントカレンダー管理で使用されているフォルダに圧縮ファイルはアップロードできません。
+  activemodel:
+    models:
+      import_page/upload_file: ファイル
+    attributes:
+      import_page/upload_file:
+        section_id: 所属
+        genre_id:   フォルダ
+        user_id:    ユーザ
+        file:       圧縮ファイル
+    errors:
+      messages: &error_messages
+        blank: を入力して下さい
+        confirmation: が一致しません
+        too_short: "は%{count}文字以上で入力して下さい"
+        too_long: "は%{count}文字以内で入力して下さい"
+        non_select: "を選択してください。"
+        less_than: "は%{count}より小さい値にして下さい"
+        greater_than: "は%{count}より大きい値にして下さい"
+        invalid: "は無効な値を含んでいます"
+        taken: が重複しています
+      models:
+        import_page/upload_file:
+          attributes:
+            base:
+              invalid_extname: アップロード出来ないファイルです。アップロード出来るファイルは、zip圧縮されたファイルです。
+            genre_id:
+              blank: を選択してください
+              unusable: (%{genre}) はブログ管理、またはイベントカレンダー管理で使用されているため、アップロードできません
+            file:
+              blank: を選択してください
+              broken: は破損しています。
+              infected: にウィルスが検出されたので削除しました
+              has_no_html: の中にHTMLファイルが無いため、ファイルを削除しました
+              greater_than: のサイズが%{size}の上限を越えています
+              invalid_filename: のファイル名は半角英数字のみにしてください
+            filename:
+              invalid: は半角英数字のみにしてください
+        import_page/importer:
+          attributes:
+            base:
+              result: "一括ページ取り込み実行結果 : %{timestamp}"
+              genre_not_found: 取り込み先のフォルダが存在しないか、フォルダ名が正しくありません。
+              compressed_file_broken: 圧縮ファイルが破損しているため、解凍できませんでした。
+              compressed_file_not_deleted: zipファイルが削除出来ませんでした
+            genre:
+              result: "[フォルダ]：%{path}"
+            page:
+              result: "[ページ]：%{path}"
+        import_page/importers/genre_importer:
+          attributes:
+            base:
+              genre_not_found: 取り込み先のフォルダが存在しないか、フォルダ名が正しくありません。
+              invalid_genre: フォルダが追加出来ませんでした。
+              genre_not_imported: フォルダを取り込めませんでした。
+              html_not_found: HTMLファイルが存在しないフォルダのため、フォルダを作成しませんでした。
+        import_page/importers/page_importer:
+          attributes:
+            base:
+              invalid_filename: ファイル名が不正なため、取り込めませんでした。
+              page_not_imported: ファイルが取り込めませんでした。
+              invalid_page_title: ページタイトルが正常に設定できませんでした。ページタイトルの修正が必要です。
+              image_total_size_too_big: 画像ファイルの合計サイズが%{size}Byteの上限を越えましたので、HTMLファイルを取り込めませんでした。

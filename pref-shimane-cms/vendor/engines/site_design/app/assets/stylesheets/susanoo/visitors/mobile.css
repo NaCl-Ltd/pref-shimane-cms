@@ -1,0 +1,22 @@
+div.mobile {
+  border: solid #999 1px;
+  padding: 0.3em;
+  margin: 0.5em 0 0.2em 0;
+  width: 154px;
+  height: 180px;
+  overflow: scroll;
+}
+
+h1, h2, h3, h4, h5, h6, div, p, address, pre {
+  font-size: 14px;
+  font-family: monospace;
+  font-style: normal;
+  line-height: 1.1em;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.invalid {
+  border: 1px red solid;
+}

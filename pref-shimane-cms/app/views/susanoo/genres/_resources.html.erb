@@ -1,0 +1,92 @@
+<div id="file-index-field">
+  <div class="panel-folder">
+    <%= genre_fullpath(@genre) %>
+  </div>
+
+  <%= form_for @search_form, as: "search",
+      url: main_app.susanoo_genres_path, method: :get, remote: true,
+      html: {class: "form-inline form-search"} do |f| %>
+    <%= hidden_field_tag 'genre_id', @genre.id %>
+    <%= f.text_field :keyword %>
+    <%= f.submit t("shared.search"), class: "btn btn-primary btn-small"%>
+    <%= f.label :recursive, class: 'checkbox', style: 'margin-left:10px;' do %>
+      <%= f.check_box(:recursive, {}, "1", "0") %><%= t(".recursive") %>
+    <% end %>
+  <% end %>
+
+  <% if @genres.present? || @pages.present? %>
+
+    <table id="file-index" class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th class="icon"></th>
+          <th><%= t(".title") %></th>
+          <th><%= t(".admission") %></th>
+          <th><%= t(".private_admission") %></th>
+          <th class='move'><%= t(".move_order") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%# 検索時はルートフォルダを表示しない -%>
+        <% if @search_form.attributes.blank? -%>
+          <tr data-id="<%= @genre.id %>" data-type="genre" class="folder info resource-selected">
+            <td><span class="treeview-icon rootfolder"></span></td>
+            <td><%= @genre.title %><% unless @genre.name.blank? -%>（<%= @genre.name %>）<% end -%></td>
+            <td>&nbsp;</td>
+            <td colspan='2'></td>
+          </tr>
+        <% end -%>
+        <%# 左側のツリービューからフォルダを選択したときは、サブフォルダまたはページ（二行目移行）をインデントする %>
+        <% class_name = @search_form.attributes.blank? ? "indent" : "no-indent" %>
+
+        <%# フォルダ %>
+        <% genre_max_index = @genres.present? ? @genres.size - 1 : 0 %>
+        <% @genres.each_with_index do |g, i| -%>
+          <tr data-id="<%= g.id %>" data-type="genre" class="folder">
+            <td class="<%= class_name %>"><span class="treeview-icon folder"></span></td>
+            <td class="<%= class_name %>"><%= g.title %>（<%= g.name %>）</td>
+            <td></td>
+            <td></td>
+            <td class='move'>
+              <div class='move-area'>
+                <div class='move-link move-up'>
+                <% if i != 0 -%>
+                  <%= link_to main_app.move_order_susanoo_genre_path(g, type: 'move_higher'), remote:true do %>
+                    <i class='icon icon-chevron-up icon-white'></i>
+                  <% end -%>
+                <% end -%>
+                </div>
+               <div class='move-link move-down'>
+                  <% if i != genre_max_index -%>
+                    <%= link_to main_app.move_order_susanoo_genre_path(g, type: 'move_lower'), remote:true do %>
+                      <i class='icon icon-chevron-down icon-white'></i>
+                    <% end -%>
+                  <% end -%>
+               </div>
+              </div>
+            </td>
+          </tr>
+        <% end -%>
+
+        <%# ページ %>
+        <% @pages.each do |page| -%>
+          <tr data-id="<%= page.id %>" data-type="page" class="page">
+            <td class="<%= class_name %>"><span class="treeview-icon html"></span></td>
+            <td class="<%= class_name %>"><%= page.title %> （<%= page.name %>）</td>
+            <td><%= page.published_content.present? ? t("shared.admission.#{page.published_content.admission_key}") : "" %></td>
+            <td><%= page.unpublished_content.present? ? t("shared.admission.#{page.unpublished_content.admission_key}") : "" %></td>
+            <td></td>
+          </tr>
+        <% end -%>
+
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-info" style="margin: 5px">
+      <%= t(".not_found")%>
+    </div>
+  <% end %>
+</div>
+
+
+

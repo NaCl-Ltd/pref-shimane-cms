@@ -1,0 +1,22 @@
+<%
+#=== Description
+# ブログシステム用のプラグインです。
+# genre 以下にあるブログページから、指定した数だけコンテンツを取得し、
+# 表示するプラグインです。
+# ブログシステムでない場合は何も表示しません。
+#
+#=== Arguments
+# arg[0]: 表示するブログコンテンツの数
+#
+%>
+<%
+  blog_num = args[0] || 5
+  blog_num = blog_num.to_i
+  blog_pages_with_content = @blog_pages_with_content[0 ... blog_num] rescue []
+%>
+
+<% blog_pages_with_content.each do |page, content| -%>
+  <%= render(:partial => '/plugins/blog_index', :locals => {:page => @page_view.page, :genre => @page_view.genre, :blog_page => page, :content => content}) %>
+  <br />
+  <p style="font-size: 110%; font-family: 'MS ゴシック'; font-weight: bold;"><%=h page.genre.parent.name %>年<%=h page.genre.name %>月<%=h page.name %>日</p>
+<%   end -%>

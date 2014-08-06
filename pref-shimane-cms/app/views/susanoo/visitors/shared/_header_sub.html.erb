@@ -1,0 +1,25 @@
+<script type="text/javascript">
+  function normal(){document.getElementById('allchar').style.fontSize="75%";}
+  function large(){document.getElementById('allchar').style.fontSize="150%";}
+</script>
+<title>pref-shimane-cms<%= @page_view.page.title %></title>
+</head>
+<body id='allchar'>
+<div id="wrapper">
+  <div id="navigation" class="navbar navbar-static-top">
+    <div class="container">
+      <div id="skip">
+        <p class="skiplink" id="skiplink"><a href="#honbun"><%= t('susanoo.visitors.header_sub.link.skip') %></a></p>
+      </div>
+      <a class="brand" href="/">pref-shimane-cms</a>
+      <div class="nav-collapse collapse">
+        <div class="pull-right nav-control">
+          <div class="pull-left nav-control-label"><%= t('susanoo.visitors.header_sub.label.font_size')%>&nbsp;</div>
+          <div class="pull-right">
+            <input type="button" class="btn btn-default btn-small" value="<%= t('susanoo.visitors.header_sub.btn.font_size_to_normal') %>" onclick="normal()" />
+            <input type="button" class="btn btn-default btn-small" value="<%= t('susanoo.visitors.header_sub.btn.font_size_to_large') %>" onclick="large()" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

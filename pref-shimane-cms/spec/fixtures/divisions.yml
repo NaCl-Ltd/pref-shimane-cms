@@ -1,0 +1,6 @@
+division_admin:
+  id    : 1
+  name  : 管理用
+  number: 1
+  enable: true
+

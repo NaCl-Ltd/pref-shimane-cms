@@ -1,0 +1,44 @@
+<div id="genre_news_list">
+  <div class="editable-plugin bootstrap">  
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <div class="controls">
+              <p class="text">
+                <%= raw t("plugins.descriptions.genre_news_list") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.genre_news_list.limit") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:limit, 5, "data-arg" => 1, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.genre_news_list.limit") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.genre_news_list.date") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:date, 5, "data-arg" => 2, id: nil) %><br/>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.genre_news_list.date") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

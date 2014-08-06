@@ -1,0 +1,25 @@
+#
+# JavaScriptのメッセージ
+#
+ja:
+  js:
+    editor_iframe:
+      editable_control:
+        move: 移動
+        edit: 編集
+        remove: 削除
+
+      accessibility_popover:
+        title: エラー内容
+
+      confirm:
+        content_remove: 指定したコンテンツを削除します.
+
+    ckeditor:
+      lang:
+        en: 英語
+        zh: 中国語
+        ko: 韓国語
+        ru: ロシア語
+        tl: タガログ語
+        pt: ポルトガル語

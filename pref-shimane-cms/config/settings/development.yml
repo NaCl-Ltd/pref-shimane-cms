@@ -1,0 +1,6 @@
+# Export用
+export:
+  servers:
+    - localhost
+  sync_counter_servers:
+    - localhost

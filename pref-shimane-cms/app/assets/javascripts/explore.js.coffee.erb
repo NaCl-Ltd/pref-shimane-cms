@@ -1,0 +1,26 @@
+this.Susanoo ||= {}
+this.Susanoo.ExploreTimer = false
+
+#
+# エクスプローラ風画面用クラス
+#
+class Explore
+  # 画面要素のイベントを設定する
+  init: =>
+    @adjustSize()
+    $(window).resize( =>
+      if (Susanoo.ExploreTimer)
+        clearTimeout(Susanoo.ExploreTimer)
+      else
+        Susanoo.ExploreTimer = setTimeout(@adjustSize(), 300)
+      return
+    )
+    return
+
+  # エクスプローラ部の高さをWindowサイズに合わせる
+  adjustSize: ->
+    h = $("#header").outerHeight()
+    $("#treeview").height(window.innerHeight - h - 30)
+    return
+
+this.Susanoo.Explore = new Explore

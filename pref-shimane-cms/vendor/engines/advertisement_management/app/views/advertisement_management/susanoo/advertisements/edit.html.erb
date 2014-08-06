@@ -1,0 +1,19 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= form_for(@advertisement, url: susanoo_advertisement_path(@advertisement),
+      html: {method: :patch, multipart: true, class: "form-horizontal form-inline well"}) do |f| -%>
+      <%= render partial: 'form', locals: {f: f} %>
+      <br />
+      <%= submit_tag t("shared.save", model: t("activerecord.models.advertisement")), class: "btn btn-primary" %>&nbsp;&nbsp;
+      <%= link_to t("shared.back"), susanoo_advertisements_path, class: "btn btn-warning" %>
+    <% end -%>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Advertisement.Form.init()
+});
+<% end %>
+<% end -%>

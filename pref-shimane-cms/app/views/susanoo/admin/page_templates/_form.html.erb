@@ -1,0 +1,20 @@
+<%= form_for([:susanoo, :admin, @page_template], html: {class: 'form-horizontal well'}) do |f| %>
+
+  <% if @page_template.errors.any? -%>
+    <%= error_messages_for(@page_template) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+      <%= link_to_back main_app.susanoo_admin_page_templates_path %>
+    </div>
+  </div>
+<% end %>

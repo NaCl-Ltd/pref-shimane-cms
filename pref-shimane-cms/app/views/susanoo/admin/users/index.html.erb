@@ -1,0 +1,25 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new main_app.new_susanoo_admin_user_path, pull_right: true %>
+<% end -%>
+
+<div class="form-search">
+  <%= select_tag :section_id, options_for_select(Section.order("number").map{|d|[d.name, d.id]}, params[:section_id]), include_blank: true %>
+  <%= submit_tag(t(".submit.search"), class: "btn btn-info btn-small", id: "search_submit") %>
+</div>
+
+<div id="users">
+  <%= render partial: 'user_row', locals: {users: @users} %>
+</div>
+
+<% content_for :javascript_contents do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#search_submit').on('click',  function(){
+        $.get('<%= main_app.susanoo_admin_users_path %>', {section_id: $("#section_id").val()}, function(ajax_html){
+          $("#users").html(ajax_html)
+        })
+        return false
+      })
+    })
+  </script>
+<% end %>

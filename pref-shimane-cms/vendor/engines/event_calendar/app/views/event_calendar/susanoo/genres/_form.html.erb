@@ -1,0 +1,62 @@
+<%= error_messages_for @genre %>
+<fieldset>
+
+  <% if params[:mode] == "top" %>
+    <div class="control-group">
+      <%= f.label :parent_id, class: "control-label" %>
+      <div class="controls" style="padding-top:5px;">
+        <%= @genre.parent ? @genre.parent.title : "" %>
+        <%= @genre.new_record? ? f.hidden_field(:parent_id) : "" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if params[:mode] == "category" %>
+    <div class="control-group">
+      <label class="control-label"><%= t(".label.event_top") %></label>
+      <div class="controls" style="padding-top:5px;">
+        <%= f.select :parent_id,
+                     options_from_collection_for_select(::Genre.event_top_in_section(current_user.section).order(:id), :id, :title)  %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @genre.new_record? -%>
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+        <span class="help-block"><%= t(".description.name") %></span>
+      </div>
+    </div>
+  <% else -%>
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls" style="padding-top:5px;">
+        <%= @genre.name %>
+      </div>
+    </div>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :title, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :title %>
+      <span class="help-block"><%= t(".description.title") %></span>
+    </div>
+  </div>
+
+  <%# 運用管理者のみ設定可能 -%>
+  <% if current_user.admin? -%>
+    <div class="control-group">
+      <%= f.label :tracking_code, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_area :tracking_code,style: "width: 500px; height: 120px;" %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag :mode, params[:mode] %>
+</fieldset>
+
+

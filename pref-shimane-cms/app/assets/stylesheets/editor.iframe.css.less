@@ -1,0 +1,240 @@
+/**
+ * iframe内にロードする公開ページ用のスタイルシート
+ */
+.editable:hover {
+  outline: none;
+  background-color: #ccc;
+  opacity: 0.7;
+}
+
+.editable-content {
+  *zoom: 1;
+  position: relative;
+}
+.editable-content:before,
+.editable-content:after {
+  display: table;
+  content: "";
+  line-height: 0;
+  clear: both;
+}
+
+.editable-content > .editable-control {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  margin: -;
+  padding: 0;
+  font-size: 12px;
+  top: -25px;
+  width: 50%;
+  float: inherit;
+}
+
+.editable-plugin {
+  margin: 5px 0;
+  padding: 5px;
+  font-size: 10px;
+}
+
+.editable-plugin input,
+.editable-plugin textarea {
+  margin-right: 5px;
+}
+
+.editable-active {
+  box-shadow: inset 0px 0px 20px 3px #ddd, inset 0 0 1px #000;
+  outline: none;
+  background-color: #eee;
+}
+
+.editable-placeholder {
+  background: #bdeaf9;
+  outline: 1px dotted #5abee3;
+  height: 30px;
+  margin: 15px 0;
+}
+
+.editable-placeholder ul  {
+  display: inline-block;
+  list-style: none;
+}
+/*
+ * アクセシビリティチェック用
+ *
+ */
+#accessibility-content {
+  .popover {
+    width: 250px;
+    font-size: 11px;
+    color: #333;
+
+    h3 {
+      border: none;
+    }
+
+    hr {
+      margin: 3px 0;
+    }
+  }
+
+  .popover-title {
+    font-size: 12px;
+    background-image: none;
+  }
+}
+
+.popover-title {
+  font-size: 12px;
+}
+
+.accessibility-error-highlight {
+  border: 1px solid #b94a48;
+}
+
+.accessibility-error-highlight th, .accessibility-error-highlight td {
+  border: 1px solid #b94a48 !important;
+}
+
+button[class*="accessibility-error-highlight"] {
+  border: 2px solid #b94a48;
+}
+
+.susanoo-editable-field {
+  min-height: 100px;
+}
+
+/**
+ * Bootstrap のスタイルを流用
+ */
+.data-type-plugin,
+.btn {
+  font-weight: normal;
+/*  line-height: 1.428571429; */
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.btn {
+  display: inline-block;
+  padding: 3px 3px;
+  margin-bottom: 0;
+  font-size: 11px;
+}
+
+.data-type-plugin {
+  padding: 4px 12px;
+  display: block;
+  margin: 5px 0;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.btn-static {
+  min-width: 50px;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
+  color: #333333;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+
+.btn:hover, .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+
+.btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+
+
+.data-type-plugin.editable:hover,
+.data-type-plugin.editable:focus,
+.data-type-plugin.editable:active,
+.data-type-plugin.editable.active {
+  box-shadow: none;
+}
+
+.data-type-plugin.editable:hover,
+.data-type-plugin.editable:focus,
+.data-type-plugin.editable:active,
+.data-type-plugin.editable.active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+
+.data-type-plugin,
+.btn-primary {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+/**
+ * 公開ページ内でBootstrapのスタイルを使用出来るようにする
+ */
+.bootstrap {
+  @import "twitter/bootstrap/bootstrap";
+  @import "twitter/bootstrap/responsive";
+
+  table > tbody >tr.current > td {
+    background-color: #8DC078;
+  }
+
+  // Set the correct sprite paths
+  @iconSpritePath: asset-url("twitter/bootstrap/glyphicons-halflings-white.png");
+  @iconWhiteSpritePath: asset-url("twitter/bootstrap/glyphicons-halflings-white.png");
+
+  // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+  @fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+  @fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
+  @fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+  @fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+  @fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+
+  // Font Awesome
+  // @import "fontawesome/font-awesome";
+
+  // Glyphicons
+  @import "twitter/bootstrap/sprites.less";
+
+  .alert {
+    margin: 10px;
+
+    li {
+      list-style : disc outside none;
+    }
+  }
+
+  .alert-user,
+  .alert-user {
+    background-color: #f5f5f5;
+    border-color: #e3e3e3;
+    color: #000;
+  }
+  .alert-user h4,
+  .alert-user h4 {
+    color: #000;
+  }
+}
+
+#content-left {
+  margin: 0 -328px 0 0 !important;
+}

@@ -1,0 +1,49 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+class PageAssetBrowseResource
+  link_to: null
+  message: null
+  selected_genre: null
+
+  # フォルダ一覧用
+  init: (datasource) ->
+    $("#treeview").fancytree({
+      autoActivate: false
+      source: datasource
+      activate: (event, data) =>
+        node = data.node
+        if (node.data.path)
+          CKEDITOR.tools.callFunction(CKEditorFuncNum, node.data.path)
+          window.close()
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_with_pages_susanoo_genres_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    # フォルダ・ページ一覧のクリックイベントを設定する
+    $(document).on("click", "#file-index > tbody > tr", (e) ->
+      selected = $(".resource-selected")
+      selected.removeClass("info")
+      selected.removeClass("resource-selected")
+
+      element = $(this);
+      element.addClass("info")
+      element.addClass("resource-selected")
+
+      $.ajax(
+        url: "<%= url_helpers.select_resource_susanoo_genres_path %>",
+        data: {
+          type: element.attr("data-type")
+          id  : element.attr("data-id")
+        },
+        dataType: 'script'
+      )
+    )
+
+this.Susanoo ||= {}
+this.Susanoo.PageAsset ||= {}
+this.Susanoo.PageAsset.BrowseResource ||= {} = new PageAssetBrowseResource

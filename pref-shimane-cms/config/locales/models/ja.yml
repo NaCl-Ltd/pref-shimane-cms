@@ -1,0 +1,242 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザ
+      user_session: ユーザセッション
+      section: 所属
+      division: 部局
+      mailmagazine: メールマガジン
+      help: ヘルプ
+      web_monitor: ウェブモニタ
+
+    attributes:
+      user:
+        login: ユーザID
+        password: パスワード
+        name: ユーザ名
+        mail: メールアドレス
+        authority: 権限
+        section_id: 所属
+        password_confirmation: パスワード再入力
+
+      section:
+        code: 所属コード
+        name: 組織正式名称
+        division_id: 部
+        approval_level: 承認フロー数
+        link: 組織別情報で外部サイトへリンクするURL
+        ftp: FTP領域フォルダ名
+        info: 連絡先
+        feature: 機能
+        skip_accessibility_check: アクセシビリティ
+
+      division:
+        name: "部名"
+        enable: 組織別情報に表示する
+        enable_label:
+          enable: する
+          disable: しない
+
+      info:
+        title: タイトル
+        last_modified: 更新日
+        content: 内容
+
+      emergency_info:
+        display_start_datetime: 公開開始日
+        display_end_datetime: 公開終了日
+        content: 内容
+
+      mailmagazine:
+        mail_address: メールアドレス
+        section_id: 所属
+        header: ヘッダー
+        footer: フッター
+
+      help:
+        name: 見出し
+        help_category_id: カテゴリ
+        help_content_id: 内容
+        public: 状態
+
+      help_content:
+        content: 内容
+
+      help_category:
+        name: 名前
+
+      help_action:
+        name: 名前
+        action_master_id: 画面名
+        help_category_id: カテゴリ名
+
+      genre:
+        name: フォルダ名
+        title: タイトル
+        uri: 外部へのリンクURL
+        parent_id: 親フォルダ
+        section_id: 所有者
+        path: パス
+        tracking_code: トラッキングコード
+        auth: アクセス制限
+
+      engine_master:
+        name: "エンジン名"
+        enable: "有効/無効"
+        enable_label:
+          enable: 有効
+          disable: 無効
+
+      page_template:
+        name: 名前
+        content: 内容
+
+      page:
+        name: ページ名
+        title: タイトル
+        genre_id: フォルダ
+
+      page_content:
+        news_title: 新着見出し
+        begin_date: 公開開始日
+        end_date: 公開終了日
+        last_modified: 最終更新日時
+        content: コンテンツ
+        mobile: 携帯コンテンツ
+        user_name: 担当者
+        tel: 電話番号
+        email: メールアドレス
+        comment: コメント
+
+      board:
+        title: "タイトル名"
+
+      board_comment:
+        from: "投稿者名"
+        body: "本文"
+        board_id: "投稿先"
+
+      sent_mailmagazine:
+        title: メールマガジン件名
+        datetime: 登録日
+        content: 内容
+      mailmagazine_content:
+        datetime: 登録日
+        content: "内容"
+        title: "タイトル"
+
+      web_monitor:
+        name: モニタ名
+        login: ユーザID
+        password: パスワード
+        password_confirmation: パスワード確認用
+
+    errors:
+      messages: &error_messages
+        blank: を入力して下さい
+        confirmation: が一致しません
+        too_short: "は%{count}文字以上で入力して下さい"
+        too_long: "は%{count}文字以内で入力して下さい"
+        non_select: "を選択してください。"
+        less_than: "は%{count}より小さい値にして下さい"
+        greater_than: "は%{count}より大きい値にして下さい"
+        invalid: "は無効な値を含んでいます"
+        taken: が重複しています
+        record_invalid: バリデーションに失敗しました
+        unexpected: 処理中にエラーが発生しました
+
+      models:
+        user:
+          attributes:
+            login:
+              invalid: "は半角英数字で入力してください"
+            password:
+              invalid: "は半角英数字で入力してください"
+            password_confirmation:
+              invalid: "は半角英数字で入力してください"
+
+        emergency_info:
+          attributes:
+            display_start_datetime: "は%{time}より小さい時間にして下さい"
+            display_end_datetime: "は%{time}より大きい時間にして下さい"
+
+        section:
+          attributes:
+            ftp:
+              invalid: "は/contents/からはじまる書式で入力してください"
+
+        genre:
+          org_no_permission: コピー元フォルダのアクセス権限がありません
+          dest_no_permission: コピー先フォルダのアクセス権限がありません
+          no_descendants: コピー元フォルダ配下のフォルダにコピーできません
+          no_same_parent: コピー元と同じフォルダにはコピーできません
+          parent_top_genre: 所属のトップフォルダにフォルダは作成できません
+          attributes:
+            base:
+              'move/auth': 上位フォルダ、はたは下位フォルダでアクセス制限が有効になっているため移動できません
+              'move/waiting_page': 公開待ち、または公開期間が終了していないページがあるため移動できません
+              'copy/auth': 上位フォルダ、または下位フォルダでアクセス制限が有効になっているためコピーできません
+            name:
+              invalid: "が正しくありません。半角英数字で入力してください"
+              initial_invalid: "javascripts、images、stylesheets、contents、backnumbers、アンダースコアで始まるURL名は使用出来ません。"
+            title:
+              invalid: "が正しくありません。"
+          move:
+            no_genre_permission: フォルダのアクセス権限がありません
+            ancestor: フォルダ'%{name}'は移動先のフォルダの上位フォルダのため移動できません
+            same_genre: 移動するフォルダと移動先のフォルダが同じです
+            same_parent: 現在の親フォルダと同じフォルダが指定されています
+            section_top_genre: 所属トップフォルダへ移動できません.
+            auth: 上位フォルダ、はたは下位フォルダでアクセス制限が有効になっているため移動できません
+            waiting_page: 公開待ち、または公開期間が終了していないページがあるため移動できません
+
+        board_comment:
+          attributes:
+            board_id:
+              blank: "の掲示板が見つかりません"
+        sent_mailmagazine:
+          attributes:
+            title:
+              blank: "が入力されていません"
+        mailmagazine_content:
+          attributes:
+            content:
+              blank: "が入力されていません"
+            title:
+              blank: "が入力されていません"
+        page:
+          no_page_permission: ページのアクセス権限がありません
+          no_genre_permission: フォルダのアクセス権限がありません
+          cannot_move: 公開待ち、または公開期間が終了していないため移動できません
+          ancestor: フォルダ'%{name}'は移動先のフォルダの上位フォルダのため移動できません
+          not_move: 現在のフォルダと同じフォルダが指定されています
+          only_index: 所属フォルダ配下にはページ名がindex以外のページは作成することができません
+          attributes:
+            name:
+              taken: が重複しています
+              invalid: "は半角英数字で入力してください"
+            title:
+              taken: が重複しています
+              invalid: "に機種依存文字は使用できません"
+
+        page_content:
+          attributes:
+            news_title:
+              invalid_chars: "に使用できない文字%{chars}が含まれます"
+            content:
+              convert_invalid_chars: "の機種依存文字を変換しました:'%{chars}' "
+              cannot_convert_invalid_chars: "に変換できない機種依存文字 '%{chars}' があります"
+              invalid_chars: "に使用できない文字%{chars}が含まれます"
+            begin_date:
+              invalid: は終了日時より前の日時を指定してください
+            end_date:
+              invalid: は現在日時以降の日時を指定してください
+            email:
+              invalid: は@以降は入力しないで下さい
+            last_modified:
+              invalid: は現在日時以前の日時を指定してください
+
+        web_monitor:
+          attributes:
+            base:
+              login_changed: ユーザIDを更新する場合は、パスワードの変更も行なってください

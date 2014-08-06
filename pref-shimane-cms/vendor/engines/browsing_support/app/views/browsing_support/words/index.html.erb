@@ -1,0 +1,60 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new new_word_path, pull_right: true %>
+<% end -%>
+
+<div style="margin-top: 10px">
+  <%= form_tag words_path, method: :get do %>
+    <div>
+      <%= t('.search_by_text') %>
+      <% BrowsingSupport::WordsHelper::QUERY_TEXT_LIST.each do |title, query| -%>
+        [<%= link_to h(title), words_path(query_text: query) %>]
+      <% end -%>
+    </div>
+
+    <div>
+      <%= t('.search_by_word') %>
+      <%= text_field_tag(:query_base, @query_base) %>
+      <%= submit_tag t('.search_words_to_begin_in'), name: 'prefix_search', class: 'btn btn-primary' %>
+      <%= submit_tag t('.search_words_including'), name: 'search', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <% if @search -%>
+    <h3><%= t('.search_result') %></h3>
+  <% else -%>
+    <h3><%= t('.registered_words') %></h3>
+  <% end -%>
+
+  <% if !@words || @words.empty? -%>
+    <%= t('.word_not_found') %>
+  <% else -%>
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th><%= Word.human_attribute_name(:base) %></th>
+          <th><%= Word.human_attribute_name(:text) %></th>
+          <th><%= Word.human_attribute_name(:user) %></th>
+          <th><%= Word.human_attribute_name(:updated_at) %></th>
+          <th><%= t('shared.label.operation') %></th>
+        </tr>
+      </thead>
+
+    <% for word in @words %>
+      <tr>
+        <td><%= h(word.base) %></td>
+        <td><%= h(word.text_2h) %></td>
+        <td><%= h(word.user.try(:name)) %>（<%= h(word.user.try(:section).try(:name)) %>）</td>
+        <td><%= h(public_term_strftime(word.updated_at)) %></td>
+        <td><% if word.editable_by?(@current_user) %>
+             <%= link_to_edit edit_word_path(word) %>
+             <%= link_to_remove word_path(word), data: {confirm: t('.delete_confirm', word: word.base)} %>
+           <% end %></td>
+      </tr>
+    <% end %>
+    </table>
+
+    <div><%= t('.about_action') %></div>
+
+    <%= paginate(@words) %>
+  <% end -%>
+</div>

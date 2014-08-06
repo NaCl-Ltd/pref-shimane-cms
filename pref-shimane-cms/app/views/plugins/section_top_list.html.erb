@@ -1,0 +1,35 @@
+<%
+  section = @page_view.page.genre.section_except_super
+  if section
+    genres = section.genres.reject do |i|
+      if parent_genre = i.parent
+        parent_genre.section_id == section.id
+      end
+    end
+  else
+    genres = []
+  end
+%>
+<% if @preview || !genres.empty? -%>
+  <ul class="genre_list">
+    <% genres.each do |g| %>
+      <% if section.genre != g -%>
+        <% icon_name = g.original_id ? 'folder_alias.png' : 'folder.png' -%>
+
+        <li>
+          <%= image_tag icon_name, alt: '', size: '18x18' %>
+          <a href="<%= g.link_uri %>"><%= g.title %></a>
+          <% unless section_name = g.section_name_except_super.empty? %>
+            （<%= g.section_name_except_super %>）
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @preview && genres.empty? %>
+      <li><%= image_tag 'folder.png', alt: '', size: '18x18' %> サンプル課</li>
+    <% end %>
+  </ul>
+
+  <hr class="sep" />
+<% end %>

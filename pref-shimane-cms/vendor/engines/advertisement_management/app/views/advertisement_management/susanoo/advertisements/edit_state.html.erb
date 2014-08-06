@@ -1,0 +1,18 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= form_tag update_state_susanoo_advertisements_path, class: " form-inline well" do -%>
+      <%= t(".please_checked_publish_page")  %>
+      <hr />
+      <%= render(partial: 'select_publish', locals: {advertisements: @toppage_ads, side_type: Advertisement::TOPPAGE_TYPE}) %>
+      <hr />
+      <%= render(partial: 'select_publish', locals: {advertisements: @corp_ads, side_type: Advertisement::OUTSIDE_TYPE}) %>
+      <br />
+      <%= render(partial: 'select_publish', locals: {advertisements: @pref_ads, side_type: Advertisement::INSIDE_TYPE}) %>
+      <%= submit_tag t(".go_order_setting"), class: "btn btn-primary" %>
+      <%= submit_tag(t("shared.cancel"), name: 'cancel', class: "btn btn-warning") %>
+    <% end -%>
+  </div>
+</div>
+
+<h2></h2>
+<br />

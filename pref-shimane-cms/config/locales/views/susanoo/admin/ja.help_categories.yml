@@ -1,0 +1,34 @@
+#
+# 管理者向け機能 ヘルプカテゴリ管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      help_categories:
+        index:
+          title: ヘルプカテゴリ一覧
+          select_message: 左側からカテゴリを選択して下さい
+          new: カテゴリ作成
+          button:
+            helps: ヘルプ一覧へ
+        new:
+          child_add_title: 子カテゴリ作成
+          selected_category_title: 選択中のカテゴリ
+          child_overflow: このカテゴリにはこれ以上子カテゴリを作成出来ません
+          button:
+            navigation: ナビゲーション設定
+            help_list: ヘルプ一覧
+            available_confirm: 初心者向けナビゲーションの設定を有効にしますか?
+            reject_confirm: 初心者向けナビゲーションの設定を無効にしますか?
+
+        create:
+          success: ヘルプカテゴリを作成しました
+
+        update:
+          success: ヘルプカテゴリの更新に成功しました
+
+        update_sort:
+          success: ヘルプカテゴリの更新に成功しました
+
+        destroy:
+          success: ヘルプカテゴリの削除に成功しました

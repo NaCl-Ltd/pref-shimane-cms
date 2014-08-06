@@ -1,0 +1,42 @@
+<h4><%= t(".label.info")%></h4>
+<% if infos && infos.any? -%>
+<table class="table">
+  <tr>
+    <th><%= t(".label.title")%></th>
+    <th><%= t(".label.last_modified")%></th>
+  </tr>
+  <% infos.each do |i| -%>
+  <tr>
+    <td>
+      <%= link_to i.title, "#modal-info-show", "data-load-remote" => main_app.susanoo_info_path(i), "data-toggle" => "modal", "data-remote-target" => "#modal-info-show .modal-body" %>
+    </td>
+    <td><%= i.last_modified.strftime(t('date.formats.default')) %></td>
+  </tr>
+  <% end -%>
+</table>
+<% else -%>
+<p class="alert"><%= t(".alert.noinfo")%> </p>
+<% end -%>
+
+
+<div id="modal-info-show" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t(".modal.title") %></h3>
+  </div>
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-small" data-dismiss="modal" aria-hidden="true"><%= t(".modal.close") %></button>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+  <%= javascript_include_tag "info"  %>
+
+  <%= javascript_tag do %>
+    $(function () {
+      Susanoo.Info.init()
+    });
+  <% end -%>
+<% end -%>

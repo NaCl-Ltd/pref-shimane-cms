@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+html {
+  height: 100%;
+}
+
+body#allchar {
+  background: #000000;
+  color: #ffffff;
+  font: 75% "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+#footer {
+  background: #000000;
+  color: #ffffff;
+  border-top: 1px solid #ffffff;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:link {
+  color: #ffff00;
+}
+
+a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #ffffff;
+}
+
+/*
+ * for blog system
+ * */
+.blogcalendar .calendar{
+  border: 1px solid #ffffff;
+}
+
+/*
+ * for twitter bootstrap
+ * */
+.well{
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.breadcrumb{
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}

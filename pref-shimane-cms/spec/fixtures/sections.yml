@@ -1,0 +1,8 @@
+section_admin:
+  id         : 1
+  code       : 100000
+  name       : 管理用所属
+  place_code : 1
+  number     : 1
+  division_id: 1
+  feature    : 0

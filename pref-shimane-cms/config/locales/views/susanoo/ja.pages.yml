@@ -1,0 +1,186 @@
+#
+# ページ管理画面用ロケールファイル
+#
+ja:
+  susanoo:
+    pages:
+      index:
+        title: ページ一覧
+
+      pages:
+        search:
+          keyword: キーワード
+          last_modified: 公開日
+          admission: 状態
+          recursive: サブフォルダを検索に含める
+          include_copy: コピーしたページを検索に含める
+
+      page_list:
+        latest: 公開ページ
+        private: 編集ページ
+        begin_date: 開始日
+        end_date: 終了日
+        genre: フォルダ
+        title: タイトル
+        name: 名称
+        creator: 作成者
+        last_modified: 公開日
+        admission: 状態
+        found: "%{count}件見つかりました."
+        not_found: ページが見つかりません.
+
+      show:
+        title: ページ詳細
+        basic:
+          title: 基本情報
+          folder: フォルダ
+          page_title: タイトル
+          name: ページ名
+          url: URL
+
+        page_title:
+          edit: タイトル変更
+
+        public:
+          title: 公開ページ
+          show: 公開ページプレビュー
+          edit: ページ編集
+          edit_status: 状態の変更
+          history: 公開履歴
+          stop_request: 公開停止依頼
+          stop_request_confirm: 情報提供責任者にページの公開停止依頼を行いますか？
+          admission: 公開ページの状況
+          term: 公開期間
+          mobile: 携帯向けページ
+          news: 新着掲載
+          user: 担当者連絡先
+          comment: コメント
+          copy: ページの複製
+
+        unpublished:
+          title: 非公開ページ
+          edit_status: 状態の変更
+          show: 編集ページプレビュー
+          edit: ページ編集
+          history: 編集履歴
+          admission: 未公開ページの状況
+          mobile: 携帯向けページ
+          news: 新着掲載
+          user: 担当者連絡先
+          comment: コメント
+          copy: ページの複製
+        mobile:
+          show: 携帯ページ
+          edit: 携帯ページ編集
+          exist: あり
+          not_exist: なし
+        unlock:
+          force: "編集中状態の解除"
+          request: "別ユーザの方が編集中です。情報提供責任者、又は運用管理者へ連絡し、編集中状態の解除を依頼してください"
+          confirm: "このページの編集中の状態を解除します。本当に解除しますか？"
+
+      new:
+        title: ページ新規作成
+        next: 次へ
+        genre_not_select: フォルダ未選択
+        copy_page_not_select: 複製元ページ未選択
+        description:
+          name: 半角英数字で入力してください. ページ名はURLの一部になります.
+          title: 日本語で入力してください.
+          genre_id: 新規ページを作成するフォルダを選択してください.
+          template_id: ページ作成に利用するテンプレートを選択してください.
+          copy_page: 既存ページの内容を複製して新規にページを作成する場合は、ページを選択してください.
+        caution:
+          template_id: ※複製元ページを選択している場合は、テンプレートを選択していても適用されません.
+        modal:
+          genre:
+            title: フォルダ選択
+            close: 閉じる
+            select: 選択
+          copy_page:
+            title: 複製元ページ選択
+
+        label:
+          template: テンプレート
+          preview: プレビュー
+          copy_page: 複製元ページ
+          copy_page_select: ページ選択
+        confirm:
+          back: 入力した内容が破棄されます。よろしいですか？
+
+      select_copy_page_footer:
+        modal:
+          copy_page:
+            close: 閉じる
+            preview: プレビュー
+            select: 選択
+            cancel: キャンセル
+        label:
+          unpublished: 非公開ページ
+          published: 公開ページ
+
+      validate:
+        title: ページ新規作成
+
+      create:
+        title: ページ新規作成
+
+      edit:
+        title: ページ編集
+        submit: 保存
+        description:
+          title: 日本語で入力してください.
+
+      update:
+        success: "ページタイトルを変更しました"
+
+      destroy:
+        success: ページ'%{name}'を削除しました.
+        failure: ページ'%{name}'の削除に失敗しました.
+        not_deletable: ページ'%{name}'は削除できません。
+
+      revisions:
+        title: ページ編集履歴
+        label:
+          user: 担当者
+          updated_at: 更新日時
+          deleted_user: 削除済みユーザ
+
+      histories:
+        title: ページ公開履歴
+        no_history: 公開ページはありません。
+        index: 公開ページ履歴一覧
+        reflect: 編集ページに反映
+        has_waiting_content: 現在、公開待ちのページが存在するため、過去の公開ページを編集ページに反映できません
+        has_request_content: 現在、公開依頼中のページが存在するため、過去の公開ページを編集ページに反映できません
+        confirm:
+          reflect: 現在の編集ページを破棄して、この公開ページに置き換えますか？
+
+      reflect:
+        success: 過去の公開ページを編集ページに反映しました.
+        failure: 過去の公開ページの反映に失敗しました.
+
+      move:
+        success: ページ'%{name}'を移動しました.
+        failure: ページ'%{name}'の移動に失敗しました.
+
+      copy:
+        title: ページコピー作成
+        genre_not_select: フォルダ未選択
+        description:
+          name: 半角英数字で入力してください. ページ名はURLの一部になります.
+          title: 日本語で入力してください.
+          genre_id: 新規ページを作成するフォルダを選択してください.
+        modal:
+          title: フォルダ選択
+          close: 閉じる
+          select: 選択
+        confirm:
+          back: 入力した内容が破棄されます。よろしいですか？
+
+      create_copy:
+        success: ページ'%{original}'を'%{name}'にコピーしました.
+        failure: ページ'%{original}'のコピーに失敗しました.
+
+
+

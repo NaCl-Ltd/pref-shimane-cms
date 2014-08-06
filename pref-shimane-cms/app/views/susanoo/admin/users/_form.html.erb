@@ -1,0 +1,70 @@
+<%= form_for([:susanoo, :admin, @user], html: {class: 'form-horizontal well'}) do |f| %>
+  <%= f.hidden_field(:section_id) %>
+
+  <% if @user.errors.any? -%>
+    <%= error_messages_for(@user) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :login, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :login, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :mail, class: "control-label"%>
+    <div class="controls">
+      <%= f.text_field :mail, class: "span3"  %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :section_id, class: "control-label"%>
+    <div class="controls">
+      <%= f.select :section_id, options_for_select(Section.all.map{|s| [s.name, s.id]}, @user.section_id), class: "span3"  %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :authority, class: "control-label"%>
+    <div class="controls">
+      <% authority_display = t("shared.authorities") -%>
+      <% User.authorities.each_value do |authority| %>
+        <label class="radio inline">
+        <%= f.radio_button :authority, authority %>
+        <%= authority_display[authority] %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :password, class: "control-label"%>
+    <div class="controls">
+      <%= f.password_field :password, class: "span3"  %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :password_confirmation, class: "control-label"%>
+    <div class="controls">
+      <%= f.password_field :password_confirmation, class: "span3"  %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+      <%= link_to t('shared.back'), main_app.susanoo_admin_users_path, class: 'btn btn-warning btn-small' %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,15 @@
+= ImportPage
+
+This project rocks and uses MIT-LICENSE.
+
+= 一括ページ取り込みの実行方法
+== コマンド
+
+  $ cd RAILS_ROOT
+  $ rails runner 'ImportPage::Importer.run'
+
+== cron
+下記の設定を /etc/cron.d または crontab に設定してください。
+(crontab に設定する場合は <アカウント名> は必要ありません)
+
+  1   0  *  *  *  <アカウント名>  /bin/bash -lc "cd RAILS_ROOT && rails runner 'ImportPage::Importer.run'"

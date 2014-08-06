@@ -1,0 +1,37 @@
+ja:
+  shared:
+    footer_banner:
+      pref:
+        title: PR広告
+        about: PR広告について
+      corp:
+        title: 企業広告
+        about: 企業広告掲載について
+
+  advertisement_management:
+    susanoo:
+      advertisements:
+        list:
+          pref_title: PRの広告一覧
+          corp_title: 企業の広告一覧
+        form:
+          side_type_label:
+            pref: PRの広告
+            corp: 企業の広告
+        selection_publish:
+          pref_title: PR広告
+          corp_title: 企業広告
+        sort:
+          sort_pref: PR広告の並び替え
+          corp_pref: 企業広告の並び替え
+      visitors:
+        random_corp: 企業広告
+        pref_title: PR広告
+        corp_title: 企業広告
+
+  activerecord:
+    attributes:
+      advertisement:
+        side_type_label:
+          pref: PRの広告
+          corp: 企業の広告

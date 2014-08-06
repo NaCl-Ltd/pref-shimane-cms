@@ -1,0 +1,8 @@
+<div class="alert alert-danger">
+    <p><strong><%= t('.section_1.title') %></strong></p>
+    <div style="max-height: 40em; overflow: auto">
+      <%= import_page_result_messages(@upload_file.results) %>
+    </div>
+    <p style="margin-top: 10px"><%= t('.section_1.line_1') %></p>
+    <%= link_to_remove import_path, label: t('.delete') %>
+</div>

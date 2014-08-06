@@ -1,0 +1,31 @@
+<h3><%= t(".#{Advertisement::SIDE_TYPE[side_type]}_title") %></h3>
+<% if advertisements.empty? -%>
+  <p><%= t("shared.empty_list", label: t("activerecord.attributes.advertisement.side_type_label.#{Advertisement::SIDE_TYPE[side_type]}")) %></p>
+<% else -%>
+  <table class="table">
+    <tr>
+      <th><%= t("activerecord.attributes.advertisement.name") %></th>
+      <th><%= t("activerecord.attributes.advertisement.advertiser") %></th>
+      <th><%= t(".display_period") %></th>
+      <th><%= t("activerecord.attributes.advertisement.state") %></th>
+      <th><%= t("shared.process") %></th>
+    </tr>
+  <% advertisements.each do |ad| -%>
+    <tr <%= 'class="ad_expired"' if ad.expired? && ad.published? %>>
+      <td><%= ad.name %></td>
+      <td><%= ad.advertiser %></td>
+      <td><%= news_strftime(ad.begin_date) + "〜" + news_strftime(ad.end_date)%></td>
+      <td>
+        <%= state_or_processing(ad) %>
+      </td>
+      <td>
+        <%= link_to_show(susanoo_advertisement_path(ad)) %>
+        <% if !advertisement_job_exists? && !ad.published? %>
+          <%= link_to_edit(edit_susanoo_advertisement_path(ad)) %>
+          <%= link_to_remove(susanoo_advertisement_path(ad)) %>
+        <% end %>
+      </td>
+    </tr>
+  <% end -%>
+  </table>
+<% end -%>

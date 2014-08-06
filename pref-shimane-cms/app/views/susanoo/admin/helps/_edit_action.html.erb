@@ -1,0 +1,57 @@
+<%= form_for([:susanoo, :admin, @help_action], remote: true, url: save_action_susanoo_admin_helps_path, method: :post, html: {id: "edit-action-form"}) do |f| %>
+  <% if @help_action.persisted? %>
+    <legend><%= t('.edit_title') %></legend>
+    <%= hidden_field_tag(:id, @help_action.id)  %>
+  <% else %>
+    <legend><%= t('.new_title') %></legend>
+  <% end %>
+
+  <div id="form-message-area"></div>
+
+  <div class="clearfix">
+    <div class="control-group span4">
+      <%= label_tag :big_category, t('.label.big_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@big_categories.map{|h_c| [h_c.name, h_c.id]}, @big_category.try(:id)), prompt: t('.select.prompt'), id: 'big_category', class: "help-category span8", target_select_id: 'middle_category' %>
+      </div>
+    </div>
+
+    <div class="control-group span4">
+      <%= label_tag :middle_category, t('.label.middle_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@middle_categories.map{|h_c| [h_c.name, h_c.id]}, @middle_category.try(:id)), prompt: t('.select.prompt'), id: 'middle_category', class: "help-category span8", target_select_id: 'small_category' %>
+      </div>
+    </div>
+
+    <div class="control-group span4">
+      <%= label_tag :small_category, t('.label.small_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@small_categories.map{|h_c| [h_c.name, h_c.id]}, @small_category.try(:id)), prompt: t('.select.prompt'), id: 'small_category' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="control-group span4">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, class: "span12" %>
+      </div>
+    </div>
+
+    <div class="control-group span4">
+      <%= f.label :action_master_id, class: "control-label" %>
+      <div class="controls">
+        <%= f.select :action_master_id, options_for_select(ActionMaster.all.map{|a_m| [a_m.name, a_m.id]}, @help_action.action_master_id), {}, class: "span12" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit t('shared.save'), class: "btn btn-success pull-right" %>
+      </div>
+    </div>
+  </div>
+<% end %>

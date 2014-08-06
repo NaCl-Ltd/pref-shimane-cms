@@ -1,0 +1,16 @@
+<%
+#=== Discription
+# ブログシステム用のパーシャルです。
+# 指定したブログページのコンテンツを表示します。
+#
+#=== Argments
+# page:      表示中のページ
+# genre:     pageが所属しているジャンル
+# blog_page: コンテンツ表示を行うブログページ
+#
+%>
+<%   if content == 'genre_top_layout' -%>
+<%=    genre_auto_content(page.title) %>
+<%   else -%>
+<%=    render(:inline => content.content) %>
+<%   end -%>

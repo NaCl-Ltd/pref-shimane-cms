@@ -1,0 +1,7 @@
+<% if @genre.present? -%>
+  $(".col-center > .col-content").html("<%= escape_javascript(render(partial: "resources")) %>");
+  $(".col-right > .col-content").html("<%= escape_javascript(render(partial: "genre")) %>");
+  col_resize();
+<% end -%>
+
+$.isLoading('hide');

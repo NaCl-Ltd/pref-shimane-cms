@@ -1,0 +1,15 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new main_app.new_susanoo_admin_page_template_path, pull_right: true %>
+<% end -%>
+
+<%= form_for @search_form, as: "search",
+    url: main_app.susanoo_admin_page_templates_path, method: :get, remote: true,
+    html: {class: "form-inline form-search"} do |f| %>
+  <label><%= t(".search.name") %></label>
+  <%= f.text_field :name %>
+  <%= f.submit t("shared.search"), class: "btn btn-primary btn-small"%>
+<% end %>
+
+<div id="result-search">
+  <%= render 'page_templates' %>
+</div>

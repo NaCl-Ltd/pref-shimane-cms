@@ -1,0 +1,26 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to 'キャンセル', '#', id: 'cancel', class: "btn btn-small pull-right", style: "margin-left:5px;"%>
+  <%= link_to 'アクセシビリティチェック', '#', id: 'check', class: "btn btn-small pull-right", style: "margin-left:5px;"%>
+  <%= link_to '保存', '#', id: 'save', class: "btn btn-primary btn-small pull-right" %>
+<% end -%>
+
+<%= form_for([:susanoo, @page], url: susanoo_pages_path) do |f| %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :genre_id %>
+  <%= f.hidden_field :template_id %>
+  <%= f.fields_for :contents, @page.contents do |fc| %>
+    <%= fc.hidden_field :content %>
+  <% end %>
+<% end %>
+
+<iframe src="<%= content_susanoo_pages_path(page_id: @page.id, template_id: @page.template_id) %>" class="iframe-edit" scrolling="yes">
+</iframe>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.PageNewContent.init()
+});
+<% end %>
+<% end -%>

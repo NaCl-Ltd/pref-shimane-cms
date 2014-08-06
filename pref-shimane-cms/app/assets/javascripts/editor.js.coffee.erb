@@ -1,0 +1,598 @@
+#
+# Wysiwyg Editor
+#
+class WysiwygEditor
+  wysiwyg_id: 'wysiwyg-editor'
+
+  body_id: ''
+
+  body_class: ''
+
+  # 編集中に表示するモーダルダイアログ
+  object: null
+
+  # 編集中の EditableContentオブジェクト
+  content: null
+
+  # エディターで使用するスタイルシート
+  stylesheets: null
+
+  # 携帯コンテンツの編集かどうか
+  mobile: false
+
+  # EditorManager
+  manager: false
+
+  filebrowserBrowseUrl: '/susanoo/page_assets/attachment_files'
+  filebrowserImageBrowseLinkUrl: '/susanoo/page_assets/images'
+  filebrowserImageBrowseUrl: '/susanoo/page_assets/images'
+  filebrowserImageUploadUrl: '/susanoo/page_assets/upload_image'
+  filebrowserUploadUrl: '/susanoo/page_assets/upload_attachment_file'
+
+  #
+  # コンストラクタ
+  #
+  constructor: (manager, id, mobile, options = {}) ->
+    this.manager = manager
+    this.mobile = mobile
+    this.object = $(id)
+    $(id + " .modal-save").click(@save)
+    $(id + " .modal-cancel").click(@cancel)
+
+    if options
+      if options.body_id
+        this.body_id = options.body_id
+      if options.body_class
+        this.body_class = options.body_class
+
+    page_id = $('#page_content_page_id').val();
+
+    this.filebrowserBrowseUrl += '?page_id=' +　page_id
+    this.filebrowserImageBrowseLinkUrl += '?page_id=' +　page_id
+    this.filebrowserImageBrowseUrl += '?page_id=' +　page_id
+    this.filebrowserImageUploadUrl += '?page_id=' +　page_id
+    this.filebrowserUploadUrl += '?page_id=' +　page_id
+
+    return
+
+  #
+  # エディターを表示する
+  #
+  show: (content)=>
+    @content = content
+    target = @content.target
+    instance = CKEDITOR.instances[@wysiwyg_id]
+
+    if instance
+      instance.destroy(true)
+
+    if target.hasClass('data-type-h')
+      toolbar = Toolbar.header
+      enterMode = CKEDITOR.ENTER_BR
+      forceEnterMode = true
+      tag = target.children().get(0).tagName
+      format_tags = tag.toLowerCase()
+    else if @mobile
+      toolbar = Toolbar.mobile
+      enterMode = CKEDITOR.ENTER_P
+      forceEnterMode = false
+      format_tags = 'p'
+    else
+      toolbar = Toolbar.div
+      enterMode = CKEDITOR.ENTER_P
+      forceEnterMode = false
+      format_tags = 'p;h1;h2;h3;h4;h5;h6;pre;address;div'
+
+
+    bodyId = target.attr('id')
+    bodyId ||= @body_id
+
+    instance = CKEDITOR.replace(@wysiwyg_id, {
+      forceEnterMode: forceEnterMode
+      toolbar: toolbar
+      removeFormatAttributes: ""
+      contentsCss   : @stylesheets
+      allowedContent: AllowedContent.standard
+      format_tags   : format_tags
+      enterMode     : enterMode
+      bodyId        : bodyId
+      bodyClass     : @body_class
+      height        : '300px'
+      resize_enabled: false
+      extraPlugins  : 'language,jisxtable,jisxtabletools,letterspacing'
+      removePlugins : 'tabletools,table'
+      language_list : LanguageList
+      filebrowserBrowseUrl: @filebrowserBrowseUrl
+      filebrowserImageBrowseLinkUrl: @filebrowserImageBrowseLinkUrl
+      filebrowserImageBrowseUrl: @filebrowserImageBrowseUrl
+      filebrowserImageUploadUrl: @filebrowserImageUploadUrl
+      filebrowserUploadUrl: @filebrowserUploadUrl
+      on:
+        instanceReady: (e) ->
+          editor = e.editor
+          editor.setData(target.html())
+    })
+
+    @object.modal({backdrop: 'static'})
+    @object.modal('show')
+    return
+
+  #
+  # エディターで編集した内容を保存する
+  #
+  save: =>
+    instance = CKEDITOR.instances[@wysiwyg_id]
+    if instance
+      @content.just_drop = false
+      data = instance.getData()
+
+      if Susanoo.RemoveEmptyTags
+        data =Susanoo.RemoveEmptyTags.block(data)
+
+      @content.target.html(data)
+    @manager.disable_save()
+    @close()
+
+    return
+
+  #
+  # エディターで編集した内容を破棄する
+  #
+  cancel: =>
+    if @content.just_drop
+      @content.content.remove()
+
+    @close()
+    return
+
+  close: =>
+    @content = null
+    @object.modal('hide')
+    return
+
+#
+# Plugin Editor
+#
+class PluginEditor
+  # 編集中に表示するモーダルダイアログ
+  object: null
+
+  # 編集中の EditableContentオブジェクト
+  content: null
+
+  # EditorManagerのインスタンス
+  manager: null
+
+  #
+  # コンストラクタ
+  #
+  constructor: (manager, id) ->
+    this.manager = manager
+    this.object = $(id)
+    $(id + " .modal-save").click(@save)
+    $(id + " .modal-cancel").click(@cancel)
+    return
+
+  #
+  # エディターを表示する
+  #
+  show: (content)=>
+    @content = content
+    target = @content.target
+    data = target.attr("name")
+
+    # タイトルをセットする
+    title = <%= I18n.t('shared.editor.modal').to_json %>
+    @object.find("#pluginEditorModalLabel").html(title[target.attr("title")].title)
+
+    # モーダルにフォームをセットする
+    form = $("#form-plugin-sample #" + data).html()
+    @object.find("#plugin-editor-body").html(form)
+
+    if $("#form-plugin-sample #" + data + ".disabled-plugin").length > 0
+      @object.find(".modal-save").hide()
+    else
+      @object.find(".modal-save").show()
+
+    # Pluginボタン要素から
+    values = target.attr("value")
+    if values
+      args = values.split(",")
+      @object.find("#plugin-editor-body input, #plugin-editor-body textarea").each( (i, e) =>
+        if $(e).attr("data-type") == "array"
+          array = args[i..args.length]
+          $(e).val(array.join("\n"))
+        else
+        　$(e).val(args[i])
+      )
+    @object.modal({backdrop: 'static'})
+    @object.modal('show')
+    return
+
+  #
+  # エディターで編集した内容を保存する
+  #
+  save: =>
+    args = []
+    errors = []
+    @object.find('#plugin-editor-body input, #plugin-editor-body textarea').each( (i, e) =>
+      if $(e).attr('data-type') == 'array'
+        array = $(e).val()
+        if array
+          values = array.split('\n')
+          for v in values
+            　args.push(v) if v
+        else if $(e).attr('data-required')
+          errors.push({elem: e, kind: 'data_required_array'})
+      else
+        value = $(e).val()
+        if value
+          args.push($(e).val())
+        else if $(e).attr('data-required')
+          errors.push({elem: e, kind: 'data_required'})
+
+      # エラーメッセージの削除
+      $(e).parent().find('.alert-error').remove()
+    )
+
+    # エラーメッセージの追加
+    if errors.length > 0
+      i18n_errors = JSON.parse('<%= I18n.t('plugins.errors').to_json %>')
+      for error in errors
+        tmpl_error = $("<div/>", {"class": "alert-error"})
+        $(error.elem).after(tmpl_error.append(i18n_errors[error.kind]))
+      return
+
+    if args.length > 0
+      @content.target.attr('value', args.join(','))
+
+    @content.just_drop = false
+    @manager.disable_save()
+    @close()
+    return
+
+  #
+  # エディターで編集した内容を破棄する
+  #
+  cancel: =>
+    if @content.just_drop
+      @content.content.remove()
+    @close()
+    return
+
+  close: =>
+    @content = null
+    @object.modal('hide')
+    return
+
+#
+# Html Editor
+#
+class HtmlEditor
+  # 編集中に表示するモーダルダイアログ
+  object: null
+
+  # 編集中の EditableContentオブジェクト
+  content: null
+
+  # Post先URL
+  post_url: null
+
+  # EditorManagerのインスタンス
+  manager: null
+
+  #
+  # コンストラクタ
+  #
+  constructor: (manager, id, url) ->
+    this.manager = manager
+    this.object = $(id)
+    this.post_url = url
+    $(id + ' .modal-save').click(@save)
+    $(id + ' .modal-cancel').click(@cancel)
+    return
+
+  #
+  # エディターを表示する
+  #
+  show: (content)=>
+    @object.modal({backdrop: 'static'})
+    @object.modal('show')
+    return
+
+  #
+  # エディターで編集した内容を保存する
+  #
+  save: =>
+    source = $('#direct-html-textarea').val()
+    if source
+      $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" });
+
+      @manager.disable_save()
+
+      $.ajax(
+        type: "POST"
+        url: @post_url
+        data: { source: source }
+        dataType: 'script'
+      )
+
+    @close()
+    return
+
+  #
+  # エディターで編集した内容を破棄する
+  #
+  cancel: =>
+    @close()
+    return
+
+  close: =>
+    @object.modal('hide')
+    return
+
+#
+# ページコンテンツ編集画面の管理クラス
+#
+class EditManager
+  editable_field: null
+  stylesheets   : []
+  mobile        : false
+  editor:
+    wysiwyg: null
+    plugin : null
+    html   : null
+
+  #
+  # 初期化処理
+  #
+  init: (mobile, wysiwyg_options = {})=>
+    direct_html_post_url = $('#direct_html').attr('data-url')
+
+    @mobile         = mobile
+    @editor.plugin  = new PluginEditor(@, '#modal-plugin-editor')
+    @editor.wysiwyg = new WysiwygEditor(@, '#modal-wysiwyg-editor', mobile, wysiwyg_options)
+    @editor.html    = new HtmlEditor(@, '#modal-html-editor', direct_html_post_url)
+
+    $("#widgets").disableSelection()
+
+    $(document).keydown( (e) ->
+      if e.keyCode == 8
+        tag = e.target.nodeName.toLowerCase()
+        target = $(e.target)
+        if (tag != 'input' && tag != 'textarea') || target.attr('readonly') || target.is(':disabled')
+          return false;
+    )
+
+    # DOM構築後の設定
+    $(document).on 'ready', ->
+      # 一時保存の設定
+      if $('#save_temporarily')[0]
+        $('<input>').attr({
+          type:  "hidden",
+          name:  "_save_temporarily",
+        }).appendTo('form#new_page_content')
+
+    # 右ペーンの状態遷移図のトグル設定
+    $(".col-right .sidebar-collapser").click(
+      (e) ->
+        $("#col-right-transitions").toggle()
+        if $("#col-right-transitions").css("display") == "none"
+          $(".col-right .sidebar-collapser").addClass("closed")
+
+          w  = $("div.editor").width()
+          lw = $("div.editor > .col-left").width()
+
+          $(".col-center").width("82.5%")
+          $(".col-right").width("0.5%")
+        else
+          $(".col-right .sidebar-collapser").removeClass("closed")
+          $(".col-center").width("66.66%")
+          $(".col-right").width("16.66%")
+        return
+    )
+
+    # アクセシビリティチェックボタン押下時のイベント設定
+    $('#check').click(
+      (e) =>
+        $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" });
+        content = @editable_field.html()
+        if content
+          params = $(e.target).data('params')
+          params ||= {}
+          params['page_id'] = $('#page_content_page_id').val()
+          params['content'] = content
+          $(e.target).data("params", params)
+          return true
+        else
+          return false
+    )
+
+    # 保存ボタン押下時のイベント設定
+    $('#save').click(
+      (e) =>
+        $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" });
+        content = @editable_field.html()
+        if content
+          if @mobile
+            $('#page_content_mobile').val(content)
+          else
+            $('#page_content_content').val(content)
+
+          commit_elem = $('<input>').attr({
+            type:  "hidden",
+            name:  "commit",
+            value: $(e.target).attr('id')
+          }).appendTo('form#new_page_content')
+
+          $('form#new_page_content').submit()
+
+          commit_elem.detach()
+        return
+    )
+
+    # 一時保存ボタン押下時のイベント設定
+    $('#save_temporarily').click(
+      (e) =>
+        $('#save').trigger(e)
+    )
+
+    # プレビューボタン押下時のイベント
+    $('#preview').click(
+      (e) =>
+        $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" });
+
+        content = @editable_field.html()
+        if content
+          params = $(e.target).data("params")
+          params ||= {}
+          params['content'] = content
+          $(e.target).data("params", params)
+          return true
+        else
+          return false
+    )
+
+    # PCコンテンツ変換ボタン押下時のイベント
+    $('#copy').click(
+      (e) =>
+        @disable_save()
+        @init_iframe($(e.target).attr("data-src"))
+        return false
+    )
+
+    # 機種依存文字変換ボタン押下時のイベント
+    $('#convert').click(
+      (e) =>
+        @disable_save()
+        $.isLoading({ text: "<%= I18n.t('shared.label.processing')%>" })
+        content = @editable_field.html()
+        if content
+          params = $(e.target).data("params")
+          params ||= {}
+          params["page_id"] = $("#page_content_page_id").val()
+          params['content'] = content
+          $(e.target).data("params", params)
+          return true
+        else
+          return false
+      )
+
+    # HTML入力ボタン押下時のイベント
+    $('#direct_html').click(
+      (e) =>
+        @editor.html.show()
+        return false
+    )
+
+    # iframe内のコンテンツをロードし、ページ初期化処理を行う
+    @init_iframe()
+
+    # 各ペーンの高さを合わせる
+    @col_resize()
+
+    # Window のリサイズ時にペーンの高さをウインドウに揃える
+    Susanoo.EventTimer = false
+    $(window).resize( (e) =>
+      if (Susanoo.EventTimer != false)
+        clearTimeout(Susanoo.EventTimer)
+      Susanoo.EventTimer = setTimeout(@col_resize, 300)
+    )
+
+    return
+
+  #
+  # 各ペーンの高さを揃える
+  #
+  col_resize: ->
+    h = $("#header").outerHeight();
+    $(".col-content").height($(window).height() - h - 1)
+
+    h = $('.col-center').outerHeight()
+    $('iframe.iframe-edit').height(h)
+    return
+
+  #
+  # iFrame内のコンテンツを読み込む
+  #
+  init_iframe: (src = null)=>
+    $.isLoading({ text: "<%= I18n.t('shared.label.loading')%>" })
+    src = $('#iframe_path').val() if src == null
+    $('#iframe-edit').remove()
+    iframe_obj = $('<iframe />',{
+      id: 'iframe-edit'
+      class:'iframe-edit'
+      src: src
+    }).load((e) =>
+      @iframe_loaded()
+      return
+    )
+    iframe_obj.appendTo('.col-center > .col-content')
+    return
+
+  #
+  # iframeロード後の処理
+  #
+  iframe_loaded: =>
+    iframe_window = document.getElementById('iframe-edit').contentWindow
+    iframe_doc = $('#iframe-edit').contents()[0]
+
+    $(iframe_doc).keydown( (e) ->
+      if e.keyCode == 8
+        tag = e.target.nodeName.toLowerCase()
+        target = $(e.target)
+        if (tag != 'input' && tag != 'textarea') || target.attr('readonly') || target.is(':disabled')
+          return false;
+    )
+
+    # 公開ページのスタイルシートを動的に取得し、wysiwygエディターに渡す
+    $('#iframe-edit').contents().find('link[rel=stylesheet]').each(
+      (i, e) =>
+        @stylesheets.push($(e).attr('href'))
+    )
+    @editor.wysiwyg.stylesheets = @stylesheets
+
+    @cleanup()
+
+    # iframe内のJQuery初期化処理を実行する
+    @editable_field = iframe_window.Visitor.EditableField
+    @editable_field.init(@)
+
+    $.isLoading('hide');
+    return
+
+  #
+  # CKEditorのHTMLパーサを利用してHTMLをClenupする
+  #
+  cleanup: =>
+    wrapper_id = '#<%= Settings.page_content.wrapper_id %>'
+    html = $('#iframe-edit').contents().find(wrapper_id).html()
+    fragment = CKEDITOR.htmlParser.fragment.fromHtml(html)
+    writer = new CKEDITOR.htmlParser.basicWriter()
+    filter = new CKEDITOR.filter(AllowedContent.standard)
+    filter.applyTo( fragment )
+    fragment.writeHtml( writer )
+    html = writer.getHtml()
+
+    if Susanoo.RemoveEmptyTags
+      html = Susanoo.RemoveEmptyTags.all_block(html)
+
+    $('#iframe-edit').contents().find(wrapper_id).html(html)
+    return
+
+
+  # 保存ボタンを非活性にする
+  disable_save: ->
+    $('#save').hide()
+    $('#save-disalbed').show()
+
+  # 保存ボタンを活性にする
+  enable_save: ->
+    $('#save-disalbed').hide()
+    $('#save').show()
+
+    return
+
+this.Susanoo ||= {}
+this.Susanoo.EventTimer = false
+this.Susanoo.EditManager = new EditManager()

@@ -1,0 +1,23 @@
+<%
+# 入札情報用プラグイン(サイドメニュー)
+-%>
+<% divisions = Division.all.order("number asc") -%>
+
+<% divisions.each_with_index do |division, count| -%>
+  <% next if count.zero? %>
+  <% genres = Genre.find_by_path('/bid_info/').children.includes(:section).where(["sections.division_id = ?", division.id]).reorder("sections.code asc") -%>
+  <% unless genres.empty? -%>
+    <div class="box-right">
+      <div class="content-border-bottom"><h4 class="sidebar-title"><span><%= division.name %></span></h4></div>
+      <div class="default">
+        <ul class="clearfix">
+    <% genres.each do |genre| -%>
+      <% unless genre.section.super_section? -%>
+          <li style=""><a href="<%= genre.path %>"><%= genre.section.name %></a></li>
+      <% end -%>
+    <% end -%>
+        </ul>
+      </div>
+    </div>
+  <% end -%>
+<% end -%>

@@ -1,0 +1,6 @@
+<% if @error %>
+  <div class="alert alert-danger"><%= @error %></div>
+<% else %>
+  <p><%= t(".save_in_the_following_order") %></p>
+  <p><%= @sections.map(&:name).join(' | ') %></p>
+<% end %>

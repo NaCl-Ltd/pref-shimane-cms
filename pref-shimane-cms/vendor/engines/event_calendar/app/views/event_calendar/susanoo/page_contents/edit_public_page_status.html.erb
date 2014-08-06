@@ -1,0 +1,126 @@
+<%= form_for(@page_content, url: update_public_page_status_susanoo_page_content_path(@page_content),
+  html: {method: :patch, class: "form-horizontal"}) do |f| -%>
+
+  <% if @page_content.errors.any? -%>
+  <div class="row-fluid">
+    <div class="span12">
+      <%= error_messages_for(@page_content) %>
+    </div>
+  </div>
+  <% end -%>
+
+  <div class="row-fluid">
+    <div class="span12 well">
+      <div class="table-title"><%= t(".header.current_term")%></div>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.term") %>:</label>
+        <div class="controls">
+          <% if @page_content.begin_date -%>
+            <%= t(".label.begin_date") %> : <%= public_term_strftime(@page_content.begin_date) %><br />
+            <%= t(".label.end_date") %> : <%= @page_content.end_date ? public_term_strftime(@page_content.end_date) : " 設定されていません " -%>
+        　  <%= link_to('公開期間を解除する', main_app.destroy_public_term_susanoo_page_content_path(@page_content)) %>
+          <% else -%>
+            <p style="margin: 5px 0">
+            <%= t(".label.term_not_input") %>
+            </p>
+          <% end -%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% unless current_user.editor? -%>
+    <div class="row-fluid">
+      <div class="span12 well">
+        <div class="table-title"><%= t(".header.set_admission") %></div>
+
+        <div class="control-group">
+          <label class="control-label"><%= t(".label.current_admission") %>:</label>
+          <div class="controls">
+            <%= public_admission_select(@page_content, "page_content[admission]") %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% unless @page_content.begin_date -%>
+      <div class="row-fluid">
+        <div class="span12 well">
+          <div class="table-title"><%= t(".header.set_date") %></div>
+
+          <div class="control-group">
+            <label class="control-label"><%= t(".label.updated_at") %>:</label>
+            <div class="controls">
+              <%= datetime_select(:page_content, :last_modified, {use_month_numbers: true, end_year: Date.today.year}, {class: "input-small"}) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end -%>
+    <div class="row-fluid">
+      <div class="span12 well">
+        <div class="table-title"><%= t(".header.set_user") %></div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <%= t(".label.user_name") %>:
+          </label>
+          <div class="controls">
+            <%= f.text_field(:user_name, size: 30) %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <%= t(".label.tel") %>:
+          </label>
+          <div class="controls">
+            <%= f.text_field(:tel, size: 30) %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <%= t(".label.email") %>:
+          </label>
+          <div class="controls">
+            <%= f.text_field(:email, size: 30) %>@<%= Settings.mail.domain %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <%= t(".label.comment") %>:
+          </label>
+          <div class="controls">
+            <%= f.text_field(:comment, size: 100, class: "input-xxlarge") %>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+  <% else -%>
+    <div class="row-fluid">
+      <div class="span12 well">
+        <div class="table-title"><%= t(".header.admission") %></div>
+
+        <div class="control-group">
+          <label class="control-label"><%= t(".label.reviewing") %></label>
+        </div>
+      </div>
+    </div>
+  <% end -%>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="control-group">
+        <%= f.submit t("shared.save"), class: "btn btn-primary btn-small" %>
+        <%= f.submit t("shared.cancel"), name: 'cancel', class: "btn btn-warning btn-small",
+          onclick: raw("return confirm('#{t(".confirm.cancel")}')") %>
+      </div>
+    </div>
+  </div>
+<% end -%>
+      

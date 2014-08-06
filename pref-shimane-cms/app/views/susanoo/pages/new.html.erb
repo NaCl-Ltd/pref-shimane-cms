@@ -1,0 +1,121 @@
+<div class="row-fluid">
+  <div class="span9 well">
+    <%= form_for([:susanoo, @page], html: {class: 'form-horizontal'}) do |f| %>
+      <% if @page.errors.any? -%>
+        <%= error_messages_for(@page) %>
+      <% end -%>
+      <div class="well">
+        <div class="control-group">
+          <%= f.label :title, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :title, class: "input-xlarge" %>
+            <span class="help-block"><%= t(".description.title") %></span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :name, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :name, class: "input-xlarge" %>
+            <span class="help-block"><%= t(".description.name") %></span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :genre_id, class: "control-label" %>
+          <div class="controls">
+            <%= f.hidden_field :genre_id %>
+            <div style="margin:5px 0;">
+              <a href="#modal-folder-select" role="button" class="btn btn-small" data-toggle="modal">フォルダ選択</a>
+              <span id="selected-genre-name" style="margin-left: 20px;">
+                <%= @genre? @genre.title : t(".genre_not_select")%>
+              </span>
+            </div>
+            <span class="help-block"><%= t(".description.genre_id") %></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="well">
+        <div class="control-group">
+          <label class="control-label"><%= t(".label.template") %></label>
+          <div class="controls">
+            <%= f.select :template_id,
+                options_for_select(PageTemplate.all.order("name").map{|s| [s.name, s.id]}, @page.template_id),
+                {include_blank: true} %>
+            <a id="link-template-preview" href="#"  class="btn btn-info btn-small"><%= t(".label.preview") %></a>
+            <span class="help-block" style="margin-top:5px;"><%= t(".description.template_id") %></span>
+            <span class="help-block" style="color: red; margin-top:2px;"><%= t(".caution.template_id") %></span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label"><%= t(".label.copy_page") %></label>
+          <div class="controls">
+            <%= f.hidden_field :copy_id %>
+            <div style="margin:5px 0;">
+              <a href="#modal-page-select" role="button" class="btn btn-small" data-toggle="modal"><%= t(".label.copy_page_select") %></a>
+              <span id="selected-page-name" style="margin-left: 20px;">
+                <% if @page.copy_id.present? %>
+                  <%= page_title_with_status(@page.copy_id) %>
+                <% else %>
+                  <%= t(".copy_page_not_select") %>
+                <% end %>
+              </span>
+            </div>
+            <span class="help-block"><%= t(".description.copy_page") %></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit t('.next'), class: "btn btn-primary btn-small" %>
+          <%= link_to_back main_app.susanoo_dashboards_path, confirm: t(".confirm.back") %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+
+  <div class="span3">
+    <%= page_transitions_table(1) %>
+  </div>
+</div>
+
+<%# フォルダ選択ダイアログ %>
+<div id="modal-folder-select" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t(".modal.genre.title") %></h3>
+  </div>
+  <div class="modal-body" style="height:300px;" >
+    <div id="treeview" class="treeview"></div>
+  </div>
+  <div class="modal-footer">
+    <button id="button-folder-select" class="btn btn-primary btn-small"><%= t(".modal.genre.select") %></button>
+    <button class="btn btn-small" data-dismiss="modal" aria-hidden="true"><%= t(".modal.genre.close") %></button>
+  </div>
+</div>
+
+<%# ページの複製選択ダイアログ %>
+<div id="modal-page-select" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t(".modal.copy_page.title") %></h3>
+  </div>
+  <div class="modal-body" style="height:300px;" >
+    <div id="treeview_with_page" class="treeview"></div>
+  </div>
+  <div id="page-select-footer" class="modal-footer">
+    <%= render "select_copy_page_footer" %>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+  <%= javascript_tag do %>
+    $(function () {
+      Susanoo.Page.Form.init()
+    });
+  <% end -%>
+<% end -%>
+

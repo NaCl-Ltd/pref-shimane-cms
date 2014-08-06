@@ -1,0 +1,9 @@
+consult_management:
+  data:
+    dir: '/consult.data'
+    json:
+      path: '/consult.json'
+    cgi:
+      path: '/search_consult.rb'
+
+  authority: admin

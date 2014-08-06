@@ -1,0 +1,159 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+#
+# ページ管理クラス
+#
+class PageIndex
+  init: (datasource)=>
+    $("#treeview").fancytree({
+      source: datasource
+      activate: (event, data) ->
+        node = data.node
+        if !node.data.no_permission
+          $.get("<%= url_helpers.select_susanoo_pages_path %>", {genre_id: node.data.id})
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_susanoo_genres_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    $(document).on("submit", ".form-search", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.searching')%>" })
+      return true
+    )
+
+    $(document).on("click", ".pagination a", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.loading')%>" })
+      return true
+    )
+
+    $(document).on("click", "a.sort", (e) ->
+      $.isLoading({ text: "<%= I18n.t('shared.label.loading')%>" })
+      return true
+    )
+
+    return
+
+#
+# ページフォーム用のクラス
+#
+class PageForm
+  selected_genre: null,
+  button_folder_select: $("#button-folder-select"),
+  selected_page_content: null,
+
+  init: =>
+    # モーダルダイアログフォルダ選択ボタン
+    $(@button_folder_select).click( =>
+      if @selected_genre
+        $("#page_genre_id").val(@selected_genre.id)
+        $("#selected-genre-name").html(@selected_genre.title)
+      $('#modal-folder-select').modal('hide')
+      return
+    ).attr("disabled", true)
+
+    # テンプレートプレビューボタン
+    $("#link-template-preview").click( ->
+      template_id = $("#page_template_id").val()
+      if template_id
+        url = "<%= url_helpers.preview_virtual_susanoo_visitors_path %>"
+        window.open(url+"?mode=template&template_id=" + template_id, '', 'toolbar=yes,status=no,menubar=yes,scrollbars=yes,resizable')
+      return false
+    )
+
+    treeview_url = "<%= url_helpers.treeview_susanoo_genres_path %>"
+    $("#treeview").fancytree({
+      source: $.ajax({
+        url: treeview_url
+      })
+      activate: (event, data) =>
+        node = data.node
+        if !node.data.no_permission
+          @selected_genre = { id: node.data.id, title: node.title }
+          $(@button_folder_select).attr("disabled", false)
+        else
+          @selected_genre = {}
+          $(@button_folder_select).attr("disabled", true)
+
+        return @selected_genre
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: treeview_url
+          data: { id: node.data.id }
+        }
+    })
+
+    treeview_with_page_url = "<%= url_helpers.treeview_with_pages_susanoo_genres_path %>"
+    $("#treeview_with_page").fancytree({
+      autoActivate: false
+      source: $.ajax({
+        url: treeview_with_page_url
+      })
+      activate: (event, data) =>
+        node = data.node
+        if node.folder
+          $.ajax({
+            url: "<%= url_helpers.select_copy_page_susanoo_pages_path %>"
+          })
+        else
+          @selected_page_content = { title: node.title }
+          $.ajax({
+            url: "<%= url_helpers.select_copy_page_susanoo_pages_path %>" + "?id=" + node.data.id
+          })
+
+        return @selected_page_content
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: treeview_with_page_url
+          data: { id: node.data.id }
+        }
+    })
+
+    $(document).on("click", "input[name='status']", (e) =>
+      $("#button-page-preview").attr("disabled", false)
+      $("#button-page-select").attr("disabled", false)
+
+      content_id = $(e.target).attr("value")
+      $("#button-page-preview").attr("href", "/susanoo/visitors/" + content_id + "/preview")
+      $("#button-page-select").attr("value", content_id)
+      title = @selected_page_content.title
+      if $(e.target).attr("name") == "unpublished"
+        title = title + "（<%= I18n.t("susanoo.pages.select_copy_page_footer.label.unpublished") %>）"
+      else
+        title = title + "（<%= I18n.t("susanoo.pages.select_copy_page_footer.label.published") %>）"
+
+      @selected_page_content = { title: title, id: content_id }
+    )
+
+    # モーダルダイアログコピー元ページ選択ボタン
+    $(document).on("click", "#button-page-select", (e) =>
+      if @selected_page_content
+        $("#page_copy_id").attr("value", @selected_page_content.id)
+        $("#selected-page-name").html(@selected_page_content.title)
+      $('#modal-page-select').modal('hide')
+      return
+    ).attr("disabled", true)
+
+    # モーダルダイアログコピー元ページキャンセルボタン
+    $(document).on("click", "#button-page-cancel", (e) =>
+      $("#page_copy_id").attr("value", "")
+      $("#selected-page-name").html("<%= I18n.t("susanoo.pages.new.description.copy_page") %>")
+      $('#modal-page-select').modal('hide')
+      return
+    ).attr("disabled", true)
+
+    return
+
+this.Susanoo ||= {}
+this.Susanoo.Page ||= {}
+this.Susanoo.ExploreTimer = false
+this.Susanoo.Page.Index = new PageIndex
+this.Susanoo.Page.Form  = new PageForm
+

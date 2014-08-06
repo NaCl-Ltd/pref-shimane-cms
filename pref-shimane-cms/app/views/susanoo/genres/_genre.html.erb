@@ -1,0 +1,100 @@
+<table class="table">
+  <tr>
+    <td style='width: 120px;'><%= t('.title') %></td>
+    <td><%= @genre.title %></td>
+  </tr>
+  <tr>
+    <td style='width: 120px;'><%= t('.name') %></td>
+    <td><%= @genre.name %></td>
+  </tr>
+  <tr>
+    <td style='width: 120px;'><%= t('.owner') %></td>
+    <td>
+      <% if @genre.section.present? && @genre.section.division.present? -%>
+        <p><%= t('.division') %>: <%= @genre.section.division.name %></p>
+      <% end -%>
+      <% if @genre.section.present? -%>
+        <p><%= t('.section') %>: <%= @genre.section.name %> </p>
+      <% end -%>
+    </td>
+  </tr>
+  <tr>
+    <td style='width: 120px;'><%= t('.auth') %></td>
+    <td><%= @genre.auth.present? ? t(".auth_value.#{@genre.auth.to_s}") : t(".auth_value.false") %></td>
+  </tr>
+  <tr>
+    <td style='width: 120px;'><%= t('.tracking_code') %></td>
+    <td><%= @genre.tracking_code.present? ? t(".tracking_code_value.true") : t(".tracking_code_value.false") %></td>
+  </tr>
+  <% if @genre.original.present? -%>
+    <tr>
+      <td style='width: 120px;'><%= t('.original') %></td>
+      <td><%= link_to genre_fullpath(@genre.original), main_app.susanoo_genres_path(genre_id: @genre.original.id) %></td>
+    </tr>
+  <% end -%>
+  <% if @genre.copies.present? -%>
+    <% @genre.copies.each do |c| -%>
+      <tr>
+        <td style='width: 120px;'><%= t('.copy_to') %></td>
+        <td><%= link_to genre_fullpath(c), main_app.susanoo_genres_path(genre_id: c.id) %></td>
+      </tr>
+    <% end -%>
+  <% end -%>
+</table>
+
+<div class="col-button-group">
+  <%= link_to_new main_app.new_susanoo_genre_path(parent_id: @genre.id) %>
+  <%= link_to_new main_app.new_susanoo_page_path(genre_id: @genre.id), label: t(".new_page") %>
+
+  <br />
+
+  <%= link_to t(".show"), main_app.susanoo_genres_path(genre_id: @genre.id), class:"btn btn-info btn-small" %>
+
+  <%# 編集ボタン コピーフォルダの場合オリジナルのフォルダの編集画面を表示 -%>
+  <% if @genre.original.present? -%>
+    <%= link_to_edit main_app.edit_susanoo_genre_path(@genre.original) %>
+  <% else -%>
+    <%= link_to_edit main_app.edit_susanoo_genre_path(@genre) %>
+  <% end -%>
+
+  <% unless @genre.top_genre? -%>
+    <%# 移動ボタン 移動可能＆コピーフォルダ以外で活性 -%>
+    <% if @genre.movable? && @genre.original.blank? -%>
+      <a id="button-move-genre" href="#modal-folder-select" role="button"
+        class="btn btn-small btn-success"
+        data-toggle="modal"
+        data-url="<%= main_app.move_susanoo_genre_path(@genre) %>"
+        data-message="<%= t('.confirm.move') %>">
+        <%= t(".move")%>
+      </a>
+    <% else -%>
+      <a class="btn btn-small btn-success disabled"> <%= t(".move")%></a>
+    <% end -%>
+
+    <%# コピーボタン コピーフォルダ以外で活性 -%>
+    <%# フォルダコピー機能を一旦使用不能とするため、ボタンのHTMLをコメントアウト -%>
+    <!--
+    <% if @genre.copyable? && @genre.original.blank? -%>
+      <a id="button-copy-genre" href="#modal-folder-select" role="button"
+        class="btn btn-small btn-success"
+        data-toggle="modal"
+        data-url="<%= main_app.copy_susanoo_genre_path(@genre) %>"
+        data-message="<%= t('.confirm.copy') %>">
+        <%= t(".copy")%>
+      </a>
+    <% else -%>
+      <a class="btn btn-small btn-success disabled"> <%= t(".copy")%></a>
+    <% end -%>
+    -->
+
+    <%# 削除ボタン 削除可能で活性 -%>
+    <% if @genre.deletable?(current_user) -%>
+      <%= link_to_remove(main_app.susanoo_genre_path(@genre), data: {confirm: t('.confirm.remove') }) %>
+    <% else -%>
+      <a class="btn btn-small btn-danger disabled"> <%= t("shared.delete")%></a>
+    <% end -%>
+  <% end -%>
+
+  <%# アクセス制御ボタン -%>
+  <%= link_to t('.web_monitors'), main_app.susanoo_genre_web_monitors_path(@genre), class: "btn btn-small btn-success" %>
+</div>

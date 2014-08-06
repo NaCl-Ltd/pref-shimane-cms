@@ -1,0 +1,108 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to t('.button.helps'), main_app.susanoo_admin_helps_path, class: 'btn btn-info btn-small pull-right', style: "margin-left: 5px;" %>
+  <%= link_to_new  'javascript:void(0)', pull_right: true, id: 'new-caption', help_content_id: @help_content.id %>
+<% end -%>
+
+<div id="help-configure" class='row-fluid explore'>
+  <div class="col-center col-md-5">
+    <div class="col-content">
+      <table class='table table-hover'>
+        <thead>
+          <tr>
+            <th class='span1'><%= t('.label.help_no') %></th>
+            <th class='span1'><%= Help.human_attribute_name(:public) %></th>
+            <th class='span1'><%= Help.human_attribute_name(:name) %></th>
+            <th class='span1'><%= Help.human_attribute_name(:help_category_id) %></th>
+            <th class='span1'><%= t('shared.label.operation')%></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @help_content.helps.each.with_index(Help::START_INDEX) do |help, idx| %>
+            <tr class='help-row <%= 'private' if help.public.zero? %>' help_id='<%= help.id %>'>
+              <td><%= idx %></td>
+              <td><%= help.public.zero? ? t('.label.private') : t('.label.public') %></td>
+              <td><%= help.name %></td>
+              <td><%= help.help_category.try(:name) %></td>
+              <td>
+                <% if help.public.zero? %>
+                  <% title = t('.button.public') %>
+                  <% confirm = t('.button.public_confirm') %>
+                <% else %>
+                  <% title = t('.button.private') %>
+                  <% confirm = t('.button.private_confirm') %>
+                <% end %>
+                <%= link_to title, main_app.caption_change_public_susanoo_admin_help_path(help), data: {confirm: confirm}, class: 'btn btn-info btn-small' %>
+                <%= link_to t('shared.delete'), main_app.destroy_caption_susanoo_admin_help_path(help), class: 'btn btn-danger btn-small', method: :delete, data: {confirm: t('shared.confirm.delete')} %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /div.col-left -->
+
+  <!-- ヘルプのフォーム -->
+  <div class="col-right col-md-7">
+    <div class="col-content configure" id="center-form-area">
+    </div>
+  </div> <!-- /div.col-center -->
+</div>
+
+<% content_for :javascript_contents do %>
+  <%= javascript_tag do %>
+    function col_resize() {
+      h = $("#header").outerHeight();
+      $(".col-content").height($(window).height() - h - 10);
+    }
+
+    $(document).ready(function(){
+      col_resize();
+
+      var timer = false;
+      $(window).resize(function() {
+        if (timer !== false) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(col_resize(), 300);
+      });
+
+      $('.help-row, #new-caption').on('click', function(){
+        var help_id = $(this).attr('help_id')
+        var help_content_id = $(this).attr('help_content_id')
+        $.get('<%= main_app.edit_caption_susanoo_admin_helps_path %>',{
+          id: help_id,
+          help_content_id: help_content_id
+        }, function(form_html){
+          $('#center-form-area').html(form_html)
+        })
+        $('.active').removeClass('active warning')
+        $(this).addClass('warning active');
+        if ($(this).attr('id') == 'new-caption'){
+          return false;
+        }
+      })
+
+      $(document).on('change', '.help-category', function(){
+        var target_select_id = $(this).attr('target_select_id')
+        if (target_select_id){
+          $.getJSON('<%= main_app.susanoo_admin_help_categories_path %>', {
+            help_category_id: $(this).val()
+          }, function(help_categories){
+            $('#' + target_select_id).empty().append(new Option('<%= t('.select.prompt') %>', ''))
+            $.each(help_categories, function(){
+              $('#' + target_select_id).append(new Option(this.name, this.id))
+            })
+          })
+        }
+      })
+
+      $(document).on('ajax:success', '#edit-caption-form', function(e, data, status, xhr){
+        if (data.result){
+          location.href = data.url;
+        }else{
+          $('#form-message-area').html(data.html);
+        }
+      })
+    })
+  <% end %>
+<% end %>

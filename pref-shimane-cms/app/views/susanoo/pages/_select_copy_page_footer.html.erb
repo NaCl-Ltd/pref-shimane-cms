@@ -1,0 +1,16 @@
+<% if @unpublished %>
+  <%= radio_button_tag "status", @unpublished.id, false %><%= t(".label.unpublished") %>
+<% else %>
+  <%= radio_button_tag "status", "unpublished", false, disabled: true %><span style="color: silver"><%= t(".label.unpublished") %></span>
+<% end %>
+
+<% if @published %>
+  <%= radio_button_tag "status", @published.id, false %><%= t(".label.published") %>
+<% else %>
+  <%= radio_button_tag "status", "published", false, disabled: true %><span style="color: silver"><%= t(".label.published") %></span>
+<% end %>
+
+<%= link_to t(".modal.copy_page.preview"), "#", class: 'btn btn-small btn-info', target: '_blank', disabled: "disabled", id: "button-page-preview" %>
+<button disabled id="button-page-select" class="btn btn-primary btn-small"><%= t(".modal.copy_page.select") %></button>
+<button id="button-page-cancel" class="btn btn-danger btn-small" data-dismiss="modal" aria-hidden="true"><%= t(".modal.copy_page.cancel") %></button>
+<button class="btn btn-small" data-dismiss="modal" aria-hidden="true"><%= t(".modal.copy_page.close") %></button>

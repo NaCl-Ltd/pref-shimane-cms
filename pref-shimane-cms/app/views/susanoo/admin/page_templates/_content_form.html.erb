@@ -1,0 +1,120 @@
+<%
+  # iframe内のHTMLをキャッシュから読み込む場合があるため、
+  # JQuery で強制的に iframe 内のHTMLをロードし
+  # .col-center > .col-content に追加しています
+
+  _col_center = 'col-md-8'
+  _iframe_path = main_app.content_susanoo_admin_page_templates_path(id: @page_template.id)
+-%>
+<% content_for :page_top_menu do -%>
+  <%= link_to t('shared.cancel'),
+    main_app.cancel_susanoo_admin_page_templates_path(id: @page_template),
+    data: {
+      confirm: t('.confirm.cancel')
+    },
+    id: 'cancel',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('.label.convert'),
+    main_app.convert_susanoo_admin_page_templates_path(id: @page_template),
+    method: :post,
+    remote: true,
+    id: 'convert',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('.label.direct_html'),
+    '#',
+    id: 'direct_html',
+    'data-url' => main_app.direct_html_susanoo_admin_page_templates_path(id: @page_template),
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('.label.check'),
+    main_app.check_susanoo_admin_page_templates_path(id: @page_template),
+    method: :post,
+    remote: true,
+    id: 'check',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('.label.preview'),
+    main_app.preview_susanoo_admin_page_templates_path(id: @page_template),
+    method: :post,
+    remote: true,
+    id: 'preview',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('shared.save'), '#', id: "save-disalbed", class: "btn btn-primary btn-small pull-right", disabled: "disabled" %>
+  <%= link_to t('shared.save'), '#', id: "save", class: "btn btn-primary btn-small pull-right", style: "display:none" %>
+<% end -%>
+
+<div class="row-fluid editor">
+  <div class="col-left col-md-2">
+    <div id="widgets" class="col-content">
+      <div class="accordion" id="widget-accordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#widget-accordion" href="#collapse-content">
+              <i class="icon-edit"></i><%= t("widgets.categories.content") %>
+              <span class="label sidebar-label label-info">
+                <i class="icon-chevron-down"></i>
+              </span>
+            </a>
+          </div>
+          <div id="collapse-content" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul class="nav nav-list">
+                <%= page_editor_widgets_contents %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <% page_editor_categorized_plugins(:template).each do |category, plugins| %>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#widget-accordion" href="#collapse-<%= category %>">
+              <i class="<%= page_editor_widget_category_icon(category) %>"></i><%= t("widgets.categories.#{category}") %>
+              <span class="label sidebar-label label-info">
+                <i class="icon-chevron-down"></i>
+              </span>
+            </a>
+          </div>
+          <div id="collapse-<%= category %>" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul class="nav nav-list">
+                <% plugins.each do |_p| %><%= _widget_item(_p, type: 'plugin') %><% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-center <%= _col_center %>">
+    <div class="col-content">
+      <%= form_for(@page_template, url: update_content_susanoo_admin_page_template_path(@page_template),
+        method: :patch,
+        remote: true,
+        html: { id: "new_page_content", style: "display:none;"}) do |f| %>
+        <%= hidden_field_tag :iframe_path, _iframe_path %>
+        <%= f.hidden_field :content, :id => "page_content_content" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-right col-md-2">
+    <div class="col-content">
+      <div class="sidebar-collapser" data-side="right">
+        <div class="sidebar-collapser-caret"></div>
+      </div>
+      <div id="col-right-transitions">
+      <%#= page_transitions_table(2) %>
+      </div>
+    </div>
+  </div>
+</div>

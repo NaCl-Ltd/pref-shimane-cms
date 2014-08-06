@@ -1,0 +1,397 @@
+#
+# 編集可能ブロッククラス
+#
+class EditableContent
+  # 編集可能ブロックに挿入する制御用要素
+  template:
+    content : "<div class='editable-content'></div>"
+    control : """
+      <div class='editable-control bootstrap'>
+        <div class='btn-group'>
+          <a href='#' class='edit btn btn-inverse' title='<%= I18n.t('js.editor_iframe.editable_control.edit') %>'><i class='icon-edit'></i></a>
+          <a href='#' class='move btn btn-inverse' title='<%= I18n.t('js.editor_iframe.editable_control.move') %>'><i class='icon-move'></i></a>
+          <a href='#' class='remove btn btn-inverse' title='<%= I18n.t('js.editor_iframe.editable_control.remove') %>'><i class='icon-remove'></i></a>
+        </div>
+      </div>
+    """
+    popover : """
+      <a href='#' class='accessibility-popover btn btn-inverse' title='<%= I18n.t('js.editor_iframe.accessibility_popover.title') %>'><i class='icon-ok'></i></a>
+    """
+
+  # 編集フィールド
+  editable_field: null
+
+  #
+  # ドロップ直後のブロックかどうかを判定する
+  # ドロップ直後の編集でキャンセルした場合ブロック自体を削除する
+  just_drop: false
+
+  data_type: null
+
+  # 編集可能ブロックの要素
+  content: null
+  target : null
+  control: null
+
+  # 親フレームのEditManager
+  manager: null
+
+  # エディタオブジェクト
+  editor:
+    wysiwyg: null
+    plugin: null
+
+  # コンストラクタ
+  constructor: (manager)->
+    this.manager = manager
+    this.editor.wysiwyg = manager.editor.wysiwyg
+    this.editor.plugin  = manager.editor.plugin
+    return
+
+  # ページ読み込み時に編集可能ブロックオブジェクトを作成する
+  create_on_load: (field, index, element) =>
+    @editable_field = field
+
+    obj = $(element)
+
+    # 編集ブロックを編集用の要素で囲み、編集メニューを追加する
+    obj.wrap(@template.content)
+    obj.after(@template.control)
+
+    # インスタンス変数に編集ブロックの各コンテンツを設定する
+    @target  = obj
+    @content = obj.closest("div.editable-content")
+    @control = @content.find("div.editable-control")
+
+    offset = obj.position()
+    if offset
+      @control.css('left', offset.left)
+
+    if obj.hasClass("data-type-plugin")
+      @data_type = 'plugin'
+      obj.attr('title', 'plugin')
+
+      plugin_names = <%= ApplicationHelper.page_content_plugins.to_json %>
+      for plugin_type of plugin_names
+        if $.inArray(obj.attr('name'), plugin_names[plugin_type]) >= 0
+          obj.attr('title', plugin_type)
+
+    else
+      @data_type = 'wysiwyg'
+
+    # アクセシビリティのエラーメッセージを持つ場合、エラー内容表示ボタンを追加する
+    alert_content = @content.find("[data-content]")
+    if alert_content.length > 0
+
+      control_btn_group = @content.find("div.editable-control div.btn-group")
+      control_btn_group.append(@template.popover)
+
+      # エラー内容は編集ブロック内のタグから取得する
+      # 取得済みのエラー（data-content属性）はタグから削除する
+      popover_data_content = "<ul>"
+      alert_content.each( (index, element) ->
+        popover_data_content += "<li>#{$(element).attr("data-content")}</li>"
+        $(element).removeAttr("data-content")
+      )
+      popover_data_content += "</ul>"
+      popover = control_btn_group.find("a.accessibility-popover")
+      popover.attr("data-content", popover_data_content)
+      popover.attr("data-contentsize", alert_content.length)
+
+    @initialize()
+    return @
+  # end create_on_load
+
+  #
+  # Widgetドロップ時のオブジェクト作成
+  #
+  create_on_drop: (field, element) =>
+    wrapper_id = '#<%= Settings.page_content.wrapper_id %>'
+
+    @editable_field = field
+    @just_drop  = true
+
+    data_text    = element.text()
+    data_name    = element.attr('name')
+    data_type    = element.attr('data-type')
+    data_deault  = element.attr('data-default')
+    data_title   = element.attr('title')
+    drag_item    = $(wrapper_id + ' .widget-item')
+    prev_item    = drag_item.prev()
+    next_item    = drag_item.next()
+    parent_field = drag_item.closest(".susanoo-editable-field")
+
+    # ドラッグしたオブジェクト自体は削除する
+    drag_item.remove()
+
+    count = parent_field.find('.editable-content').length
+
+    if data_type == 'plugin'
+      obj = $("<button class='editable data-type-plugin'></button>")
+      obj.attr('name', data_name)
+      obj.attr('title', 'plugin')
+
+      plugin_names = <%= ApplicationHelper.page_content_plugins.to_json %>
+      for plugin_type of plugin_names
+        if $.inArray(obj.attr('name'), plugin_names[plugin_type]) >= 0
+          obj.attr('title', plugin_type)
+
+      obj.text(data_text)
+      @data_type = 'plugin'
+    else
+      obj = $(data_deault)
+      @data_type = 'wysiwyg'
+
+    @content = $(@template.content)
+    @content.append(obj)
+    @content.append(@template.control)
+
+    @target  = @content.find('.editable')
+    @control = @content.find('div.editable-control')
+
+    if count == 0
+      parent_field.append(@content)
+    else
+      if prev_item && prev_item.length == 1
+        $(prev_item).after(@content)
+      else
+        $(next_item).before(@content)
+
+    @initialize()
+    @show_editor()
+    return @
+
+  # イベントの初期化
+  initialize: =>
+    @content.mouseenter( (e) =>
+      if @editable_field.dragging == false
+        @control.show()
+    )
+
+    @content.mouseleave( (e) =>
+      if @editable_field.dragging == false
+        @control.hide()
+    )
+
+    @control.find(".edit").click( (e)=>
+      @show_editor()
+    )
+
+    @control.find(".remove").click( (e)=>
+      if confirm("<%= I18n.t('js.editor_iframe.confirm.content_remove') %>")
+        @manager.disable_save()
+        @content.remove()
+        delete @
+
+    )
+    return @
+
+  #
+  # エディタを表示する
+  # エディタで変更する前の要素を保存しておく
+  #
+  show_editor: =>
+    @control.hide()
+    if @data_type == 'wysiwyg'
+      @editor.wysiwyg.show(@)
+    else if @data_type == 'plugin'
+      @editor.plugin.show(@)
+    else
+      ;
+    return
+# end EditableContent
+
+#
+# iframe内の編集可能フィールド用クラス
+#
+class EditableField
+  editors: null
+  dragging: false
+  manager: null
+  wrapper_id: null
+  field_class: '.susanoo-editable-field'
+  drag_target: null
+  draggable_obj: null
+
+  init: (manager) =>
+    @wrapper_id = '#<%= Settings.page_content.wrapper_id %>'
+    @manager = manager
+    @dragging = false
+    @drag_target = null
+
+    # 編集可能なブロックに編集用のHTML要素を挿入する
+    $('.editable').each( (index, element) =>
+      c = new EditableContent(@manager)
+      c.create_on_load(@, index, element)
+      return
+    )
+
+    # ブロックのソート
+    $(@field_class).sortable({
+      connectWith: @field_class
+      dropOnEmpty: true
+      placeholder: 'editable-placeholder'
+      handle: '.editable-control .move'
+      cursorAt: { left: 0, top: 0 }
+      items: '.editable-content'
+      update: =>
+        @manager.disable_save()
+        return
+    })
+
+
+    draggable_field = $(@field_class)
+
+    # HTML直接挿入等でinitメソッドを呼び出す際、親フレームのイベントを除去する
+    if @draggable_obj
+      $(".widget-item", parent.document).draggable("destroy")
+      $(".widget-item", parent.document).off('click')
+      @draggable_obj = null
+
+    if $.support.opacity
+      @draggable_obj = $(".widget-item", parent.document).draggable({
+        appendTo: 'parent.body'
+        connectToSortable: @field_class
+        helper: "clone"
+        cursor: "move"
+        cursorAt: { left: 0, top: 0 }
+        zIndex: 9999
+        iframeFix: true
+        start: (e, ui) =>
+          @dragging = true
+          return
+        stop: (e, ui) =>
+          @dragging = false
+          @manager.disable_save()
+          @add_content($(ui.helper))
+          return
+      })
+    else
+      # ウィジェットクリック時にドラッグ開始と同等のイベントを発火する
+      @draggable_obj = $(".widget-item", parent.document).draggable({
+        appendTo: 'parent.body'
+        connectToSortable: @field_class
+        helper: "clone"
+        cursor: "move"
+        cursorAt: { left: 0, top: 0 }
+        zIndex: 9999
+        iframeFix: true
+        start: (e, ui) =>
+          @dragging = true
+          return
+        stop: (e, ui) =>
+          @dragging = false
+          @manager.disable_save()
+          @add_content($(ui.helper))
+          return
+      }).click((e) =>
+        if !@drag_target
+          @drag_target = $(e.target)
+          @drag_target.data('uiDraggable')._mouseCapture(e, true)
+          @drag_target.data('uiDraggable')._mouseStart(e, true, true);
+        else
+          @drag_target.data('uiDraggable')._mouseUp(e);
+          @drag_target.data('uiDraggable')._mouseStop(e);
+          @drag_target = null
+        return false
+      )
+
+      $(document).on('mousemove', ".susanoo-editable-field", (e) =>
+        @drag_target.data('uiDraggable')._mouseDrag(e) if @drag_target
+      )
+
+      $(@field_class).click((e)=>
+        @drag_target.trigger("click") if @drag_target
+      )
+    # end
+
+    # popover のコンテンツを挿入する div 要素を body に追加する
+    $("#accessibility-content").remove()
+    $("body").append("<div id='accessibility-content' class='bootstrap'></div>")
+
+    # 再初期化時のために一度イベントを破棄する
+    $(document).off('mouseenter', '.accessibility-popover')
+    $(document).off('mouseleave', '.accessibility-popover')
+
+    $(document).off('click', 'a')
+    $(document).off('submit', 'form')
+    $('.accessibility-popover').popover('destroy')
+
+    # popover の初期化
+    $('.accessibility-popover').popover({
+      html     : true
+      trigger  : "manual"
+      container: "#accessibility-content"
+    })
+
+    # popover 表示領域内のHTML要素を削除することで、すべての poppver を閉じてから popover を表示する
+    # popover('hide') -> popover('show') ではうまく制御できなかった
+    $(document).on('mouseenter', '.accessibility-popover', (e) ->
+      h = 35 + $(this).attr('data-contentsize') * 30
+      $("#accessibility-content").height(h)
+      $(this).popover('show')
+    )
+
+    $(document).on('mouseleave', '.accessibility-popover', (e) ->
+      $(this).popover('hide')
+    )
+
+    $(document).on('click', 'a', (e) ->
+      e.preventDefault()
+      return false
+    )
+
+    $(document).on('submit', 'form', (e) ->
+      e.preventDefault()
+      return false
+    )
+
+    $('[onclick]').each( ->
+      $(this).removeAttr('onclick')
+    )
+    return
+  # end init
+
+  #
+  # UIウィジェットをドラッグした際に呼び出すメソッド
+  #
+  add_content: (element) =>
+    if element && element.is(".widget-item")
+      c = new EditableContent(@manager)
+      c.create_on_drop(@, element)
+    else
+      $(element).remove()
+    return
+
+  #
+  #
+  #
+  html: =>
+    # 見た目的に邪魔になるのでpopoverを一旦隠す
+    $('.accessibility-popover').popover('hide')
+
+    clone = $(@wrapper_id).clone()
+    clone.find('.ui-sortable').each(()->
+      $(this).removeClass('ui-sortable')
+    )
+    clone.find('.editable-control').each(()->
+      $(this).remove()
+    )
+    clone.find('.editable').each(()->
+      $(this).css('position','')
+      $(this).unwrap()
+    )
+
+    clone.removeAttr('data-content')
+    clone.removeClass('accessibility-error-highlight')
+    clone.find('.accessibility-error-highlight').each( ()->
+      $(this).removeClass('accessibility-error-highlight')
+      return
+    )
+
+    clone.html()
+# end EditableField
+
+
+this.Visitor ||= {}
+this.Visitor.EditableField = new EditableField

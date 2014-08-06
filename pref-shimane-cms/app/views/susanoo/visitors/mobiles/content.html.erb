@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Susanoo:<%= @page_view.title %></title>
+<% if @page_view.edit -%>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <%= stylesheet_link_tag 'editor.iframe', media: 'all' %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "editor.iframe" %>
+<% end -%>
+</head>
+<body>
+  <div class='mobile'>
+  <a href="/">TOP</a>
+  <hr />
+  <div id='page-content'>
+    <%= render partial: '/susanoo/visitors/content' %>
+  </div>
+  <hr />
+  </div>
+  <% if @page_view.normal_layout? || @page_view.section_top_layout? %>
+    <% if section = @page_view.genre.section -%>
+      <div>
+        <%= format_address(section.info) if section.info.present? %>
+      </div>
+    <% end %>
+  <% else %>
+    <div>
+      <p><%= t('susanoo.visitors.footer.title') %></p>
+      <p>〒<%= t('susanoo.visitors.footer.postcode') %>
+      <p><%= t('susanoo.visitors.footer.address') %>
+      <p><%= t('susanoo.visitors.footer.label.tel') %>&nbsp;<%= t('susanoo.visitors.footer.tel') %></p>
+  </div>
+  <% end -%>
+</body>
+</html>

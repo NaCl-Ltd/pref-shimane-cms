@@ -1,0 +1,13 @@
+<div>
+<%- case  -%>
+<%- when @upload_file.stored? -%>
+  <%= render 'stored' %>
+<%- when !@upload_file.results.nil? -%>
+  <%= render 'results' %>
+<%- else -%>
+  <%= render 'form' -%>
+<%- end -%>
+
+  <hr>
+  <%= render 'description' -%>
+</div>

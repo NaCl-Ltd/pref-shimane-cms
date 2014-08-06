@@ -1,0 +1,205 @@
+#
+# 画面・コントローラのメッセージ
+#
+ja:
+  shared:
+    notice:
+      login_required: ログインしてください
+      login_not_required: ログアウトしてください
+      no_authorization: ページを表示できません
+
+    engines:
+      disable: オプション機能が無効になっています。
+
+    empty: なし
+    empty_list: "%{label}は現在ありません"
+    save: 保存
+    show: 詳細
+    edit: 編集
+    delete: 削除
+    cancel: キャンセル
+    preview: プレビュー
+    position: 表示順変更
+    back: 戻る
+    search: 検索
+    example: 例
+    process: 処理
+    no_term: 未設定
+    term_separator: " 〜 "
+    upload: アップロード
+    select_file: ファイル選択
+    copy: コピー
+    select_file_genre_page: フォルダ、ページ、ファイル選択
+    select_genre_page: フォルダ、ページ選択
+    save_temporarily: 一時保存
+
+    confirm:
+      delete: 削除しますか？
+
+    upload:
+      image_size_too_big: アップロードする画像ファイルのサイズが%{size}Byteの上限を越えています
+      image_total_size_too_big: 画像ファイルの合計サイズが%{size}Byteの上限を越えますのでファイルを削除してからアップロードしてください
+      invalid_file_type: アップロード出来ないファイルです.アップロード出来るファイルは、「Microsoft Word、Microsoft Excel、一太郎、PDF、画像ファイル(jpg、png、gif)」です
+      invalid_image_type: アップロード出来ないファイルです.アップロード出来るファイルは、「画像ファイル(jpg、png、gif)」です
+      failed_optimization: 規定のファイルサイズまで、最適化できませんでした
+      invalid_file_name: 'ファイル名は半角英数字のみにしてください'
+      infected: 'アップロードしたファイルはウイルスに感染しています'
+
+    page:
+      locked: "別ユーザの方が編集中のため、編集出来ません"
+      requested: "公開審査中のため、編集中ページの変更はできません"
+      waiting: "公開待ちのため、編集中ページの変更はできません"
+
+    label:
+      operation: 操作
+      loading: 読込中
+      processing: 処理中
+      searching: 検索中
+
+    navigation:
+      login : ログイン
+      logout: ログアウト
+      change_password: パスワード変更
+
+      page:
+        new: 新規ページ作成
+        index: ページ編集・検索
+
+      genre:
+        index: フォルダ管理
+
+      setting:
+        title: 各種設定
+        admin:
+          divisions: 部局管理
+          sections: 所属管理
+          users: ユーザ管理
+          options: オプション管理
+          infos: お知らせ管理
+          emergency_infos: 緊急お知らせ管理
+          external_links: 外部サイトリンク
+          helps: ヘルプ管理
+          page_templates: テンプレート管理
+
+      option:
+        title: オプション
+        lost_links: "リンク切れチェック"
+        import_pages: "一括ページ取込み"
+        access_statistics: "アクセス統計"
+        section_info_configure: 連絡先設定
+        browsing_support: 辞書管理
+        mailmagazine_management: メールマガジン管理
+        advertisement_management: バナー広告管理
+        blog_management: ブログ管理
+        event_calendar: イベントカレンダー管理
+
+    authorities:
+      0: ホームページ担当者
+      1: 情報提供責任者
+      2: 運用管理者
+
+    admission:
+      editing: 編集中
+      request: 公開依頼中
+      reject : 公開依頼却下
+      publish: 公開中
+      cancel : 公開停止
+      waiting: 公開待ち
+      finished: 公開期限切れ
+      copy: コピー
+      save_temporarily: 一時保存
+
+    description:
+      position: ドラッグ＆ドロップで順番を変更できます。
+
+    section_news:
+      "yes": する
+      "no": しない
+
+    not_select: "指定無し"
+
+    transitions:
+      step1: ページ基本設定
+      step2: ページ本文作成
+      step3: ページ情報確認
+      step4: ページ公開依頼
+      step5: ページ公開審査
+      step6: ページ公開
+
+    accessibility:
+      success: HTMLに問題点は見つかりませんでした.
+      error: 要修正箇所が%{count}件あります.
+      warning: 警告が%{count}件あります.
+      user: 要判断箇所が%{count}件あります.
+      info: 手動確認箇所が%{count}件あります.
+
+    infos:
+      index:
+        label:
+          title: タイトル
+          last_modified: 日付
+          info: お知らせ一覧
+
+        alert:
+          noinfo: お知らせはありません.
+
+        modal:
+          title: お知らせ
+          close: 閉じる
+
+    editor:
+      modal:
+        plugin:
+          title: プラグイン設定
+
+    messages:
+      genre_not_found: 閲覧可能なフォルダが見つかりませんでした.フォルダの権限を確認してください.
+
+  layouts:
+    editor:
+      modal:
+        wysiwyg:
+          title: コンテンツ編集
+
+        plugin:
+          title: プラグイン設定
+
+        direct_html:
+          title: HTML直接入力
+
+  views:
+    pagination:
+      first: 最初
+      last: 最後
+      previous: 前
+      next: 次
+      truncate: ...
+
+  mail:
+    signature: 'pref-shimane-cms ホームページ管理システム'
+
+    page_notify:
+      publish_request:
+        subject: 依頼
+
+      cancel_request:
+        subject: ページ公開停止依頼
+
+      publish_reject:
+        subject: 却下
+
+      publish:
+        subject: 承認
+
+      top_news_status_request:
+        subject: 依頼
+
+      top_news_status_reject:
+        subject: 却下
+
+      top_news_status_yes:
+        subject: 承認
+
+  rss:
+    title: 'pref-shimane-cms RSS (%{title})'
+    description: pref-shimane-cms

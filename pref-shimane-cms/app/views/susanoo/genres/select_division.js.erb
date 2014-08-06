@@ -1,0 +1,5 @@
+<% if @sections.present? %>
+$("#genre_section_id").html(
+  "<%= escape_javascript(options_for_select(@sections.map{ |_| [_.name, _.id] })) %>"
+);
+<% end %>

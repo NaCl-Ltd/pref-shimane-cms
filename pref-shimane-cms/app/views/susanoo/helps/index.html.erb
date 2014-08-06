@@ -1,0 +1,94 @@
+<% content_for :page_top_menu do -%>
+  <div class="pull-right">
+    <%= text_field_tag :'search-text', '',  class: 'input-large search-query', placeholder:  t('.button.search.placeholder') %>
+    <%= button_tag :'search-button', id: 'search-category-and-help', class: 'btn' do %>
+      <i class='icon-search icon-white'></i>
+    <% end %>
+  </div>
+<% end -%>
+
+<div id="top-message-area"></div>
+<!-- ファイルエクスプローラ -->
+<div class="row-fluid explore">
+  <!-- ファイルツリービュー-->
+  <div class="col-left col-md-3">
+    <div class="col-content">
+      <div id='nothing-data'>
+        <%= render partial: "shared/helps/alert", locals: {type: :info, messages: [t('.alert.nothing_data')]} %>
+      </div>
+      <div id="treeview" class="treeview"></div>
+    </div>
+  </div><!-- /div.col-left -->
+
+  <div class="col-center col-md-9">
+    <div class="col-content" id="center-help-area">
+    </div>
+  </div> <!-- /div.col-center -->
+</div>
+
+<% content_for :javascript_contents do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      image_tag = '<%= image_tag('news_item.png', class: 'wakaba').html_safe %>'
+
+      //init treeview
+      $("#treeview").fancytree({
+        icons: false,
+        source: $.ajax({
+          url: "<%= main_app.treeview_susanoo_helps_path(expanded_id: params[:expanded_id]) %>",
+        }),
+
+        renderNode: function(event, data) {
+          node = data.node;
+          if (node.data.datatype !== "<%= ::HelpCategory::CATEGORY_CLASS %>") {
+            span = $(node.span).find('.fancytree-title');
+            img = $(node.span).find('.wakaba');
+            if (span.length > 0 && img.length == 0) {
+              if (node.data.id) {
+                $(span).before(image_tag)
+              }
+            }
+          }
+        },
+
+        activate: function(event, data) {
+          node = data.node
+          if (node.data.id) {
+            params = {};
+            params.parent_id = node.data.id;
+            if (node.data.datatype !== "<%= ::HelpCategory::CATEGORY_CLASS %>"){
+              $.get("/susanoo/helps/" + node.data.id, function(help_html){
+                $('#center-help-area').html(help_html);
+              })
+            }
+          }
+        },
+
+        lazyload: function(event, data)  {
+          node = data.node;
+          data.result = {
+            url: "<%= main_app.treeview_susanoo_helps_path(expanded_id: params[:expanded_id]) %>",
+            data: { id: node.data.id }
+          }
+        }
+      });
+
+      $('#search-category-and-help').on('click', function(){
+        $.post('<%= main_app.search_susanoo_helps_path %>', {
+          keyword: $('#search-text').val()
+        }, function(tree_json){
+         if (tree_json.length > 0){
+            $('#nothing-data').hide();
+          }else{
+            $('#nothing-data').show();
+          }
+          treeview = $("#treeview").fancytree('getTree');
+          treeview.reload(tree_json);
+         })
+        return false;
+      })
+
+    })
+  <% end %>
+<% end %>
+

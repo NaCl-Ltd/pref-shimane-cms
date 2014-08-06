@@ -1,0 +1,81 @@
+
+<%= error_messages_for @advertisement %>
+
+<div class="control-group">
+  <%= f.label :side_type, class: "control-label" %>
+  <div class="controls">
+    <% Advertisement::SIDE_TYPE.each do |k, v| %>
+      <label class="radio inline">
+        <%= radio_button 'advertisement', 'side_type', k %>
+        <%= t(".side_type_label.#{v}") %>
+      </label>　&nbsp;
+    <% end %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :name, class: "control-label" %>
+  <div class="controls"><%= f.text_field :name %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :advertiser, class: "control-label" %>
+  <div class="controls"><%= f.text_field :advertiser %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :begin_date, class: "control-label" %>
+  <div class="controls"><%= f.datetime_select :begin_date, {use_month_numbers: true, minute_step: 15}, class: "span1" %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :end_date, class: "control-label" %>
+  <div class="controls"><%= f.datetime_select :end_date, {use_month_numbers: true, minute_step: 15}, class: "span1" %></div>
+</div>
+
+
+<div class="control-group">
+  <%= f.label :description, class: "control-label" %>
+  <div class="controls"><%= f.text_field :description, size: 60 %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :description_link, class: "control-label" %>
+  <div class="controls"><%= f.text_field :description_link, size: 60 %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :image, class: "control-label" %>
+  <div class="controls">
+    <% if @advertisement.persisted? -%>
+      <%= t(".uploaded_image") %>
+      <%= image_tag(show_file_susanoo_advertisement_path(@advertisement)) %>
+      <br />
+      <label class="radio">
+        <%= radio_button_tag :reupload_image, "1", !params[:reupload_image] || params[:reupload_image] == "1"  %>
+        <%= t(".not_reupload_image") %>
+      </label>
+      <br />
+      <label class="radio">
+        <%= radio_button_tag :reupload_image, "2", params[:reupload_image] == "2" %>
+        <%= t(".reupload_image") %>
+      </label>&nbsp;&nbsp;&nbsp;
+    <% end -%>
+    <%= f.file_field :image, size: '60' %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :alt, class: "control-label" %>
+  <div class="controls"><%= f.text_field :alt, size: 60 %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :url, class: "control-label" %>
+  <div class="controls"><%= f.text_field :url, size: 60 %></div>
+</div>
+
+<div class="control-group">
+  <%= f.label :show_in_header, class: "control-label" %>
+  <div class="controls"><%= f.check_box(:show_in_header, {}, true, false) %></div>
+</div>

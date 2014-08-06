@@ -1,0 +1,14 @@
+<div id="fileupload" class="gal-holder col-md-6">
+  <h2><%= t('shared.select_file') %></h2>
+  <div class="fileupload-list">
+    <%= render partial: 'asset', collection: @help_assets %>
+  </div>
+</div>
+
+<% content_for :stylesheet_contents do -%>
+  <%= stylesheet_link_tag "explore", media: "all" %>
+<% end %>
+
+<% content_for :title do -%>
+  <%= t('shared.select_file_genre_page') %>
+<% end %>

@@ -1,0 +1,86 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new main_app.edit_action_susanoo_admin_helps_path, pull_right: true, id: 'new-help-action', remote: true %>
+<% end -%>
+
+<div id="help-configure" class='row-fluid explore'>
+  <div class="col-center col-md-5">
+    <div class="col-content">
+      <table class='table table-hover'>
+        <thead>
+          <tr>
+            <th class='span1'><%= t('.label.help_action_no') %></th>
+            <th class='span1'><%= HelpAction.human_attribute_name(:name) %></th>
+            <th class='span1'><%= HelpAction.human_attribute_name(:action_master_id) %></th>
+            <th class='span1'><%= HelpAction.human_attribute_name(:help_category_id) %></th>
+            <th class='span1'><%= t('shared.label.operation')%></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @help_actions.each.with_index(HelpAction::START_INDEX) do |h_a, idx| %>
+            <tr class='help-action-row' help_action_id='<%= h_a.id %>'>
+              <td><%= idx %></td>
+              <td><%= h_a.name %></td>
+              <td><%= h_a.action_master.try(:name) %></td>
+              <td><%= h_a.help_category.try(:name) %></td>
+              <td>
+                <%= link_to t('.button.confirmation'), susanoo_helps_path(expanded_id: h_a.help_category_id), class: 'btn btn-info btn-small' %>
+                <%= link_to t('shared.delete'), main_app.destroy_action_susanoo_admin_help_path(h_a), class: 'btn btn-danger btn-small', method: :delete, confirm: t('shared.confirm.delete') %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /div.col-left -->
+
+  <!-- ヘルプのフォーム -->
+  <div class="col-right col-md-7">
+    <div class="col-content configure" id="center-form-area">
+    </div>
+  </div> <!-- /div.col-center -->
+</div>
+
+<%= link_to t('.button.helps'), main_app.susanoo_admin_helps_path, class: 'btn btn-info' %>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do -%>
+  $(function() {
+    $('#new-help-action').on('ajax:success', function(e, data, status, xhr){
+      $('#center-form-area').html(data);
+      $('.active').removeClass('active warning');
+    })
+
+    $('.help-action-row').on('click', function(){
+      $.get('<%= main_app.edit_action_susanoo_admin_helps_path %>',{
+        id: $(this).attr('help_action_id')
+      }, function(form_html){
+        $('#center-form-area').html(form_html)
+      })
+      $('.active').removeClass('active warning')
+      $(this).addClass('warning active');
+    })
+
+    $(document).on('change', '.help-category', function(){
+      var target_select_id = $(this).attr('target_select_id')
+      if (target_select_id){
+        $.getJSON('<%= main_app.susanoo_admin_help_categories_path %>', {
+          help_category_id: $(this).val()
+        }, function(help_categories){
+          $('#' + target_select_id).empty().append(new Option('<%= t('.select.prompt') %>', ''))
+          $.each(help_categories, function(){
+            $('#' + target_select_id).append(new Option(this.name, this.id))
+          })
+        })
+      }
+    })
+
+    $(document).on('ajax:success', '#edit-action-form', function(e, data, status, xhr){
+      if ($(data).hasClass('alert-success')){
+        location.href="<%= main_app.action_configure_susanoo_admin_helps_path %>" + "?notice=" + "<%= t('.success') %>" ;
+      }else{
+        $('#form-message-area').html(data);
+      }
+    })
+  });
+<% end -%>
+<% end -%>

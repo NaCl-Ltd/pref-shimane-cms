@@ -1,0 +1,8 @@
+<div class="alert alert-<%= type %>">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <ul>
+    <% messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>

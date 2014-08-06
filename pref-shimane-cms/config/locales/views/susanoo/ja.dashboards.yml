@@ -1,0 +1,27 @@
+#
+# トップページ(ダッシュボード)用ロケールファイル
+#
+ja:
+  susanoo:
+    dashboards:
+      index:
+        title: トップメニュー
+        
+        link:
+          new: 新規作成
+          edit: 編集中
+          request: 公開依頼中
+          publish: 公開中
+          waiting: 公開待ち
+          reject: 公開依頼却下
+          
+        label:
+          info: お知らせ一覧
+          title: タイトル
+          last_modified: 日付
+          editor: 作業担当者
+          manager: 承認者
+          visitor: 閲覧者
+
+        alert:
+          noinfo: お知らせはありません.

@@ -1,0 +1,29 @@
+<div class="row-fluid explore">
+  <div class="col-left col-md-6">
+    <div id="treeview" class="treeview col-content"></div>
+  </div>
+
+  <div id="fileupload" class="gal-holder col-md-6 col-center">
+    <div class="fileupload-list col-content">
+      <%= render partial: 'asset', collection: @page_assets %>
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+  <%= javascript_tag do %>
+    $(function () {
+      Susanoo.PageAsset.BrowseResource.init(<%= raw Genre.root_treeview(current_user, page_displayed: true).to_json %>)
+    });
+  <% end %>
+<% end -%>
+
+<% content_for :stylesheet_contents do -%>
+  <%= stylesheet_link_tag "explore", media: "all" %>
+  <%= stylesheet_link_tag "treeview", media: "all" %>
+<% end %>
+
+<% content_for :title do -%>
+  <%= t('shared.select_file_genre_page') %>
+<% end %>
+

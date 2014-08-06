@@ -1,0 +1,145 @@
+<%
+  # iframe内のHTMLをキャッシュから読み込む場合があるため、
+  # JQuery で強制的に iframe 内のHTMLをロードし
+  # .col-center > .col-content に追加しています
+  unless local_assigns.has_key? :mobile
+    mobile = false
+  end
+
+  if @page_content.new_record?
+    _post_path = susanoo_page_contents_path
+  else
+    _post_path = susanoo_page_content_path(@page_content)
+  end
+
+  if mobile
+    _col_center = 'col-md-10'
+    _iframe_path = content_susanoo_page_contents_path(id: @page_content.id, page_id: @page.id, mobile: true)
+  else
+    _col_center = 'col-md-8'
+    _iframe_path = content_susanoo_page_contents_path(id: @page_content.id, page_id: @page.id, template_id: @template_id)
+  end
+-%>
+<% content_for :stylesheet_contents do -%>
+<%# IE8 で画像アップロードのプレビューで縮尺がおかしくなることへの対応 (max-widthバグ) %>
+<!--[if IE 8 ]>
+<style>
+  .ImagePreviewBox img {
+    max-width: none !important;
+  }
+</style>
+<![endif]-->
+<% end -%>
+<% content_for :page_top_menu do -%>
+  <%= link_to t('shared.cancel'),
+    cancel_susanoo_page_contents_path(page_id: @page.id, mode: @mode),
+    data: {
+      confirm: t('.confirm.cancel')
+    },
+    id: 'cancel',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%= link_to t('.label.convert'),
+    convert_susanoo_page_contents_path(id: @page_content.id, page_id: @page.id, mobile: mobile),
+    method: :post, remote: true, id: 'convert',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <% if current_user.admin? -%>
+    <%= link_to t('.label.direct_html'), '#',
+      id: 'direct_html',
+      "data-url" => direct_html_susanoo_page_contents_path,
+      class: "btn btn-small pull-right",
+      style: "margin-left:5px;"%>
+  <% end -%>
+
+  <%= link_to t('.label.check'),
+    check_susanoo_page_contents_path(page_id: @page.id, mobile: mobile),
+    method: :post, remote: true, id: 'check',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <% if mobile -%>
+    <%= link_to t('.label.copy'), '#',
+      method: :post, remote: true, id: 'copy',
+      "data-src" => content_susanoo_page_contents_path(id: @page_content.id, page_id: @page.id, mobile: true, copy: true),
+      class: "btn btn-small pull-right",
+      style: "margin-left:5px;"%>
+  <% end -%>
+
+  <%= link_to t('.label.preview'),
+    preview_susanoo_page_contents_path(page_id: @page.id, mobile: mobile),
+    method: :post,
+    remote: true,
+    id: 'preview',
+    class: "btn btn-small pull-right",
+    style: "margin-left:5px;"%>
+
+  <%# 一時保存ボタン %>
+  <%- unless mobile -%>
+  <%= link_to t('shared.save_temporarily'),'#',
+    id: 'save_temporarily',
+    class: 'btn btn-warning btn-small pull-right',
+    style: "margin-left:5px;" %>
+  <%- end -%>
+
+  <%# 保存ボタン %>
+  <%= link_to t('shared.save'), '#', id: 'save-disalbed', class: "btn btn-primary btn-small pull-right", disabled: 'disabled' %>
+  <%= link_to t('shared.save'), '#', id: 'save', class: 'btn btn-primary btn-small pull-right', style: 'display:none' %>
+<% end -%>
+
+
+<div class="row-fluid editor">
+  <div class="col-left col-md-2">
+    <div id="widgets" class="col-content">
+      <div class="accordion" id="widget-accordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#widget-accordion" href="#collapse-content">
+              <i class="icon-edit"></i><%= t("widgets.categories.content") %>
+              <span class="label sidebar-label label-info">
+                <i class="icon-chevron-down"></i>
+              </span>
+            </a>
+          </div>
+          <div id="collapse-content" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul class="nav nav-list">
+                <%= page_editor_widgets_contents %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-center <%= _col_center %>">
+    <div class="col-content">
+      <%= form_for([:susanoo, @page_content], url: _post_path,
+        remote: true,
+        html: { id: "new_page_content", style:"display: none"}) do |f| %>
+        <%= hidden_field_tag :template_id, @template_id %>
+        <%= hidden_field_tag :mode, @mode %>
+        <%= hidden_field_tag :iframe_path, _iframe_path %>
+        <%= f.hidden_field :content %>
+        <%= f.hidden_field :mobile  %>
+        <%= f.hidden_field :page_id %>
+      <% end %>
+    </div>
+  </div>
+
+  <% unless mobile -%>
+    <div class="col-right col-md-2">
+      <div class="col-content">
+        <div class="sidebar-collapser" data-side="right">
+          <div class="sidebar-collapser-caret"></div>
+        </div>
+        <div id="col-right-transitions">
+        <%= page_transitions_table(2) %>
+        </div>
+      </div>
+    </div>
+  <% end -%>
+</div>

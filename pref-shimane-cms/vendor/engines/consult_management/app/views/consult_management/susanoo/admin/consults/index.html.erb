@@ -1,0 +1,42 @@
+<ul class='nav nav-tabs'>
+  <li class='active'>
+    <%= link_to t('.consult_management'), susanoo_admin_consults_path %>
+  </li>
+
+  <li>
+    <%= link_to t('.consult_category_management'), susanoo_admin_consult_categories_path %>
+  </li>
+</ul>
+
+<div id="consult-form-area">
+  <%= render 'new' %>
+</div>
+
+<hr />
+<p class='text-center'><%= t('.list') %></p>
+
+<%= form_tag(search_susanoo_admin_consults_path, id: "consult-search-form", class: 'form-inline', remote: true) do %>
+  <%= ConsultManagement::ConsultCategory.model_name.human %>:
+  <%= select_tag :consult_category_id, options_for_select(@c_ca.map{|c| [c.name, c.id]}), include_blank: true %>
+  <%= submit_tag t('shared.search'), class: 'btn btn-primary btn-small' %>
+<% end %>
+
+<%= render partial: 'list', locals: {consults: ConsultManagement::Consult.all} %>
+
+<% content_for :javascript_contents do %>
+  <script>
+    $(document).ready(function(){
+      $("#consult-search-form").on('ajax:success', function(e, data, status, xhr){
+        $('#consults').replaceWith(data)
+      })
+    });
+
+    $(document).on('ajax:success', "#consult-form", function(e, data, status, xhr){
+      if (data.status){
+        location.href = '<%= susanoo_admin_consults_path %>'
+      }else{
+        $('#consult-form-area').html(data.html)
+      }
+    })
+  </script>
+<% end %>

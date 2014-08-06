@@ -1,0 +1,14 @@
+<table class="table table-bordered table-striped">
+  <tr>
+    <th><%= t(".label.user") %></th>
+    <th><%= t(".label.updated_at") %></th>
+  </tr>
+  <% @page.revisions.each do |rev| -%>
+    <tr>
+      <td><%= User.find(rev.user_id).name rescue t(".label.deleted_user") %></td>
+      <td><%= public_term_strftime(rev.last_modified) %></td>
+    </tr>
+  <% end -%>
+</table>
+
+<%= link_to_back(main_app.susanoo_page_path(@page)) %>

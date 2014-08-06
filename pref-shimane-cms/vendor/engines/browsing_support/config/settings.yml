@@ -1,0 +1,33 @@
+browsing_support:
+  dicdir: &browsing_support_dicdir <%= BrowsingSupport::Engine.root.join('files', Rails.env, 'dic') %>
+  mecabrc: <%= Rails.root.join('vendor/src/mecab/mecabrc') %>
+
+  library:
+    mecab: <%= Rails.root.join('vendor/src/mecab/src/.libs/libmecab.so') %>
+
+  voice_synthesis:
+    # Open Jtalk Settings
+    open_jtalk: <%= Rails.root.join('vendor/src/open_jtalk/bin/open_jtalk') %>
+    open_jtalk_options:
+      '-x': *browsing_support_dicdir
+      '-m': <%= Rails.root.join('vendor/htsvoices/htsvoice') %>
+      '-r': '0.9'
+      '-jm': '0.5'
+      '-jf': '0.2'
+
+    # mecab dic index Settings
+    mecab_dict_index: <%= Rails.root.join('vendor/src/open_jtalk/mecab/src/mecab-dict-index') %>
+    mecab_dict_index_options: &browsing_support_mecab_dict_index_options
+      '-d': *browsing_support_dicdir
+      '-o': *browsing_support_dicdir
+      '-f': EUC-JP
+      '-t': utf-8
+
+    # lame Settings
+    lame: <%= Rails.root.join('vendor/src/lame/frontend/lame') %>
+    lame_options:
+      '-r':    ""
+      '-b':    32
+      '--cbr': ""
+      '-m':    m
+      '--scale': '1.5'

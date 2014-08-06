@@ -1,0 +1,145 @@
+#
+# 画面・コントローラのメッセージ
+#
+ja:
+  engines:
+    advertisement_management: 広告管理
+
+  shared:
+    advertisement_management:
+      preview_banners:
+        advertisement_preview_title: 広告表示のプレビュー
+
+      footer_banner:
+        corp:
+          title: 企業広告
+          about: 広告掲載について
+
+        pref:
+          title: 県施策PR
+          about: 県施策PRについて
+
+        toppage:
+          title: トップページ上部
+          about: トップページのバナー
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    # Used in number_to_human_size() and number_to_human()
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+
+      # Used in number_to_human_size()
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  advertisement_management:
+    susanoo:
+      advertisements:
+        show:
+          title: 広告の詳細
+          public_process_now: 公開処理中
+        index:
+          title: バナー広告一覧
+          edit_state: 公開設定
+          new: 新規作成
+          exist_banner_job: 現在、バナー広告の設定変更を反映中です。変更が反映されるまでバナー広告の設定はできません。
+          toppage_advertisements_not_found: トップページ上部のバナーが未登録のためバナー広告の設定はできません。
+        list:
+          toppage_title: トップページ上部のバナー一覧
+          pref_title: 県の広告一覧
+          corp_title: 企業広告一覧
+          display_period: "表示期間"
+          publishing: 公開処理中
+        new:
+          title: 新規広告の登録
+        create:
+          success: 広告を作成しました。
+        edit:
+          title: 広告の編集
+        update:
+          success: 広告を編集しました。
+        destroy:
+          success: 広告'%{name}'を削除しました.
+        form:
+          side_type_label:
+            pref: 県の広告
+            corp: 企業の広告
+            toppage: トップページ上部のバナー
+          uploaded_image: 現在アップロードされている画像
+          not_reupload_image: 画像を変更しない
+          reupload_image: 画像を変更する
+        edit_state:
+          title: 公開・非公開の設定
+          please_checked_publish_page: 公開するページにチェックを付けてください。
+          go_order_setting: 順番設定画面に進む
+        update_state:
+          cancel_message: 設定変更を破棄しました。
+          select_toppage: トップページ上部バナーは、1つから4つ選択してください。
+        select_publish:
+          pref_title: 県広告
+          corp_title: 企業広告
+          toppage_title: トップページ上部バナー
+        sort:
+          title: 広告の並び替え
+          please_change_order_by_dragging_and_dropping_the_ad: 広告をドラッグ アンド ドロップして順番を変更してください。
+          sort_corp: 企業広告の並び替え
+          sort_pref: 県の広告の並び替え
+          sort_toppage: トップページ上部バナーの並び替え
+        finish_sort:
+          cancel_message: 設定変更を破棄しました。
+  activerecord:
+    models:
+      advertisement: 広告
+
+    attributes:
+      advertisement:
+        name: 広告名
+        advertiser: 広告主
+        state: 状態
+        side_type: 種別
+        begin_date: 公開開始日
+        end_date: 公開終了日
+        description: 広告の説明
+        description_link: 説明のlink URL
+        image: 画像ファイル
+        alt: 画像の説明
+        url: 画像のlink URL
+        show_in_header: ヘッダ広告表示する
+        side_type_label:
+          toppage: トップページ上部のバナー
+          pref: 県の広告
+          corp: 企業の広告
+        state_label:
+          published: 公開中
+          unpublished: 非公開
+        show_in_header_label:
+          show: 表示する
+          hidden: 表示しない
+
+      advertisement_list:
+        state_label:
+          published: 公開処理中
+          unpublished: 非公開処理中
+
+  errors:
+    messages:
+      is_behind_from_date: "が%{finish}よりも後になっています"

@@ -1,0 +1,9 @@
+#
+# Rails.env 毎に設定を変更したい場合は、config/settings/#{Rails.env}.yml で
+# 設定値を上書きしてください
+#
+
+# 通常以外のデザイン（テンプレートファイル） を使用するパスのリスト
+site_design:
+  path:
+    custom: '/custom/'

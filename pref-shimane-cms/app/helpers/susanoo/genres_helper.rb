@@ -1,0 +1,2 @@
+module Susanoo::GenresHelper
+end

@@ -1,0 +1,37 @@
+<%
+# 説明：そのフォルダ(サブフォルも含めた）にあるイベントページの一覧を表示する
+#      抽出条件は、イベント情報ピックアップと同じ
+# 引数：最大表示数（無指定時は全て）
+path = @page_view.genre.path
+max_display_num = args[0].to_i
+range_begin = Date.today
+range_end = range_begin + 6
+-%>
+
+<div class="section">
+  <div class="information clearfix">
+    <% num_event = 0 -%>
+    <% displayed_event = Array.new -%>
+    <% date = range_begin %>
+    <dl>
+      <% while date <= range_end -%>
+        <% if num_event >= max_display_num -%><% break -%><% end -%>
+        <% events = ::EventCalendar::PluginHelper.event_pickup(path, date, date) -%>
+        <% for event in events -%>
+          <% if num_event >= max_display_num -%><% break -%><% end -%>
+          <% if displayed_event.include?(event.id) -%><% next -%><% end -%>
+          <% displayed_event.push(event.id) -%>
+          <% begin_date = event.page.begin_event_date || event.begin_event_date %>
+        <% end_date = event.page.end_event_date || event.end_event_date %>
+          <dt style="width: 130px;">
+            <%= news_strftime(begin_date) %>
+            <% if end_date && begin_date != end_date -%> 〜 <%= h(news_strftime(end_date)) %>  <% end -%>
+          </dt>
+          <dd><a href="<%= event.page.path %>"> <%= event.page.news_title %></a></dd>
+          <% num_event += 1 -%>
+        <% end -%>
+        <% date += 1 -%>
+      <% end %>
+    </dl>
+  </div>
+</div>

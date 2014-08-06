@@ -1,0 +1,42 @@
+#
+# Visitorコントローラ用
+#
+ja:
+  susanoo:
+    visitors:
+      header_sub:
+        link:
+          top_page: pref-shimane-cms
+          skip: 本文へ移動
+          back_to_top: ページの先頭へ戻る
+        label:
+          font_size: 文字サイズ
+          background_color: 背景色
+        btn:
+          font_size_to_normal: 標準
+          font_size_to_large: 拡大
+          background_color_to_white: 白
+          background_color_to_black: 黒
+          background_color_to_beige: ベージュ
+          read_aloud: 読み上げ
+          link_to_rubi: ふりがな
+
+      content:
+        label:
+          top_page_title: pref-shimane-cms
+          top_page_title_sub: Content Management System
+          contact: お問い合わせ先
+
+      footer:
+        title: "<Name>"
+        postcode: "<Post Code>"
+        tel: "<Phone Number>"
+        address: "<Address>"
+        copyright: "<Year> <Name>. All Rights Reserved."
+
+        label:
+          address: 住所
+          tel: 電話
+
+        link:
+          back_to_top: ページの先頭へ戻る

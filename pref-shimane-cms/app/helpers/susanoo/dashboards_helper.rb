@@ -1,0 +1,2 @@
+module Susanoo::DashboardsHelper
+end

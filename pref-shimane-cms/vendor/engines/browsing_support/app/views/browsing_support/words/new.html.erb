@@ -1,0 +1,7 @@
+<%= form_tag words_path, method: :post, class: 'form-horizontal well' do %>
+  <%= render 'form', word: @word %>
+  <div class="controls">
+    <%= submit_tag t('.add'), class: 'btn btn-primary' %>
+    <%= link_to_back words_path %>
+  </div>
+<% end %>

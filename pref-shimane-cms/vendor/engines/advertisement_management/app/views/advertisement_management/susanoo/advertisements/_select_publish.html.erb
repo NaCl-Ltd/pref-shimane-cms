@@ -1,0 +1,20 @@
+<fieldset>
+  <legend><%= t ".#{Advertisement::SIDE_TYPE[side_type]}_title" %></legend>
+  <% if advertisements.empty? -%>
+  <p><%= t("shared.empty_list", label: t("activerecord.attributes.advertisement.side_type_label.#{Advertisement::SIDE_TYPE[side_type]}")) %></p>
+  <% else %>
+    <div class="control-group">
+      <% advertisements.each do |ad| -%>
+        <div class="controls">
+          <%= label_tag "advertisement[#{ad.id}]", class: "control-label" do %>
+            <%= check_box('advertisement',
+              ad.id,
+              {checked: "#{'checked' if ad.published?}"},
+              Advertisement::PUBLISHED, Advertisement::NOT_PUBLISHED) %>
+            <%= ad.name %>
+          <% end %>
+        </div>
+      <% end -%>
+    </div>
+  <% end %>
+</fieldset>

@@ -1,0 +1,83 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= t(".please_change_order_by_dragging_and_dropping_the_ad") %>
+    <%= form_tag(finish_sort_susanoo_advertisements_path, name: 'ChangeAdvertisement', class: " form-inline well")  do -%>
+      <div id="result"></div>
+
+      <h4><%= t(".sort_toppage") %></h4>
+      <ul class="advertisements_list" id="toppage_ads">
+        <% if @toppage_ads.empty? -%>
+          <p><%= t("shared.empty_list", label: t("activerecord.attributes.advertisement.side_type_label.#{Advertisement::SIDE_TYPE[Advertisement::TOPPAGE_TYPE]}")) %></p>
+        <% else -%>
+          <% @toppage_ads.each do |ad| -%>
+            <li class="draggble" id="item_<%= ad.id %>">
+              <span class="handle">
+                <%= ad.advertisement.name %></span>
+            </li>
+          <% end -%>
+        <% end -%>
+      </ul>
+
+      <h4><%= t(".sort_corp") %></h4>
+      <ul class="advertisements_list" id="corp_ads">
+        <% if @corp_ads.empty? -%>
+          <p><%= t("shared.empty_list", label: t("activerecord.attributes.advertisement.side_type_label.#{Advertisement::SIDE_TYPE[Advertisement::OUTSIDE_TYPE]}")) %></p>
+        <% else -%>
+          <% @corp_ads.each do |ad| -%>
+            <li class="draggble" id="item_<%= ad.id %>">
+              <span class="handle">
+                <%= ad.advertisement.name %></span>
+            </li>
+          <% end -%>
+        <% end -%>
+      </ul>
+
+      <h4><%= t(".sort_pref") %></h4>
+      <ul class="advertisements_list" id="pref_ads">
+        <% if @pref_ads.empty? -%>
+          <p><%= t("shared.empty_list", label: t("activerecord.attributes.advertisement.side_type_label.#{Advertisement::SIDE_TYPE[Advertisement::INSIDE_TYPE]}")) %></p>
+        <% else -%>
+          <% @pref_ads.each do |ad| -%>
+            <li class="draggble" id="item_<%= ad.id %>">
+              <span class="handle"><%= ad.advertisement.name %></span>
+            </li>
+          <% end -%>
+        <% end -%>
+      </ul>
+      <br />
+      <%= submit_tag(t("shared.save"),    name: 'save',     class: "btn btn-primary", onclick: raw("document.ChangeAdvertisement.target = ''")) %>
+      <%= submit_tag(t("shared.cancel"),  name: 'cancel',   class: "btn btn-warning", onclick: raw("document.ChangeAdvertisement.target = ''")) %>
+      <%= link_to t("shared.preview"), main_app.preview_virtual_susanoo_visitors_path(mode: "advertisement"),
+                  data: { popup: true }, class: "btn btn-info" %>
+    <% end -%>
+  </div>
+</div>
+
+<% content_for :javascript_contents do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      <% Advertisement::SIDE_TYPE.each do |k, v| %>
+        $('#<%= v %>_ads').sortable({
+          axis: 'y',
+          dropOnEmpty: false,
+          handle: '.handle',
+          cursor: 'crosshair',
+          items: 'li',
+          opacity: 0.4,
+          scroll: true,
+          update: function(){
+            $.ajax({
+              type: 'post',
+              data: $('#<%= v %>_ads').sortable('serialize'),
+              dataType: 'script',
+              complete: function(request){
+                $('#<%= v %>_ads').effect('highlight');
+              },
+              url: '<%= update_sort_susanoo_advertisements_path(side_type: v) %>'
+            })
+          }
+        });
+      <% end %>
+    });
+  </script>
+<% end %>

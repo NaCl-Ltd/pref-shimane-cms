@@ -1,0 +1,51 @@
+<%= form_for [:susanoo, @genre, @web_monitor], html: {class: 'form-horizontal well'} do |f| -%>
+  <fieldset>
+    <legend><%= t(".caption.#{f.object.new_record? ? :new : :edit}") %></legend>
+
+    <% unless f.object.new_record? -%>
+      <div class="alert alert-info"><%= t('.description.edit_login') %></div>
+    <% end -%>
+
+    <% if f.object.errors.any? -%>
+      <%= error_messages_for(f.object) %>
+    <% end -%>
+
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :login, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :login %>
+        <div class="help-block"><%= t('.description.login') %></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :password, class: "control-label" %>
+      <div class="controls">
+        <%= f.password_field :password %>
+        <div class="help-block"><%= t('.description.password') %></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :password_confirmation, class: "control-label" %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+        <div class="help-block"><%= t('.description.password_confirmation') %></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit t("shared.save"), class: "btn btn-primary btn-small" %>
+        <%= link_to_back susanoo_genre_web_monitors_path(@genre) %>
+      </div>
+    </div>
+  </fieldset>
+<% end -%>

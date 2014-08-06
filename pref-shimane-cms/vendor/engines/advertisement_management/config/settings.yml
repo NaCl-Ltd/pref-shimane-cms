@@ -1,0 +1,9 @@
+advertisement_management:
+  # エンジン機能へのアクセス権限
+  authority: admin
+
+# 広告用のエクスポート設定を追加
+export:
+  advertisement:
+    image_dir: /images/advertisement/
+    javascript_file_path: /javascripts/banner.js

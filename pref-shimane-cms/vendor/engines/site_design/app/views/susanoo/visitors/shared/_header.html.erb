@@ -1,0 +1,28 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="X-FRAME-OPTIONS" content="SAMEORIGIN" />
+<meta name="Keywords" content="pref-shimane-cms,CMS,Ruby,Rails" />
+<meta name="Description" content="pref-shimane-cms" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/doc.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/bootstrap.css" media="all" />
+<% # RSS load %>
+<% if @page_view.rss_create? && @page_view.rss_path && @page_view.page.try(:persisted?) -%>
+<link type="application/rss+xml" rel="alternate" href="<%= @page_view.rss_path %>" media="all" title="RSS" />
+<% end -%>
+<% if @page_view.edit -%>
+<%= stylesheet_link_tag 'editor.iframe', media: 'all' %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "editor.iframe" %>
+<% else -%>
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+<% end -%>
+<%- # load for AdvertisementManagement -%>
+<%= render partial: "/susanoo/visitors/advertisement_management/header"  if EngineMaster.enable?('advertisement_management') -%>
+<%- # load for BrowsingSupport -%>
+<%= render partial: "/susanoo/visitors/browsing_support/header"  if EngineMaster.enable?('browsing_support') -%>
+<title>pref-shimane-cms :<%= @page_view.page.title %></title>

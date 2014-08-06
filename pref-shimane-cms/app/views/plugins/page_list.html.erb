@@ -1,0 +1,28 @@
+<%
+# 説明：そのフォルダにあるページの一覧を表示する
+# 引数：最大表示数（無指定時は全て）
+args ||= []
+max = args.first.to_i - 1
+pages = Page.where('genre_id = ? AND name != ?', @page_view.page.genre_id, 'index').includes(:contents).order('page_contents.id DESC')
+pages = pages.select{|p| p.publish_content}
+-%>
+
+<% if @preview || !pages.empty? -%>
+  <ul class="page_list">
+    <% pages[0..max].each do |page| -%>
+      <li>
+        <img src="/images/page.png" alt="" width="16" />
+        <%= link_to page.path do %>
+          <%= page.news_title %>（<%= news_strftime(page.publish_content.last_modified) %>）
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if @preview && pages.empty? %>
+      <li>
+        <img src="/images/page.png" alt="" width="16" />
+        サンプルページ（<%= news_strftime(Time.now) %>）
+      </li>
+    <% end %>
+  </ul>
+<% end %>

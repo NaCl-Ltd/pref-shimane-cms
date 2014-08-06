@@ -1,0 +1,5 @@
+<% if @genre.present? -%>
+  var html = "<%= escape_javascript(render(partial: "pages")) %>"
+  $(".col-center > .col-content").html(html);
+<% end -%>
+

@@ -1,0 +1,26 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+.consult-table{
+  table-layout: fixed;
+}
+
+.no{
+  width: 20px;
+}
+
+.category{
+  width: 50px;
+}
+
+.link{
+  width: 300px;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

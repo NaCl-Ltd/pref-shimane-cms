@@ -1,0 +1,83 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= form_for(@advertisement, url: "#", html: {class: "form-horizontal form-inline well"}) do |f| %>
+      <div class="control-group info info">
+        <%= label :advertisement,  :side_type, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :side_type, state_or_processing(@advertisement), readonly: true, disabled: "disabled" %>
+        </div>
+      </div>
+      <div class="control-group info info">
+        <%= label :advertisement,  :side_type, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :side_type, @advertisement.side_type_label, readonly: true, disabled: "disabled" %>
+        </div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :name, class: "control-label" %>
+        <div class="controls"><%= f.text_field :name, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :advertiser, class: "control-label" %>
+        <div class="controls"><%= f.text_field :advertiser, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :begin_date, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :begin_date, public_term_strftime(@advertisement.begin_date), readonly: true, disabled: "disabled" %>
+        </div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :end_date, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :end_date, public_term_strftime(@advertisement.end_date), readonly: true, disabled: "disabled" %>
+        </div>
+      </div>
+
+
+      <div class="control-group info">
+        <%= f.label :description, class: "control-label" %>
+        <div class="controls"><%= f.text_field :description, size: 60, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :description_link, class: "control-label" %>
+        <div class="controls"><%= f.text_field :description_link, size: 60, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :description_link, class: "control-label" %>
+        <div class="controls">
+          <% if @advertisement.image.file? -%>
+            <%= image_tag(show_file_susanoo_advertisement_path(@advertisement)) %>
+          <% end -%>
+        </div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :alt, class: "control-label" %>
+        <div class="controls"><%= f.text_field :alt, size: 60, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= f.label :url, class: "control-label" %>
+        <div class="controls"><%= f.text_field :url, size: 60, readonly: true, disabled: "disabled" %></div>
+      </div>
+
+      <div class="control-group info">
+        <%= label :advertisement,  :show_in_header, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :side_type, @advertisement.show_in_header_label, readonly: true, disabled: "disabled" %>
+        </div>
+      </div>
+    <% end %>
+    &nbsp;&nbsp;<%= link_to t("shared.back"), susanoo_advertisements_path, class: "btn btn-warning" %>
+    <% if !advertisement_job_exists? && !@advertisement.published? %>
+      &nbsp;&nbsp;<%= link_to t("shared.edit"), edit_susanoo_advertisement_path(@advertisement), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+import_page:
+  pool_path: <%= ImportPage::Engine.root.join('files', Rails.env) %>
+  max_file_size: <%= 30.megabytes %>

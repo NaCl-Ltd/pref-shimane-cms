@@ -1,0 +1,15 @@
+<div id="crumbs">
+  <ul class="breadcrumb">
+  <% page.genre.each_from_parent do |genre| -%>
+    <% break if page.name == 'index' && genre == page.genre %>
+    <li><a href="<%= genre.link_uri %>"><%= genre.title %></a><span class="divider">/</span></li>
+  <% end %>
+
+  <% if page.name == 'index' -%>
+    <li><%= page.genre.title %></li>
+  <% else -%>
+    <li><a href="<%= page.genre.link_uri %>"><%= page.genre.title %></a><span class="divider">/</span></li>
+    <li><%= page.title %></li>
+  <% end -%>
+  </ul>
+</div>

@@ -1,0 +1,36 @@
+<% content_for :stylesheet_contents do %>
+  <%= stylesheet_link_tag 'consult_management/consults' %>
+<% end %>
+
+<table id="consults" class='table table-striped table-bordered consult-table'>
+  <thead>
+    <tr>
+      <th class='no'><%= t('.no') %></th>
+      <th class='category'><%= ConsultManagement::Consult.human_attribute_name(:consult_categories) %></th>
+      <th><%= ConsultManagement::Consult.human_attribute_name(:name) %></th>
+      <th class='link'><%= ConsultManagement::Consult.human_attribute_name(:link) %></th>
+      <th><%= ConsultManagement::Consult.human_attribute_name(:work_content) %></th>
+      <th><%= ConsultManagement::Consult.human_attribute_name(:contact) %></th>
+      <th><%= t('.operation') %></th>
+    </tr>
+  </thead>
+
+  <% c_ca = params[:consult_category_id].present? ? ConsultManagement::ConsultCategory.find(params[:consult_category_id]) : nil %>
+  <tbody>
+    <% consults.each.with_index(1) do |consult, idx| %>
+      <tr>
+        <td><%= idx %></td>
+        <% c_name = c_ca ? c_ca.name : consult.consult_categories.pluck(:name).join("\n") %>
+        <td><%= simple_format(c_name) %></td>
+        <td><%= consult.name %></td>
+        <td class='link truncate'><%= link_to consult.link, consult.link %></td>
+        <td><%= consult.work_content %></td>
+        <td><%= consult.contact %></td>
+        <td>
+          <%= link_to_edit edit_susanoo_admin_consult_path(consult), class: 'btn btn-success consult-edit', remote: true %>
+          <%= link_to_remove susanoo_admin_consult_path(consult) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

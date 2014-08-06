@@ -1,0 +1,42 @@
+<table class="table inner-col-table">
+  <tr>
+    <td style='width: 120px;'><%= t('.title')%></td>
+    <td><%= @page.title %></td>
+  </tr>
+  <tr>
+    <td style='width: 120px;'><%= t('.name')%></td>
+    <td><%= @page.name %></td>
+  </tr>
+  <% if @page.original.present? -%>
+    <tr>
+      <td style='width: 120px;'><%= t('.original') %></td>
+      <td><%= link_to page_fullpath(@page.original), main_app.susanoo_genres_path(genre_id: @page.original.genre_id) %></td>
+    </tr>
+  <% end -%>
+  <% if @page.copies.present? -%>
+    <% @page.copies.each do |c| -%>
+      <tr>
+        <td style='width: 120px;'><%= t('.copy_to') %></td>
+        <td><%= link_to page_fullpath(c), main_app.susanoo_genres_path(genre_id: c.genre.id) %></td>
+      </tr>
+    <% end -%>
+  <% end -%>
+</table>
+
+<div class="col-button-group">
+<%= link_to_edit main_app.susanoo_page_path(@page) %>
+<% if @page.movable? -%>
+<a id="button-move-page" href="#modal-folder-select" role="button"
+    class="btn btn-small btn-success"
+    data-toggle="modal"
+    data-url="<%= main_app.move_susanoo_page_path(@page) %>"
+    data-message="<%= t('.confirm.move') %>">
+  <%= t(".move")%>
+</a>
+<% else -%>
+  <a class="btn btn-small btn-success disabled"> <%= t(".move")%></a>
+<% end -%>
+<%= link_to_remove main_app.susanoo_page_path(@page),
+  data: {confirm: t('.confirm.remove') },
+  disabled: @page.locked?(request.session_options[:id]) || !@page.deletable?(current_user) %>
+</div>

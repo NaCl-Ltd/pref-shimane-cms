@@ -1,0 +1,22 @@
+ja:
+  consult_management:
+    susanoo:
+      admin:
+        consults:
+          list:
+            no: No
+            consult_category: 分類
+            operation: 操作
+          index:
+            list: 一覧
+            title: 相談窓口管理
+            consult_management: 相談窓口管理
+            consult_category_management: 分類管理
+          edit:
+            title: 相談窓口編集
+          create:
+            success: 作成に成功しました　
+          update:
+            success: 更新に成功しました
+          destroy:
+            success: 削除に成功しました

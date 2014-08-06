@@ -1,0 +1,120 @@
+html, body {
+  height: 100%;
+}
+
+body#allchar {
+  font: 75% "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+#wrapper {
+  min-height: 100%;
+  height: auto;
+  /* margin: 0 auto -150px 0; */
+}
+
+#footer {
+  height: 149px;
+  padding: 0;
+  margin: 0 auto;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+  position: relative;
+}
+
+#footer .container {
+  margin: 15px auto;
+}
+
+#skip {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  padding: 0px;
+  line-height: normal;
+}
+
+p.skiplink a {
+  position: absolute;
+  width: 120px;
+  margin: 0px;
+  padding: 5px;
+  left: -9999px;
+  top: 0px;
+  text-align: center;
+  z-index: 50;
+}
+
+p.skiplink a:focus, p.skiplink a:active {
+  left: 0px;
+  top: 0px;
+  background: #000000;
+  color: #ffffff;
+}
+
+
+#navigation {
+  background-color: #2c3e50;
+  border-color: transparent;
+  color: #ffffff;
+}
+
+#navigation .brand {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+#navigation .nav-control {
+  padding-top: 10px;
+}
+#navigation .nav-control .btn {
+  margin-top: 0px;
+}
+
+#navigation .nav-control-label{
+  padding-top: 5px;
+  margin-right: 5px;
+}
+
+.btn.btn-default {
+  box-shadow: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.splash {
+  padding: 4em 0 2em;
+  background: #141d27;
+  background: -moz-linear-gradient(70deg, #141d27 0, #233344 72%, #2c4055 89%, #39526e 100%);
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #141d27), color-stop(72%, #233344), color-stop(89%, #2c4055), color-stop(100%, #39526e));
+  background: -webkit-linear-gradient(70deg, #141d27 0, #233344 72%, #2c4055 89%, #39526e 100%);
+  background: -o-linear-gradient(70deg, #141d27 0, #233344 72%, #2c4055 89%, #39526e 100%);
+  background: -ms-linear-gradient(70deg, #141d27 0, #233344 72%, #2c4055 89%, #39526e 100%);
+  background: linear-gradient(70deg, #141d27 0, #233344 72%, #2c4055 89%, #39526e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#141d27', endColorstr='#39526e', GradientType=1);
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  min-height: 300px;
+}
+
+table td, table th {
+  border: solid 1px black;
+}
+
+table.table_center {
+  margin-left: auto;
+  margin-right: auto;
+}
+div.table_div_center {
+  text-align: center;
+}
+
+div.table_div_right {
+  float: right;
+}
+
+div.table_div_left {
+  float: left;
+}

@@ -1,0 +1,49 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to_new main_app.new_susanoo_admin_division_path, pull_right: true %>
+<% end -%>
+
+<div id="result"></div>
+<div id="division">
+  <table id="list" class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.attributes.division.name") %></th>
+        <th><%= t("activerecord.attributes.division.enable") %></th>
+        <th><%= t("shared.label.operation") %></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @divisions.each do |division| -%>
+        <tr class="draggble" id="item_<%= division.id %>">
+          <td style="width: 30%"><%= division.name %></td>
+          <td style="width: 30%"><%= division.enable_label -%></td>
+          <td>
+            <%= link_to_edit main_app.edit_susanoo_admin_division_path(division) %>
+            <%= link_to_remove main_app.susanoo_admin_division_path(division) %>
+            <a class="btn btn-info btn-position btn-small" href="#" title="<%= t("shared.description.position") %>">
+              <%= t("shared.position")%>
+            </a>
+          </td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+</div>
+
+<% content_for :javascript_contents do %>
+  <script type="text/javascript">
+    $( '#list tbody' ).sortable({
+      cursor: 'move',
+      opacity: 0.7,
+      containment: "parent",
+      handle: ".btn-position",
+      update: function(){
+        jQuery( '#list tbody' ).effect( 'highlight', '', 2000 );
+        jQuery.post('<%= main_app.update_sort_susanoo_admin_divisions_path %>', $(this).sortable( 'serialize'), function(html){
+          $("#result").html(html)
+        }, 'text');
+      }
+    });
+  </script>
+<% end %>

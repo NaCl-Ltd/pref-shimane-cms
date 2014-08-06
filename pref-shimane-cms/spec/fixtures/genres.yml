@@ -1,0 +1,9 @@
+genre_top:
+  id         : 1
+  name       :
+  title      : "トップ"
+  path       : "/"
+  section_id : 1
+  description: "トップフォルダ"
+  "no"       : 1
+  deletable  : false

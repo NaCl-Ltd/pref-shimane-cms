@@ -1,0 +1,49 @@
+<div id="header_police">
+  <div class="logo">
+    <a href="<%= @page_view.page.section.genre.try(:path) %>">
+      <%= image_tag 'susanoo/visitors/basic/police.gif', alt: '島根県警察', size: '290x116' %>
+    </a>
+
+    <a href="#content_top">
+      <%= image_tag 'susanoo/visitors/basic/blank.gif', alt: '本文へジャンプ', size: '1x1' %>
+    </a>
+  </div>
+
+  <script type="text/javascript">udMenu('<%= @page_view.page.path_base%>');</script>
+
+  <noscript>
+    <div class="ud_menu">
+      <a href="<%= @page_view.path %><%= @page_view.page.name %>.m3u">
+        <%= image_tag 'susanoo/visitors/basic/speak.png', alt: 'よみあげ', size: '55x66' %>
+      </a>
+
+      <a href="<%= @page_view.path %><%= @page_view.page.name %>.html.r">
+        <%= image_tag 'susanoo/visitors/basic/ruby_off.png', alt: 'ふりがなをつける', size: '55x66' %>
+      </a>
+    </div>
+  </noscript>
+
+  <div id="global_nav" class="police_nav">
+    <div class="button"><a href="/police/keimu/">警務部</a></div>
+    <div class="button"><a href="/police/seikatsu/">生活安全部</a></div>
+    <div class="button"><a href="/police/keiji/">刑事部</a></div>
+    <div class="button"><a href="/police/koutsuu/">交通部</a></div>
+    <div class="button"><a href="/police/keibi/">警備部</a></div>
+  </div>
+
+<!-- ツール -->
+  <div id="search_nav">
+    <form method="get" action="/cgi-bin/search.cgi">
+      <div id="tool">
+        <div style="font-size:9pt;">
+          <input type="text" tabindex="1" id="text" accesskey="K" name="query" size="25" value="" maxlength="1991" />
+          <input type="radio" id="search_top" tabindex="2" accesskey="T" name="uri" value="" checked />全体で検索
+          <input type="radio" id="search_dir" tabindex="2" accesskey="S" name="uri" value="<%=  @page_view.path %>" />このフォルダ以下から検索
+          <input type="submit" id="submit" tabindex="2" accesskey="D" value="検索" />
+
+          <a href="/usage.html">使い方</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

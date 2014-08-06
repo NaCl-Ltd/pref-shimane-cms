@@ -1,0 +1,48 @@
+
+<%= form_for([:susanoo, :admin, @help], remote: true, url: save_caption_susanoo_admin_helps_path, method: :post, html: {id: "edit-caption-form"}) do |f| %>
+  <% if @help.persisted? %>
+    <legend><%= t('.edit_title') %></legend>
+    <%= hidden_field_tag(:id, @help.id)  %>
+  <% else %>
+    <legend><%= t('.new_title') %></legend>
+    <%= f.hidden_field(:help_content_id)%>
+  <% end %>
+
+  <div id="form-message-area"></div>
+
+  <div>
+    <div class="control-group span4">
+      <%= label_tag :big_category, t('.label.big_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@big_categories.map{|h_c| [h_c.name, h_c.id]}, @big_category.try(:id)), prompt: t('.select.prompt'), id: 'big_category', class: "help-category span8", target_select_id: 'middle_category' %>
+      </div>
+    </div>
+
+    <div class="control-group span4">
+      <%= label_tag :middle_category, t('.label.middle_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@middle_categories.map{|h_c| [h_c.name, h_c.id]}, @middle_category.try(:id)), prompt: t('.select.prompt'), id: 'middle_category', class: "help-category span8", target_select_id: 'small_category' %>
+      </div>
+    </div>
+
+    <div class="control-group span4">
+      <%= label_tag :small_category, t('.label.small_category'), class: "control-label" %>
+      <div class="controls">
+        <%= select_tag :'help_category_ids[]', options_for_select(@small_categories.map{|h_c| [h_c.name, h_c.id]}, @small_category.try(:id)), prompt: t('.select.prompt'), id: 'small_category', class: "span8" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, class: "span4" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-success pull-right" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<%
+    # 説明：そのフォルダにある下位フォルダ及び、さらに1階層下の一覧を表示する
+  # 引数：なし
+  section = Section.find(:first, :conditions => ['top_genre_id = ?', @page_view.genre.id])
+  if section
+    genres = section.genres
+  else
+    genres = @page_view.page.genre.children
+  end
+-%>
+<% if @preview || !genres.empty? -%>
+<h2>フォルダ一覧</h2>
+<ul class="genre_down_list">
+<% genres.each do |genre| -%>
+  <li><h3><a href="<%= h(genre.link_uri) %>"><%= h(genre.title) %></a></h3>
+<% unless genre.children.empty? -%>
+<ul>
+<% genre.children.each do |g| -%>
+<li><a href="<%= h(g.link_uri) %>"><%= h(g.title) %></a></li>
+<% end -%>
+</ul>
+</li>
+<% end -%>
+<% end -%>
+<% if @preview && genres.empty? -%>
+  <li><h3>サンプルフォルダ</h3></li>
+<% end -%>
+</ul>
+<% end -%>

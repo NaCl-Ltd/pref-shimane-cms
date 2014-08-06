@@ -1,0 +1,35 @@
+<%
+# 説明：指定したフォルダにある下位フォルダの一覧を表示する(目的別情報の第3階層用)
+# 引数：path ('/life/')
+
+genre = Genre.find_by_path(args[0])
+if genre
+  genres = genre.children
+end
+-%>
+<% if @preview || !genres.empty? -%>
+  <% genres.order("no asc").each do |child_genre| -%>
+    <% grandchildren = child_genre.children -%>
+
+    <% if child_genre.public_pages_exists?(true) -%>
+      <div class="box-right">
+        <div class="content-border-bottom"><h4 class="sidebar-title"><span><a href="<%= child_genre.path %>"><%= child_genre.title -%></a></span></h4></div>
+        <% unless grandchildren.empty? -%>
+          <div class="default">
+            <ul class="clearfix">
+              <% if @preview && genres.empty? -%>
+                <li>サンプルフォルダ</li>
+              <% else -%>
+                <% grandchildren.order("no asc").each do |grandchild_genre| -%>
+                  <% if grandchild_genre.public_pages_exists?(true) -%>
+                    <li><a href="<%= grandchild_genre.path %>"><%= grandchild_genre.title %></a></li>
+                  <% end -%>
+                <% end -%>
+              <% end -%>
+            </ul>
+          </div>
+        <% end -%>
+      </div>
+    <% end -%>
+  <% end -%>
+<% end -%>

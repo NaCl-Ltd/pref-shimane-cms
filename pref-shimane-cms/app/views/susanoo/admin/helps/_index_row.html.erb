@@ -1,0 +1,22 @@
+
+<% per_page = help_contents.default_per_page %>
+<% current_page = help_contents.current_page - 1 %>
+<% help_contents.each.with_index(per_page * current_page + 1) do |h_c, idx| %>
+  <tr>
+    <td><%= idx %></td>
+    <td>
+      <% h_c.helps.order_by_number_nulls_first.order(:id).each do |help| %>
+        <div><%= help.name %></div>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to_edit main_app.edit_susanoo_admin_help_path(h_c) %>
+      <%= link_to configure_susanoo_admin_helps_path(help_content_id: h_c.id), class: 'btn btn-small' do %>
+        <%= t('.button.configure') %>
+      <% end %>
+      <%= link_to_remove main_app.susanoo_admin_help_path(h_c) %>
+    </td>
+  </tr>
+<% end %>
+
+<%= paginate help_contents %>

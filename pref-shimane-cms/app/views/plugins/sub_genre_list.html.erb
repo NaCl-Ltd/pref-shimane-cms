@@ -1,0 +1,17 @@
+<%
+  # 説明：そのフォルダにある下位フォルダの中で、公開ページを含むものを表示する。
+  section = Section.find_by(top_genre_id: @page_view.genre.id)
+  genres = section ? section.genres : @page_view.page.genre.children
+  genres = genres.select{|g| g.has_publish_content?}
+%>
+
+<% if @preview || !genres.empty? -%>
+  <h2>フォルダ一覧</h2>
+  <ul class="sub-genre-list">
+    <% genres.each do |g| -%>
+      <li>
+        <%= link_to g.title, g.link_uri %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

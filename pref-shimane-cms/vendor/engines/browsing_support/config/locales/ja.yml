@@ -1,0 +1,84 @@
+ja:
+  engines:
+    browsing_support: 辞書管理（ふりがな、音声合成）
+
+  widgets:
+    items:
+      rubi: ルビ
+
+  plugins:
+    descriptions:
+      rubi: "個別のルビを設定します"
+      attributes:
+        rubi:
+          word: ルビを設定する単語を入力してください
+          text: 読み方を入力してください
+
+    attributes:
+      rubi:
+        word: 単語
+        text: 読み
+
+  browsing_support:
+    words:
+      index:
+        title: 辞書管理
+        new: 新規単語の追加
+        search_by_text: 読みで検索：
+        search_by_word: 単語で検索：
+        search_words_to_begin_in: …で始まる単語
+        search_words_including: …を含む単語
+        search_result: 検索結果
+        word_not_found: 該当する単語がありません。
+        registered_words: 登録単語一覧
+        delete_confirm: 「%{word}」を削除しますか？
+        about_action: ※他の所属が登録した単語は、運用管理者以外は編集・削除できません。
+      new:
+        title: 新規単語の追加
+        add: 追加
+      create:
+        success: 追加されました。
+      edit:
+        title: 登録単語の編集
+        update: 更新
+      update:
+        success: 更新されました。
+        not_editable: 他の所属が登録している単語のため、編集できませんでした。
+      destroy:
+        success: 削除されました。
+        not_destroyable: 他の所属が登録している単語のため、削除できませんでした。
+      form:
+        description:
+          base: 全角文字で入力して下さい
+          text: 全角ひらがなで入力して下さい
+  activerecord:
+    attributes:
+      word:
+        base: 単語
+        text: 読み
+        updated_at: 最終変更日時
+        user: 登録者
+    errors:
+      models:
+        word:
+          attributes:
+            base:
+              blank: 単語 を入力してください
+              taken: その単語はすでに登録されています。もう少し長い単語で登録してください
+              invalid: 単語 に不正な文字が含まれています
+              invalid_chars: 単語 に使用できない文字%{chars}が含まれます
+            text:
+              invalid: に不正な文字が含まれています
+  views:
+    pagination:
+      first: 先頭
+      last: 最終
+      previous: 前ページ
+      next: 次ページ
+      truncate: "..."
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries: '%{entry_name}の%{first}-%{last}件を表示中 / 合計%{total}件'
+      more_pages:
+        display_entries: '%{entry_name}の%{first}-%{last}件を表示中 / 合計%{total}件'

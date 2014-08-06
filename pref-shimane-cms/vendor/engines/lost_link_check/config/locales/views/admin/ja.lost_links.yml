@@ -1,0 +1,8 @@
+ja:
+  lost_link_check:
+    susanoo:
+      admin:
+        lost_links:
+          index:
+            title: リンク切れ一覧
+            not_already_check: まだリンク切れチェックが行われていません。

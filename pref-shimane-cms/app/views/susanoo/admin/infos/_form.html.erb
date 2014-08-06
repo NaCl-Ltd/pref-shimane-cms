@@ -1,0 +1,35 @@
+<%= form_for([:susanoo, :admin, @info], html: {class: 'form-horizontal well'}) do |f| %>
+
+  <% if @info.errors.any? -%>
+    <%= error_messages_for(@info) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :title, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :title, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :last_modified, class: "control-label" %>
+    <div class="controls">
+      <%= f.date_select :last_modified, {}, class: "span2" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :content, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_area :content %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+      <%= link_to t('shared.back'), main_app.susanoo_admin_infos_path, class: 'btn btn-warning btn-small' %>
+    </div>
+  </div>
+
+<% end %>

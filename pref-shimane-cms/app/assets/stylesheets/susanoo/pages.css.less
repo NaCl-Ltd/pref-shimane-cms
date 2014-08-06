@@ -1,0 +1,88 @@
+#susanoo-pages-index {
+  table.table-pages {
+    thead, tbody {
+      width: 100%;
+    }
+
+    thead th{
+      vertical-align: middle;
+    }
+
+    thead:first-child tr:first-child th {
+      border-top: 1px solid #dddddd;
+    }
+
+    tbody td {
+      vertical-align: middle;
+    }
+
+    th,td {
+      border: 1px solid #dddddd;
+    }
+
+    thead th.admission,
+    thead th.preview,
+    thead th.last_modified,
+    thead th.begin_date {
+      border-top: 0;
+    }
+
+    .latest,
+    .private,
+    .operation,
+    .admission,
+    .preview,
+    .last_modified {
+      text-align: center;
+    }
+
+    .title,
+    .latest,
+    .private,
+    .admission,
+    .last_modified,
+    .operation {
+      border-left: 1px solid #dddddd;
+    }
+
+    .genre         { min-width: 100px; }
+    .title         { min-width: 120px; }
+    .admission     { width: 100px; }
+    .last_modified { width: 80px;  }
+    .operation     { width: 90px;  }
+    .preview       { width: 110px; }
+
+    tbody tr:hover>td,
+    tbody tr:hover>th {
+      background-color: #e9e9e9;
+    }
+
+    .sort {
+      .dropup.caret {
+        margin-top: 7px;
+        margin-left: 5px;
+        border-top: 0;
+        border-bottom: 4px solid #0088cc;
+      }
+
+      .dropdown.caret {
+        margin-top: 7px;
+        margin-left: 5px;
+        border-top: 4px solid #0088cc;
+      }
+    }
+  }
+}
+
+/**
+ * 詳細画面
+ */
+#susanoo-pages-show {
+  .page-content {
+    margin-bottom: 20px;
+  }
+
+  .data-label {
+    width: 150px;
+  }
+}

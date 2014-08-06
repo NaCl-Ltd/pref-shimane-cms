@@ -1,0 +1,14 @@
+#
+# ヘルプ参照画面用ロケールファイル
+#
+ja:
+  susanoo:
+    helps:
+      index:
+        title: オンラインヘルプ
+        search: 検索
+        alert:
+          nothing_data: データがありません
+        button:
+          search:
+            placeholder: カテゴリ名、ヘルプ名で検索

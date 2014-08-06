@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "ckeditor/application" %>
+    <%= stylesheet_link_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.css") %>
+    <%= content_for?(:stylesheet_contents) ? yield(:stylesheet_contents) : "" %>
+    <%= csrf_meta_tag %>
+    <%= tag(:meta, :name => "ckeditor-path", :content => Ckeditor.relative_path) %>
+    <title><%= content_for?(:title) ? yield(:title) : t('shared.select_file') %></title>
+
+
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "ckeditor/init" %>
+    <%= javascript_include_tag_nodigest "ckeditor/ckeditor"%>
+    <%= javascript_include_tag "ckeditor/config.toolbar" %>
+    <%= javascript_include_tag "ckeditor/config.allowed_content" %>
+    <%= javascript_include_tag "ckeditor/config.remove_empty_tags" %>
+    <%= javascript_include_tag "ckeditor/config.language_list" %>
+    <%= javascript_include_tag "bootstrap.ckeditor.modal.fix" %>
+
+    <%# NOTE:
+      本来は、ckeditor/applicationを呼ぶのだが、そこで呼ばれるjqueryのバージョンが古いためか、fancytreeの呼び出し時にエラーが発生する
+      そのため、古いjqueryは呼び出さない。しかし、その場合は、ckeditor/filebrowser/javascripts/applicationでエラーが出る。
+      回避策として、ckeditor/filebrowser/javascripts/applicationを呼び出さず、そのファイルをエラーが出ないよう編集したものを
+      RAILS_ROOT/assets/ckeditor/filebrowser/javascripts/application_modify.js.erbに起き、それを呼び出す
+      %>
+    <%#= javascript_include_tag "ckeditor/application" %>
+    <%= javascript_include_tag "ckeditor/filebrowser/javascripts/jquery.tmpl.min" %>
+    <%= javascript_include_tag "ckeditor/filebrowser/javascripts/fileuploader" %>
+    <%#= javascript_include_tag "ckeditor/filebrowser/javascripts/application" %>
+    <%= javascript_include_tag "ckeditor/filebrowser/javascripts/application_modify" %>
+
+    <script type="text/javascript">
+      var CKEditorFuncNum = $.QueryString["CKEditorFuncNum"];
+      var CKEditorName = $.QueryString["CKEditor"];
+      var CKEDITOR = window.opener.CKEDITOR;
+      var EDITOR = CKEDITOR.instances[CKEditorName];
+    </script>
+  </head>
+
+  <body id="<%= template_uniq_id %>">
+    <div id="wrap">
+      <div class="container-fluid container-main">
+        <% if page_header_required? -%>
+          <div id='flash-message-field'><%= bootstrap_flash %></div>
+        <% end -%>
+        <%= yield %>
+      </div> <!-- /container -->
+    </div>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_tag do %>
+      function col_resize() {
+        height = $(window).height() - 1;
+        flash_field = $('#flash-message-field');
+        if (flash_field.size() > 0) {
+          height = height - flash_field.outerHeight() - 10;
+        }
+        $(".col-content").height(height);
+      }
+
+      $(function () {
+        col_resize();
+        var timer = false;
+        $(window).resize(function() {
+          if (timer !== false) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(col_resize(), 300);
+        });
+      });
+    <% end %>
+    <%= javascript_include_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+    <%= content_for?(:javascript_contents) ? yield(:javascript_contents) : "" %>
+  </body>
+</html>

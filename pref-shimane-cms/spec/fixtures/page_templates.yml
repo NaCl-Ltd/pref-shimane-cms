@@ -1,0 +1,11 @@
+page_templates_2_columns:
+  name   : 2カラムレイアウト
+  content: "<div class='susanoo-editable-field'><h1>見出し1</h1></div><div class='row'><div class='span6'><div class='susanoo-editable-field'><h2>カラム1見出し</h2><div><p>カラム1本文</p></div></div></div><div class='span6'><div class='susanoo-editable-field'><h2>カラム2見出し</h2><div><p>カラム2本文</p></div></div></div></div>"
+
+page_templates_3_columns:
+  name   : 3カラムレイアウト
+  content: "<div class='susanoo-editable-field'><h1>見出し1</h1></div><div class='row'><div class='span4'><div class='susanoo-editable-field'><h2>カラム1見出し</h2><div><p>カラム1本文</p></div></div></div><div class='span4'><div class='susanoo-editable-field'><h2>カラム2見出し</h2><div><p>カラム2本文</p></div></div></div><div class='span4'><div class='susanoo-editable-field'><h2>カラム3見出し</h2><div><p>カラム3本文</p></div></div></div></div>"
+
+
+
+

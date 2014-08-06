@@ -1,0 +1,28 @@
+<p class="lead"><%= t('.title') %></p>
+<div class="panel panel-default">
+  <div class="panel-heading"><%= t('.section_1.title') %></div>
+  <div class="panel-body">
+    <ul>
+      <li><%= t('.section_1.line_1') %></li>
+    </ul>
+  </div>
+  <div class="panel-heading"><%= t('.section_2.title') %></div>
+  <div class="panel-body">
+    <ol>
+      <li><%= sanitize t('.section_2.line_1') %></li>
+      <li><%= sanitize t('.section_2.line_2') %></li>
+      <li><%= sanitize t('.section_2.line_3') %></li>
+    </ol>
+  </div>
+  <div class="panel-heading"><%= t('.section_3.title') %></div>
+  <div class="panel-body">
+    <ul>
+      <li><%= t('.section_3.line_1', size: ActiveSupport::NumberHelper.number_to_human_size(ImportPage::UploadFile.max_file_size, prefix: :binary)) %></li>
+      <li><%= t('.section_3.line_2') %></li>
+      <li><%= t('.section_3.line_3') %></li>
+      <li><%= t('.section_3.line_4') %></li>
+      <li><%= t('.section_3.line_5') %></li>
+      <li><%= t('.section_3.line_6') %></li>
+    </ul>
+  </div>
+</div>

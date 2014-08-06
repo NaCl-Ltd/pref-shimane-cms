@@ -1,0 +1,10 @@
+<div class="alert alert-danger">
+  <p><%= t('.line_1',
+           user:  @upload_file.user.try(:name) || t('.deleted_user'),
+           genre: @upload_file.genre.try(:title) || t('.deleted_genre'),
+           file:  @upload_file.filename
+          ) %></p>
+  <p><%= t('.line_2') %></p>
+  <p><%= t('.line_3') %></p>
+  <%= link_to_remove import_path, label: t('.delete_file') %>
+</div>

@@ -1,0 +1,54 @@
+<%
+  if @preview
+    pref_ads, corp_ads = ::AdvertisementList.set_preview_lists
+  else
+    pref_ads = ::AdvertisementList.pref_published
+    corp_ads =::AdvertisementList.corp_published
+  end
+-%>
+
+<div style="clear: both;"></div>
+<br />
+<% unless corp_ads.blank? && pref_ads.blank? -%>
+  <div id="footer_banner"><!-- CORP ADS START -->
+    <div class="round_corner">
+      <h3 style="font-weight: bold">企業広告</h3>
+      <p class="about_banner"><a href="/seisaku/ad1.html" target="_blank">広告掲載について</a></p>
+
+      <ul>
+        <% corp_ads.each do |ad| -%>
+          <li>
+            <%= link_to ad.url, :popup => true do %>
+              <%= image_tag(ad_image_path(ad.image), alt: ad.alt, size: "234x60") %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <div style="clear: both;">&nbsp;</div>
+    </div><!-- CORP ADS START -->
+
+    <hr class="footer_line" />
+
+    <div class="round_corner"><!-- PREF ADS START -->
+      <h3 style="font-weight: bold">県施策PR</h3>
+      <p class="about_banner">
+        <a href="/seisaku/ad2.html" target="_blank">県施策PRについて</a>
+      </p>
+
+      <ul>
+        <% pref_ads.each do |ad| %>
+          <li>
+            <%= link_to ad.url, popup: true do %>
+              <%= image_tag ad_image_path(ad.image), alt: ad.alt, size: "234x60" %>
+            <% end %>
+            <p><%= link_to ad.description, ad.description_link, popup: true if ad.description %></p>
+          </li>
+        <% end %>
+      </ul>
+      <div style="clear: both;">&nbsp;</div>
+    </div><!-- PREF ADS END -->
+
+    <hr class="footer_line" />
+  </div>
+<% end %>

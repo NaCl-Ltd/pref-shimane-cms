@@ -1,0 +1,30 @@
+<div id="counter">
+  <div class="editable-plugin bootstrap">  
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <div class="controls">
+              <p class="text">
+                <%= raw t("plugins.descriptions.counter") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <div class="control-group">
+            <label class="control-label">
+              <%= t("plugins.attributes.counter.default") %>
+            </label>
+            <div class="controls">
+              <%= text_field_tag(:limit, 0, "data-arg" => 1, class: "input-mini", id: nil) %>
+              <span class="muted description"><%= raw t("plugins.descriptions.attributes.counter.default") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

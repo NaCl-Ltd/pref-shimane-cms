@@ -1,0 +1,193 @@
+<% if @page.locked?(request.session_options[:id]) %>
+  <div class="alert alert-warning">
+    <%= t(".unlock.request") %><br />
+    <% if current_user.authorizer_or_admin? %>
+      <%= link_to_remove main_app.private_page_unlock_susanoo_page_path(@page), label: t(".unlock.force"),
+            confirm: t(".unlock.confirm") %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="row-fluid page-content">
+  <div class="span9">
+    <div class="table-title"><%= t(".basic.title") %></div>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <td class="data-label"><%= t(".basic.folder") %></td>
+        <td><%= genre_fullpath(@page.genre) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".basic.page_title") %></td>
+        <td><%= @page.title %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".basic.name") %></td>
+        <td><%= @page.name %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".basic.url") %></td>
+        <td><%= Settings.public_uri.chop %><%= @page.path %></td>
+      </tr>
+    </table>
+
+    <div>
+      <%= link_to_edit main_app.edit_susanoo_page_path(@page), label: t(".page_title.edit") %>
+      <%
+         # 編集コンテンツインスタンスが新規or既存でリンク先を変える
+         editable_content = @page.editable_content
+         if editable_content.new_record?
+           _edit_content_path = main_app.new_susanoo_page_content_path(page_id: @page.id)
+           _edit_mobile_path = main_app.new_susanoo_page_content_path(page_id: @page.id, mobile: true)
+         else
+           _edit_content_path = main_app.edit_susanoo_page_content_path(editable_content)
+           _edit_mobile_path = main_app.edit_susanoo_page_content_path(editable_content, mobile: true)
+         end
+      -%>
+      <%= link_to_edit _edit_content_path, label: t(".public.edit"),
+             disabled: @page.locked?(request.session_options[:id]) || @page.waiting_content || @page.request_content && current_user.editor? %>
+      <%= link_to_edit _edit_mobile_path, label: t(".mobile.edit"),
+             disabled: @page.locked?(request.session_options[:id]) || @page.waiting_content || @page.request_content && current_user.editor? %>
+      <%= link_to_remove main_app.susanoo_page_path(@page),
+            disabled: @page.locked?(request.session_options[:id]) || !@page.deletable?(current_user) %>
+      <%= link_to_edit (@publishing.nil? ? "#" : cancel_request_susanoo_page_content_path(@publishing.id)),
+            label: t(".public.stop_request"),
+            confirm: t(".public.stop_request_confirm"),
+            disabled: (@page.locked?(request.session_options[:id]) || @publishing.nil? || current_user.authorizer?) %>
+      <%= link_to_show main_app.revisions_susanoo_page_path(@page), label: t(".unpublished.history")%>
+      <%= link_to_show main_app.histories_susanoo_page_path(@page), label: t(".public.history") %>
+    </div>
+    <br/>
+     <div class="table-title"><%= t(".public.title") %></div>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <td class="data-label"><%= t(".public.admission") %></td>
+        <td><%= @published ? t("shared.admission.#{@published.admission_key}") : ""%></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".public.term") %></td>
+        <td><%= date_term_text(@published.try(:begin_date), @published.try(:end_date), :public_term) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".public.mobile") %></td>
+        <td><%= page_contents_has_mobile_text(@published) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".public.news") %></td>
+        <td><%= page_contents_section_news_text(@published) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".public.user") %></td>
+        <td><%= page_contents_contact_text(@published) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".public.comment") %></td>
+        <td><%= (@published && @published.comment) ? h(@published.comment) : ""%></td>
+      </tr>
+    </table>
+    <div>
+      <% unless current_user.editor? -%>
+        <% public_page_status_not_editable = @page.locked?(request.session_options[:id]) || @published.nil? %>
+        <%= link_to_edit public_page_status_not_editable ? "#" : main_app.edit_public_page_status_susanoo_page_content_path(@published),
+              label: t(".public.edit_status"),
+              disabled: public_page_status_not_editable %>
+      <% end -%>
+
+      <% if @published.present? -%>
+        <%= link_to main_app.preview_susanoo_visitor_path(@published), class: 'btn btn-small btn-success', target: '_blank' do %>
+          <%= t(".public.show") %>
+        <% end %>
+      <% else -%>
+        <%= link_to t(".public.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+
+      <% if @published.present? && @published.mobile.present? -%>
+        <%= popup_link_to t(".mobile.show"), main_app.preview_susanoo_visitor_path(id: @published.id, mobile: true), {class: "btn btn-info btn-small"} %>
+      <% else -%>
+        <%= link_to t(".mobile.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+
+      <% if @published.present? -%>
+        <%= link_to main_app.new_susanoo_page_path(copy_id: @published.id), class: 'btn btn-small btn-success', target: '_blank' do %>
+          <%= t(".unpublished.copy") %>
+        <% end %>
+      <% else -%>
+        <%= link_to t(".unpublished.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+    </div>
+    <br/>
+    <div class="table-title"><%= t(".unpublished.title") %></div>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <td class="data-label"><%= t(".unpublished.admission") %></td>
+        <td><%=
+          if @unpublished
+            if @unpublished.admission_key == "editing" && @unpublished.edit_required?
+              content_tag(:span, t("shared.admission.save_temporarily"), class: "text-error")
+            else
+              t("shared.admission.#{@unpublished.admission_key}")
+            end
+          else
+            ""
+          end %>（<%= t(".public.term") %>：<%= date_term_text(@unpublished.try(:begin_date), @unpublished.try(:end_date), :public_term) %>）</td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".unpublished.mobile") %></td>
+        <td><%= page_contents_has_mobile_text(@unpublished) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".unpublished.news") %></td>
+        <td><%= page_contents_section_news_text(@unpublished) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".unpublished.user") %></td>
+        <td><%= page_contents_contact_text(@unpublished) %></td>
+      </tr>
+      <tr>
+        <td class="data-label"><%= t(".unpublished.comment") %></td>
+        <td><%= (@unpublished && @unpublished.comment) ? h(@unpublished.comment) : ""%></td>
+      </tr>
+    </table>
+
+    <div>
+      <% private_page_status_not_editable =
+           @page.locked?(request.session_options[:id]) || @unpublished.nil? || !@unpublished.page_status_editable? ||
+           (current_user.editor? && (@page.waiting_content || @page.request_content))
+         unless private_page_status_not_editable
+           edit_page_status_path =
+             if @page.waiting_content
+               main_app.edit_public_page_status_susanoo_page_content_path(@unpublished)
+             else
+               main_app.edit_private_page_status_susanoo_page_content_path(@unpublished)
+             end
+         end
+      %>
+      <%= link_to_edit edit_page_status_path || '#', label: t(".unpublished.edit_status"), disabled: private_page_status_not_editable %>
+      <% if @unpublished.present? -%>
+        <%= link_to main_app.preview_susanoo_visitor_path(@unpublished), class: 'btn btn-small btn-success', target: '_blank' do %>
+          <%= t(".unpublished.show") %>
+        <% end %>
+      <% else -%>
+        <%= link_to t(".unpublished.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+
+      <% if @unpublished.present? && @unpublished.mobile.present? -%>
+        <%= popup_link_to t(".mobile.show"), main_app.preview_susanoo_visitor_path(id: @unpublished.id, mobile: true), {class: "btn btn-info btn-small"} %>
+      <% else -%>
+        <%= link_to t(".mobile.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+
+      <% if @unpublished.present? -%>
+        <%= link_to main_app.new_susanoo_page_path(copy_id: @unpublished.id), class: 'btn btn-small btn-success', target: '_blank' do %>
+          <%= t(".unpublished.copy") %>
+        <% end %>
+      <% else -%>
+        <%= link_to t(".unpublished.show"), "#", {class: "btn btn-info btn-small", disabled: "disabled"} %>
+      <% end -%>
+    </div>
+  </div>
+
+  <div class="span3">
+    <%= page_transitions_table_by_admission(@page) %>
+  </div>
+</div>
+

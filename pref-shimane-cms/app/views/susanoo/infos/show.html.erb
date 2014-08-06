@@ -1,0 +1,9 @@
+<div class="pull-left">
+  <h4><%= @info.title %></h4>
+</div>
+<div class="pull-right">
+  <h5><%= @info.last_modified.strftime(t('date.formats.default')) %></h5>
+</div>
+<hr style="clear: both;"/>
+
+<%= raw @info.content %>

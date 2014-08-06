@@ -1,0 +1,107 @@
+#
+#　フォルダ管理画面用ロケールファイル
+#
+ja:
+ susanoo:
+    genres:
+      index:
+        title: フォルダ管理
+        modal:
+          select_genre: フォルダ選択
+          select: 選択
+          close: 閉じる
+
+      new:
+        title: フォルダ新規作成
+
+      edit:
+        title: フォルダ編集
+
+      form:
+        division: 部局
+        section: 所属
+        description:
+          name: 半角英数字で入力してください. フォルダ名はURLの一部になります.
+          title: 日本語で入力してください.
+          uri: 移行前のサイトへのリンクを自動で生成する場合に指定してください.
+        label:
+          topic_path: トピックパス
+
+      create:
+        success: フォルダを作成しました
+
+      update:
+        success: フォルダを変更しました
+
+      resources:
+        title: タイトル
+        name: フォルダ名
+        admission: 公開状態
+        private_admission: 編集状態
+        last_modified: 更新日
+        recursive: サブフォルダを検索に含める
+        placeholder:
+          keyword: タイトルまたはフォルダ名
+        not_found: フォルダ、ページが見つかりませんでした。
+        move_order: 表示順変更
+
+      genre:
+        title: タイトル
+        parent: フォルダ
+        name: フォルダ名
+        owner: 所有者
+        division: 部局
+        section: 所属
+        auth: アクセス制限
+        tracking_code: トラッキングコード
+        show: フォルダを開く
+        copy: コピー
+        move: 移動
+        original: コピー元
+        copy_to: コピー先
+        web_monitors: アクセス制限
+        new: フォルダ作成
+        new_page: ページ作成
+
+        auth_value:
+          "true"  : 有効
+          "false" : 無効
+
+        tracking_code_value:
+          "true"  : 設定あり
+          "false" : 設定なし
+        confirm:
+          move: フォルダを移動します。よろしいですか？
+          copy: フォルダをコピーします。よろしいですか？
+          remove: フォルダを削除します。よろしいですか?
+
+      page:
+        title: タイトル
+        move: 移動
+        copy: コピー
+        genre: フォルダ
+        name: ページ名
+        original: コピー元
+        copy_to: コピー先
+        confirm:
+          move: ページを移動します。よろしいですか？
+          remove: フォルダを削除します。よろしいですか?
+
+      destroy:
+        success: フォルダ'%{name}'を削除しました.
+        failure: フォルダ'%{name}'の削除に失敗しました.
+        not_deletable: フォルダ'%{name}'は削除できません.
+
+      move:
+        no_permission: フォルダのアクセス権限がありません
+        success: フォルダ'%{name}'を移動しました.
+        failure: フォルダ'%{name}'の移動に失敗しました.
+        ancestor: フォルダ'%{name}'は移動先のフォルダの上位フォルダのため移動できません
+        not_move: 現在の親フォルダと同じフォルダが指定されています
+        same: 移動するフォルダと移動先のフォルダが同じです
+        failure_move_to: 所属トップフォルダへ移動できません.
+
+      copy:
+        success: フォルダ'%{name}'をコピーしました.
+        failure: フォルダ'%{name}'のコピーに失敗しました.
+        failure_to: 所属トップフォルダへコピーできません.

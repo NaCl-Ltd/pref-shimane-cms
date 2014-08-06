@@ -1,0 +1,28 @@
+#
+# 管理者向け機能 お知らせ管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      infos:
+        index:
+          title: お知らせ一覧
+          new: お知らせ作成
+
+        show:
+          title: お知らせ詳細
+
+        new:
+          title: お知らせ作成
+
+        edit:
+          title: お知らせ編集
+
+        create:
+          success: お知らせを作成しました
+
+        update:
+          success: お知らせの更新に成功しました
+
+        destroy:
+          success: お知らせの削除に成功しました

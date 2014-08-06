@@ -1,0 +1,63 @@
+<div class="row-fluid">
+  <div class="span9 well">
+    <%= form_for(@page, url: susanoo_pages_path, html: {class: 'form-horizontal'}) do |f| %>
+      <% if @page.errors.any? -%>
+        <%= error_messages_for(@page) %>
+      <% end -%>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.genre_name") %></label>
+        <div class="controls">
+          <%= f.select :blog_top_genre_id,
+                       options_from_collection_for_select(::Genre.blog_top_in_section(current_user.section).order(:id), :id, :title, @page.blog_top_genre_id.to_i) %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :title, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :title, class: "input-xlarge" %>
+          <span class="help-block"><%= t(".description.title") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.blog_date") %></label>
+        <div class="controls">
+          <%= f.date_select :blog_date, {}, style: "width: 80px;" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.template") %></label>
+        <div class="controls">
+          <%= f.select :template_id,
+            options_for_select(PageTemplate.all.order("name").map{|s| [s.name, s.id]}, @page.template_id),
+            {include_blank: true} %>
+          <a id="link-template-preview" href="#"  class="btn btn-info btn-small"><%= t(".label.preview") %></a>
+          <span class="help-block" style="margin-top:5px;"><%= t(".description.template_id") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit t('.next'), class: "btn btn-primary btn-small" %>
+          <%= link_to_back susanoo_blogs_path, confirm: t(".confirm.back") %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+
+  <div class="span3">
+    <%= page_transitions_table(1) %>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+  <%= javascript_tag do %>
+    $(function () {
+      Susanoo.Page.Form.init()
+    });
+  <% end -%>
+<% end -%>
+

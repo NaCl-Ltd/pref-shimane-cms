@@ -1,0 +1,9 @@
+<h1><%= @page_view.genre.section.name %>ホームページ</h1>
+
+<h2>新着ページ一覧</h2>
+
+<%= render template: 'plugins/section_news', locals: {genre: @page_view.genre} %>
+
+<h2>事業内容</h2>
+
+<%= render template: 'plugins/section_top_list', locals: {genre: @page_view.genre} %>

@@ -1,0 +1,51 @@
+<% begin %>
+  <% uniq_key = SecureRandom.urlsafe_base64(10) %>
+<% end while FileTest.exists?(Rails.root.join('files', 'help', Rails.env, 'tmp', uniq_key)) %>
+
+<%= form_for([:susanoo, :admin, @help], html: {class: 'form-horizontal well'}) do |f| %>
+  <% if @help.errors.any? -%>
+    <%= error_messages_for(@help) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :help_category_id, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :help_category_id, options_for_select(HelpCategory.all.map{|h_c| [h_c.name, h_c.id]}, @help.help_category_id), class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, class: "span4" %>
+    </div>
+  </div>
+
+  <%= f.fields_for :help_content do |h_c| %>
+    <%= h_c.hidden_field :temp_key, {value: uniq_key} %>
+
+    <div class="control-group">
+      <%= h_c.label :content, class: "control-label" %>
+      <div class="controls">
+        <%= h_c.text_area :content, class: "ckeditor" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary" %>
+      <%= link_to t('shared.back'), main_app.susanoo_admin_helps_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Admin.Helper.Form.wysiwyg_id = 'help_help_content_attributes_content';
+  Susanoo.Admin.Helper.Form.init("<%= uniq_key %>");
+});
+<% end -%>
+<% end -%>
+

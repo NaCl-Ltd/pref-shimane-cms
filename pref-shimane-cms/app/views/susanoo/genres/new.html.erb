@@ -1,0 +1,22 @@
+<div class="row-fluid">
+  <div class="span8 ">
+    <%= form_for(@genre, url: main_app.susanoo_genres_path, html: {class: "form-horizontal form-inline well"}) do |f| -%>
+      <%= render partial: 'form', locals: {f: f} %>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= submit_tag t("shared.save"), class: "btn btn-primary btn-small" %>&nbsp;&nbsp;
+          <%= link_to_back main_app.susanoo_genres_path %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Genre.Form.init()
+});
+<% end %>
+<% end -%>

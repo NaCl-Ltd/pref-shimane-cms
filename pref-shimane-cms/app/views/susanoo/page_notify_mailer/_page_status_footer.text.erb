@@ -1,0 +1,18 @@
+  <%= @url %>
+
+作成者(<%= @page_content.user_name %>・<%= @page_content.tel %>・<%= @page_content.email %>@<%= Settings.mail.domain %>)
+
+依頼・承認・却下日(<%= @time.strftime('%Y年%m月%d日') %>)
+
+<% if @end_date -%>
+公開期間(<%= @begin_date %> 〜 <%= @end_date %>)
+<% elsif @begin_date -%>
+公開期間(<%= @begin_date %> 〜)
+<% else -%>
+公開期間(なし)
+<% end -%>
+
+コメント(<%= @page_content.comment %>)
+
+---
+<%= t("mail.signature") %>

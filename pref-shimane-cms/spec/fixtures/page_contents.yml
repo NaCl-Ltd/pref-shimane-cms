@@ -1,0 +1,8 @@
+page_top_content:
+  id             : 1
+  page_id        : 1
+  content        : "<div class=\"susanoo-editable-field\"><h1>Susanoo トップページ</h1></div>"
+  last_modified  : 2014-06-30 00:00:00
+  admission      : 3
+  latest         : true
+  format_version : 1

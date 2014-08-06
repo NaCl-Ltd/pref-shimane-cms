@@ -1,0 +1,24 @@
+<%
+  # 説明：指定したフォルダ以下の新着一覧を表示する
+  # 引数：最大表示数（無指定時は全て）, パス, 最大表示日数（無指定時は全て）
+  # plugin('section_news_by_path', 10, '/life/', 30) # パス指定
+  # plugin('section_news_by_path', 10, 'all', 30) # 全件
+  # plugin('section_news_by_path', 10, 'other', 30) # その他
+
+  # max number of news items to show.
+  max = max_count(args)
+  # max datetime of news items to show.
+  max_date = 0
+  max_date = args[2].to_i if args.size > 2
+  # all the news page under the @genre
+  page_lists = genre_news(args[1], max, max_date)
+%>
+<% if page_lists -%>
+  <ul class="top_news">
+    <% page_lists[0..max].each do |pc| -%>
+      <li> <a href="<%= h(pc.path) %>"><%= h(pc.title) -%></a>（<%= h(news_strftime(pc.begin_date)) %>）</li>
+    <% end -%>
+  </ul>
+<% else -%>
+  <p>新着情報はありません</p>
+<% end -%>

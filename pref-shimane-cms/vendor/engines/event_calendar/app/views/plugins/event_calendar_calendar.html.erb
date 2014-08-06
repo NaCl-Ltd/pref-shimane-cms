@@ -1,0 +1,74 @@
+<%
+  docroot = File.expand_path("#{EventCalendar::Engine.root}/public")
+
+  # 説明：イベントカレンダーを表示させる
+  # 引数：event_calendarファルダのパス
+  path = args[0]
+  id = args[1]
+-%>
+
+<% if @mobile -%>
+<% date = Date.today -%>
+<% next_date = date >> 1 -%>
+<% this_month_file = Dir.glob("#{docroot}#{path}#{date.year}/#{date.month}") -%>
+<% next_month_file = Dir.glob("#{docroot}#{path}#{next_date.year}/#{next_date.month}") -%>
+<% unless this_month_file.empty? && next_month_file.empty? -%>
+<% unless this_month_file.empty? -%>
+<a href="<%= "#{path}#{date.year}/#{date.month}/" %>"><%= date.month %>月 <%= Genre.find_by_path(args[0]).title %></a><br />
+<% else -%>
+現在、<%= date.month %>月の情報はありません<br />
+<% end -%>
+<% unless next_month_file.empty? -%>
+<a href="<%= "#{path}#{next_date.year}/#{next_date.month}/" %>"><%= next_date.month %>月 <%= Genre.find_by_path(args[0]).title %></a>
+<% else -%>
+現在、<%= next_date.month %>月の情報はありません<br />
+<% end -%>
+<% else -%>
+現在、<%= date.month %>,<%= next_date.month %>月の情報はありません。
+<% end -%>
+
+<% else -%>
+
+<%= stylesheet_link_tag "event_calendar/calendar" , media: "all" %>
+<%= stylesheet_link_tag "event_calendar/calendar-custom" , media: "all" %>
+
+<%= javascript_include_tag("event_calendar/yahoo-dom-event.js") %>
+<%= javascript_include_tag("event_calendar/calendar-min.js") %>
+<%= javascript_include_tag("event_calendar/calendar.js") %>
+<%= javascript_include_tag("event_calendar/jkl-parsexml.js") %>
+<div class="yui-skin-sam">
+<div id="<%= id %>"></div>
+</div>
+<script type="text/javascript">
+<!--
+var <%= id %> = new YAHOO.widget.Calendar("cal<%= id %>", '<%= id %>');
+var xmlfile = "<%= path %>event_info.xml";
+var XmlParser = new JKL.ParseXML(xmlfile);
+obj<%= id %> = XmlParser.parse();
+YAHOO.util.Event.addListener(window, "load", handle_calendar('<%= path %>', <%= id %>, obj<%= id %>));
+-->
+</script>
+<noscript>
+<% date = Date.today -%>
+<% next_date = date >> 1 -%>
+<% this_month_file = Dir.glob("#{docroot}#{path}#{date.year}/#{date.month}") -%>
+<% next_month_file = Dir.glob("#{docroot}#{path}#{next_date.year}/#{next_date.month}") -%>
+<% unless this_month_file.empty? && next_month_file.empty? -%>
+<% unless this_month_file.empty? -%>
+<a href="<%= "#{path}#{date.year}/#{date.month}/" %>"><%= date.month %>月 <%= Genre.find_by_path(args[0]).title %></a><br />
+<% else -%>
+現在、<%= date.month %>月の情報はありません<br />
+<% end -%>
+<% unless next_month_file.empty? -%>
+<a href="<%= "#{path}#{next_date.year}/#{next_date.month}/" %>"><%= next_date.month %>月 <%= Genre.find_by_path(args[0]).title %></a>
+<% else -%>
+現在、<%= next_date.month %>月の情報はありません<br />
+<% end -%>
+<% else -%>
+現在、<%= date.month %>,<%= next_date.month %>月の情報はありません。
+<% end -%>
+<br />
+※javascriptを有効にするとイベントカレンダーをご覧頂けます。
+</noscript>
+
+<% end -%>

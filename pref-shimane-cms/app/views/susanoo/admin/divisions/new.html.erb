@@ -1,0 +1,14 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= form_for(@division, url: main_app.susanoo_admin_divisions_path, html: {class: "form-horizontal form-inline well"}) do |f| -%>
+      <%= render partial: 'form', locals: {f: f} %>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= submit_tag t("shared.save"), class: "btn btn-primary btn-small" %>&nbsp;&nbsp;
+          <%= link_to t("shared.back"), main_app.susanoo_admin_divisions_path, class: "btn btn-warning  btn-small" %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>

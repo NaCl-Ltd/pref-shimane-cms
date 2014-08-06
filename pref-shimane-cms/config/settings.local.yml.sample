@@ -1,0 +1,41 @@
+# CMSサーバのURI
+base_uri    : 'http://localhost/'
+
+# 公開サーバのURI
+public_uri  : 'http://localhost/'
+
+# ローカルとして扱うドメイン
+# 本設定以外のドメインは外部サイトへのリンクとして判定されます
+local_domains:
+  - localhost
+  - localhost2
+
+# micheckerのアプリケーション情報
+accessibility:
+  # 本設定に trueを指定しますと、micheker との通信には https が使われます
+  https: false
+  # michecker が動作しているサーバのホスト名を指定します
+  host : localhost
+  # michecker が待ち受けているポートの番号を指定します
+  port : 8080
+  # アクセスビリティチェックAPIのパスを指定します
+  api  : '/api/validate'
+  # api  : '/michecker/api/validate'
+
+# Exportに関する設定
+export:
+  # 同期で使用するユーザを指定します
+  # 本設定のユーザは静的ページの同期先サーバに存在している必要があります
+  user                 : www-data
+
+  # 静的ページを同期させるサーバをリスト形式で指定します
+  # 本設定値の全てのサーバに静的ページを同期させます
+  servers:
+    - localhost
+
+  # 本設定値のディレクトリは同期先サーバに存在する必要があります
+  sync_dest_dir        : /var/www/cms
+
+  # 同期に失敗した静的ページを記録するファイルを指定します
+  sync_failed_page_list: <%= Rails.root.join('log/sync_failed_pages.txt') %>
+

@@ -1,0 +1,29 @@
+source "https://rubygems.org"
+
+# Declare your gem's dependencies in consult_management.gemspec.
+# Bundler will treat runtime dependencies like base dependencies, and
+# development dependencies will be added by default to the :development group.
+gemspec
+
+gem 'pg'
+gem 'sdoc'
+gem 'kaminari'
+gem 'acts_as_tree'
+gem 'acts_as_list'
+gem 'rails_config'
+gem 'ckeditor'
+gem 'paperclip'
+gem 'iconv'
+gem 'nokogiri'
+gem 'twitter-bootstrap-rails'
+gem 'activerecord-session_store'
+
+# for development, test
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'timecop'
+end

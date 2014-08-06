@@ -1,0 +1,34 @@
+<%= form_for([:susanoo, :admin, @emergency_info], html: {class: 'form-horizontal well', method: :patch}) do |f| %>
+
+  <% if @emergency_info.errors.any? -%>
+    <%= error_messages_for(@emergency_info) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :display_start_datetime, class: "control-label" %>
+    <div class="controls">
+      <%= f.datetime_select :display_start_datetime, {}, {class: "span2"} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :display_end_datetime, class: "control-label" %>
+    <div class="controls">
+      <%= f.datetime_select :display_end_datetime, {}, {class: "span2"} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :content, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_area :content %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: "btn btn-primary btn-small" %>
+    </div>
+  </div>
+
+<% end %>

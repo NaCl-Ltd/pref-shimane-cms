@@ -1,0 +1,16 @@
+  <div id="content-wrapper" class="container">
+    <div id="content">
+      <div class="row">
+        <div class="span12">
+          <%= render partial: '/susanoo/visitors/shared/topic_path', locals: {page: @page_view.page} %>
+          <div id="honbun">
+            <!-- begin page-content -->
+            <div id="page-content">
+              <%= render partial: '/susanoo/visitors/shared/content' %>
+            </div> <!-- end page-content -->
+          </div><!-- end honbun -->
+        </div><!-- end .span12 -->
+      </div><!-- end .row -->
+      <%= render partial: '/susanoo/visitors/section_info_configure/content'  if EngineMaster.enable?('section_info_configure') %>
+    </div>
+  </div><!-- end content-wrapper -->

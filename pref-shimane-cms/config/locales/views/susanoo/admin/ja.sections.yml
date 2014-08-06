@@ -1,0 +1,52 @@
+#
+# 管理者向け機能 所属管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      sections:
+        index:
+          title: 所属一覧
+          belongs_to_section_display: に所属する課の表示
+          back_to_index: 全所属一覧表示に戻る
+          sort_division_and_section: 部局・所属の並び変え
+          new: 所属新規作成
+
+        search:
+          label:
+            link_short: 外部サイトへリンクするURL
+            user_count: ユーザ数
+            user_list: ユーザ一覧
+            feature: 使用中の機能
+
+        form:
+          top_genre: 所属トップフォルダ
+          create_section_top_genre: 所属のトップフォルダを作成する(フォルダ名(半角英数字))
+          assign_top_genre: 既存のフォルダを所属トップフォルダとして割り当てる(URL)
+          skip_accessibility_check: アクセシビリティチェックをスキップする
+          feature: Susanooの機能を利用する
+          description:
+            feature: "※ 一度Susanooの機能を有効にすると、再度変更できません"
+
+        destroy:
+          success: 所属%{name}を削除しました
+          cant_destroy_current: ログインユーザの所属は削除できません.
+
+        create:
+          title: 所属新規作成
+          success: 所属を作成しました
+
+        update:
+          title: 所属編集
+          success: 所属を更新しました
+
+        sort:
+          save_in_the_following_order: 以下の以下の順で保存しました。
+        update_sort:
+          failed: 並び替え処理に失敗しました。
+
+        new:
+          title: 所属新規作成
+
+        edit:
+          title: 所属編集

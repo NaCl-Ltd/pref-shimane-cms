@@ -1,0 +1,8 @@
+ja:
+  engines:
+    lost_link_check: リンク切れチェック
+
+  lost_links:
+    warn_message: 未公開ページです。公開処理を行ってください。
+    error_message: ページがありません。
+

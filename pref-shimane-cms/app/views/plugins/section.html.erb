@@ -1,0 +1,33 @@
+<%
+# 説明：組織別情報を表示する
+# 引数：なし
+-%>
+<%
+  divisions = Division.find(:all, :include => :sections, :conditions => ['enable = true'], :order => 'divisions.number, sections.number')
+-%>
+<div>
+<div id="main" class="sections">
+<% divisions.each_with_index do |division, count| -%>
+<h2 id="s<%= count %>"><%= h(division.name) %></h2>
+<% unless division.sections.empty? -%>
+<ul class="section_list">
+<% division.sections.each do |s| -%>
+<% if s.link && !s.link.blank? -%>
+<li><a href="<%= s.link %>"><%= h(s.name) %></a></li>
+<% elsif s.genre -%>
+<li><a href="<%= s.genre.link_uri %>"><%= h(s.name) %></a></li>
+<% else -%>
+<li><%= h(s.name) %></li>
+<% end -%>
+<% end -%>
+</ul>
+<% end -%>
+<br style="clear: both;" />
+<% end -%>
+</div>
+<div id="subject" class="sections" style="margin-top: 7px;">
+<% divisions.each_with_index do |division, count| -%>
+<h3><a class="division_name" href="#s<%= count %>"><%= h(division.name) %></a></h3>
+<% end -%>
+</div>
+</div>

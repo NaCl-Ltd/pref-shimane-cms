@@ -1,0 +1,27 @@
+<!-- フォルダパスパネル -->
+<div class="panel-folder">
+  <%= help_category_fullpath(@child_help_category) %>
+  <% if @parent_help_category %>
+    <%= link_to t('.button.help_list'),
+      main_app.help_list_susanoo_admin_help_categories_path(help_category_id: @parent_help_category.id),
+      remote: true, id: "sort-help", class: 'btn btn-small pull-right' %>
+    <% confirm = @parent_help_category.navigation ? t('.button.reject_confirm') : t('.button.available_confirm') %>
+    <%= link_to t('.button.navigation'), main_app.change_navigation_susanoo_admin_help_category_path(@parent_help_category),
+      confirm: confirm, class: 'btn pull-right btn-warning btn-small' %>
+  <% end %>
+</div>
+
+
+<% if @parent_help_category -%>
+  <legend><%= t(".selected_category_title")%></legend>
+  <%= render partial: "form", locals: {help_category: @parent_help_category} %>
+<% end %>
+
+<legend><%= t(".child_add_title")%></legend>
+<% if @parent_help_category.nil? || @parent_help_category.addable %>
+  <%= render partial: "form", locals: {help_category: @child_help_category} %>
+<% else %>
+  <%= render partial: "shared/help_categories/alert", locals: {type: :info, messages: [t('.child_overflow')]} %>
+<% end %>
+
+

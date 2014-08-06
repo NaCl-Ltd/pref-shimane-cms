@@ -1,0 +1,31 @@
+source "https://rubygems.org"
+
+gemspec
+
+gem 'pg'
+gem 'sdoc'
+gem 'kaminari'
+gem 'acts_as_tree'
+gem 'acts_as_list'
+gem 'rails_config'
+gem 'ckeditor'
+gem 'paperclip'
+gem 'twitter-bootstrap-rails'
+gem 'nokogiri'
+gem 'iconv'
+gem 'coffee-rails'
+gem 'therubyracer', platforms: :ruby
+gem 'mail-iso-2022-jp'
+gem 'activerecord-session_store'
+
+# for development, test
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'timecop'
+end
+
+

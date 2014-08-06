@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      lost_link: リンク切れ
+
+    attributes:
+      lost_link:
+        message: 内容
+        target: リンク先

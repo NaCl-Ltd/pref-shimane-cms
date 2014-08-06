@@ -1,0 +1,52 @@
+<!-- フォルダパスパネル -->
+<div class="panel-folder">
+  <%= genre_fullpath(@search_genre) %>
+</div>
+
+<!-- 検索フォーム -->
+<%= form_for @search_form, as: "search",
+    url: main_app.susanoo_pages_path, method: 'get', remote: true,
+    html: { class: "form-search" } do |f| %>
+  <%= hidden_field_tag 'genre_id', @search_genre.id %>
+
+  <table class="table-page-search">
+    <tr>
+      <td><%= f.label :keyword, t(".search.keyword"), class: "control-label" %></td>
+      <td>
+        <%= f.text_field :keyword %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label :admission, t(".search.admission"), class: "control-label" %></td>
+      <td>
+        <%= f.select :admission, ::PageContent.page_status.map {|k, v| [t("shared.admission.#{k}"), v] }, include_blank: true %>
+      </td>
+    </tr>
+    <tr>
+     <td><%= f.label :start_at, t(".search.last_modified"), class: "control-label", for: "search_start_at_1i" %></td>
+      <td>
+        <%= f.date_select :start_at, {include_blank: true, start_year: 2005, end_year: Date.today.year + 5}, style: "width: 80px;"%> 〜
+        <%= f.date_select :end_at, {include_blank: true, start_year: 2005, end_year: Date.today.year + 5}, style: "width: 80px;"%>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= f.label :recursive, class: 'checkbox', style: 'margin-right:10px;' do -%>
+          <%= f.check_box(:recursive, {}, "1", "0") %><%= t(".search.recursive") %>
+        <% end -%>
+        <%= f.label :include_copy, class: 'checkbox' do -%>
+          <%= f.check_box(:include_copy, {}, "1", "0") %><%= t(".search.include_copy") %>
+        <% end -%>
+        <br>
+        <br>
+        <%= f.submit t("shared.search"), class: "btn btn-primary btn-small" %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<!-- 検索結果 -->
+<div id="result-search">
+  <%= render(partial: "page_list") %>
+</div>
+

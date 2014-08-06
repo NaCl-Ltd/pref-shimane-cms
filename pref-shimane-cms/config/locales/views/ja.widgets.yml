@@ -1,0 +1,150 @@
+#
+# ページ編集機能コンテンツウィジェット・プラグインの定義
+#
+ja:
+  widgets:
+    categories:
+      header: 見出し
+      content: コンテンツ
+      plugin: プラグイン
+
+    items:
+      h1: 見出し1
+      h2: 見出し2
+      h3: 見出し3
+      h4: 見出し4
+      h5: 見出し5
+      h6: 見出し6
+      div: ブロック要素
+      p: 文章
+      img: 画像
+      table: テーブル
+      hr: 横罫線
+      # プラグイン
+      page_list       : ページ一覧
+      genre_down_list : 下位フォルダ一覧
+      genre_list      : フォルダ一覧
+      genre_news_list : フォルダ新着情報
+      google_search   : Google検索
+      twitter         : Twitterタイムライン
+      news            : 新着情報
+      division_news   : 部局新着情報
+      emergency       : 緊急情報
+      emergency_button: 緊急情報リンク
+      page_list       : ページ一覧
+      genre_folder_list: 指定フォルダ一覧
+      genre_news_list_truncate: "フォルダ新着情報(短縮)"
+      section: 組織別情報
+      section_news: 所属新着情報
+      section_news_by_path: 指定フォルダ所属新着
+      section_top_list: 分野別情報
+      sitemap: "サイトマップ"
+      sub_genre_list: "公開ページフォルダ一覧"
+      subject_list: "所属トップ分野別情報"
+      bid_section_list: 各課別入札情報
+
+    examples:
+      h1: 見出し1
+      h2: 見出し2
+      h3: 見出し3
+      h4: 見出し4
+      h5: 見出し5
+      h6: 見出し6
+      div: 文章を入力してください
+
+  plugins:
+    descriptions:
+      page_list: "現在のフォルダにあるページの一覧を表示します。<br />主にフォルダのindexページで使用します。"
+      genre_down_list: "そのフォルダにある下位フォルダ及び、さらに1階層下の一覧を表示します"
+      genre_folder_list: "指定したフォルダの2階層下のフォルダまで表示します。"
+      genre_news_list: "現在のフォルダ以下にあるページの新着情報を表示します。<br/>主にフォルダのindexページで使用します。"
+      genre_list: "現在のフォルダにある下位フォルダの一覧を表示します。<br/>主にフォルダのindexページで使用します。"
+      google_search: "Google検索用のフォームを設置します。"
+      twitter: "Twitterのタイムラインを表示します。アカウント名, 表示件数, 横幅サイズ、縦幅サイズ,背景色, 枠文字色, Tweetの背景色, Tweetの文字色,リンク文字色を指定出来ます。"
+      news: "トップページの新着情報を表示します"
+      division_news    : "部局の新着情報を表示します。"
+      emergency: "トップページの緊急情報を表示します"
+      emergency_button : "緊急情報ページヘのリンクを追加します"
+      page_list: "フォルダにあるページの一覧を表示します"
+      genre_news_list_truncate: "現在のフォルダ以下にあるページの新着情報を表示します。<br/> タイトルが長すぎる場合は、短縮して表示します"
+      section: "組織別情報を表示します"
+      section_news: "所属の新着情報を表示します。<br />主に所属のトップページで使用します。"
+      section_news_by_path: 指定したフォルダ以下の新着一覧を表示します"
+      section_top_list: "分野別情報（所属に割り当てられたフォルダの一覧）を表示します。<br/>主に所属のトップページで使用します。"
+      sitemap: "指定したフォルダ以下のフォルダを3階層まで表示します"
+      sub_genre_list: "そのフォルダにある下位フォルダの中で、公開ページを含むものを表示します"
+      subject_list: "所属トップページの分野別情報を表示します"
+
+      attributes:
+        emergency:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          date: "指定した日数までの緊急情報を表示します"
+        page_list:
+          limit: "表示数を変更する事で表示するページ数を変更できます"
+        genre_folder_list:
+          path: "フォルダパスを指定してください"
+        genre_news_list:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          date: "指定した日数までの新着情報を表示します"
+        genre_news_list_truncate:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          date: "指定した日数までの新着情報を表示します"
+        google_search:
+          cx: CXパラメータを入力してください
+          width: フォーム幅を入力してください
+        news:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          date : "指定した日数までの新着情報を表示します"
+        section_news:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          date : "指定した日数までの新着情報を表示します"
+        section_news_by_path:
+          limit: "最大表示数を指定してください。未指定時の場合は全て表示します"
+          path: "フォルダパスを指定してください"
+          date : "指定した日数までの新着情報を表示します"
+        sitemap:
+          name: フォルダ名を入力してください
+
+    attributes:
+      google_search:
+        cx: CXパラメータ
+        width: フォーム幅
+      twitter:
+        account: アカウント名
+        limit: 表示件数
+        width: 横幅サイズ
+        height: 縦幅サイズ
+        background_color: 背景色
+        text_color: 枠文字色
+        tweet_background_color: Tweetの背景色
+        tweet_font_color: Tweetの文字色
+        tweet_link_color: リンク文字色
+      emergency:
+        limit: 表示数
+        date: 表示日数
+      page_list:
+        limit: 表示数
+      genre_folder_list:
+        path: フォルダパス
+      genre_news_list:
+        limit: 表示数
+        date: 表示日数
+      genre_news_list_truncate:
+        limit: 表示数
+        date: 表示日数
+      news:
+        limit: 表示数
+        date: 表示日数
+      section_news:
+        limit: 表示数
+        date: 表示日数
+      section_news_by_path:
+        limit: 表示数
+        path: フォルダパス
+        date: 表示日数
+      sitemap:
+        name: フォルダ名
+
+    errors:
+      data_required: 必須項目です。入力して下さい。
+      data_required_array: 必須項目です。1つ以上入力して下さい。

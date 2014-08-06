@@ -1,0 +1,33 @@
+<% content_for :page_top_menu do -%>
+<% end -%>
+
+
+<div class="well">
+  <div>
+    <label>
+      <%= t('activerecord.attributes.info.title') %>:
+
+      <%= @info.title %>
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <%= t('activerecord.attributes.info.last_modified') %>:
+
+      <%=l @info.last_modified, format: :public_term %>
+    </label>
+  </div>
+
+  <div>
+    <label><%= t('activerecord.attributes.info.content') %>:</label>
+  </div>
+
+  <div class='info-content'>
+    <%= raw @info.content %>
+  </div>
+
+</div>
+
+<%= link_to t('shared.edit'), main_app.edit_susanoo_admin_info_path(@info), class: 'btn btn-success btn-small' %>
+<%= link_to_back main_app.susanoo_admin_infos_path %>

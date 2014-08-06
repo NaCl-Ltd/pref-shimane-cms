@@ -1,0 +1,22 @@
+event_calendar:
+  remain_referer_paths:
+    - /life/syoushika/syoushika/konkatsu/
+
+  plugins:
+    editor: &event_calendar_plugins_editor
+      - event_calendar_calendar
+      - event_calendar_pickup
+      - event_page_list
+
+
+# メインアプリの設定に追加する
+plugins:
+  editor:
+    pc: 
+      plugin: *event_calendar_plugins_editor
+
+    mobile: 
+      plugin: *event_calendar_plugins_editor
+
+    template: 
+      plugin: *event_calendar_plugins_editor

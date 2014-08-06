@@ -1,0 +1,14 @@
+ja:
+  lost_link_check:
+    susanoo:
+      lost_links:
+        index:
+          title: リンク切れ一覧
+          no_lost_links: リンク切れはありませんでした。
+          outsides_list: 外部サイトリンク切れ一覧
+          outsides_description: ページに設定したリンクにおいて、外部サーバのページへのリンク先ページが無いリンクの一覧が表示されます。
+          no: No.
+          page_name: ページ名(URL)
+          public_page: 公開ページ
+          insides_list: 内部サイトリンク切れ一覧
+          insides_description: ページに設定したリンクにおいて、CMSで作成したページへのリンク先が無い、またはリンク先が公開されていないリンクの一覧が表示されます。

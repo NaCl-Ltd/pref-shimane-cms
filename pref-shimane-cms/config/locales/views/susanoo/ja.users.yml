@@ -1,0 +1,41 @@
+#
+#　ログイン画面用ロケールファイル
+#
+ja:
+  susanoo:
+    users:
+      edit:
+        title: パスワード変更
+        label:
+          login: ID
+          now_password: 現在のパスワード
+          new_password: 新しいパスワード
+          new_password_confirmation: 新しいパスワードの確認
+        description:
+          password: 半角英数字で8文字～12文字のパスワードを入力してください
+
+      update:
+        success: パスワードを変更しました.
+        failure: パスワードの変更に失敗しました.
+        password_mismatch: 現在のパスワードが違います.
+
+      login:
+        title: "ログイン"
+
+        label:
+          login: ユーザ名
+          password: パスワード
+
+        placeholder:
+          login: ユーザ名を入力してください
+          password: パスワードを入力してください
+
+        button:
+          login: ログイン
+
+      authenticate:
+        success: ログインしました.
+        failure: ログインに失敗しました.
+
+      logout:
+        success: ログアウトしました.

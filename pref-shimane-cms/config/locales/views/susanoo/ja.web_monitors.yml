@@ -1,0 +1,84 @@
+#
+#　アクセス制御画面用ロケールファイル
+#
+ja:
+ susanoo:
+    web_monitors:
+      shared:
+        label: &web_monitors_shared_label
+          auth:
+            'true':  有効
+            'false': 無効
+      index:
+        title: アクセス制限
+        caption:
+          auth: アクセス制限の設定
+          reflect: モニタの編集情報の反映
+          web_monitors: ウェブモニタ一覧
+        label:
+          operation: 処理
+          auth:
+            "true":  有効
+            "false": 無効
+            enable:  有効にする
+            disable: 無効にする
+          reflect: 設定を反映させる
+          web_monitors:
+            new: 登録
+            all_remove: 一括削除
+            none: 現在ウェブモニタは登録されていません。
+        confirm:
+          web_monitors:
+            all_remove: ウェブモニタ全員を削除しますか?
+        description:
+          reflect: モニタの状態が変更されています。モニタの状態をアクセス制限に反映させる場合は「設定を反映させる」ボタンを押してください。
+
+      new:
+        title: ウェブモニタの登録
+        has_errors_at: モニタ名「%{attr}」の情報が不正です
+        csv:
+          caption: CSVからの一括登録
+        label:
+          csv: CSVファイル
+
+      edit:
+        title: ウェブモニタの編集
+
+      form:
+        caption:
+          new:  モニタの登録
+          edit: モニタの編集
+        description:
+          login: 3～20文字で入力してください
+          edit_login: ユーザIDを変更する場合はパスワードの変更も行なってください
+          password: 6～12文字で入力してください
+          password_confirmation: 6～12文字で入力してください
+
+      create:
+        success: モニタを登録しました
+
+      update:
+        success: モニタを更新しました
+
+      destroy:
+        success: モニタを削除しました
+        failure: モニタ%{name}の削除に失敗しました
+
+      destroy_all:
+        success: モニタを全て削除しました
+        failure: 全モニタの削除に失敗しました
+
+      import_csv:
+        success: 一括登録が完了しました
+        failure: 一括登録に失敗しました
+        file_not_found: ファイルを指定してください
+        not_csv_file: "%{name}はCSVファイルではありません"
+
+      reflect:
+        success: モニタの情報をアクセス制限に反映させました
+        failure: アクセス制限の更新処理に失敗しました
+
+      update_auth:
+        success: アクセス制限を「%{auth}」に変更しました
+        failure: アクセス制限の設定に失敗しました
+        label: *web_monitors_shared_label

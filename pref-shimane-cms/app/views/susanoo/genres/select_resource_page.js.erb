@@ -1,0 +1,4 @@
+<% if @page.present? -%>
+  var right  = "<%= escape_javascript(render(partial: "page")) %>"
+  $(".col-right > .col-content").html(right);
+<% end -%>

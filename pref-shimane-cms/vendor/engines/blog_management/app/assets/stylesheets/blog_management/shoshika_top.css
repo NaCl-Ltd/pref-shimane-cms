@@ -1,0 +1,653 @@
+*{
+margin:0;
+padding:0;
+line-height:160%;
+}
+
+h1, h2, h3, h4, h5{
+color:#333333;
+}
+
+h1.title, h3.title{
+margin:0px;
+padding:0px;
+border:none;
+}
+
+h2.title{
+margin:0px 0px 0px 15px;
+border:none;
+}
+
+h2.title2{
+margin:0px 0px 0px 0px;
+border:none;
+}
+
+h2.news{
+margin:0px 0px 0px 0px;
+border:none;
+}
+
+h2.event{
+margin:0px 0px 0px 0px;
+border:none;
+}
+
+
+h1.yellow{
+margin: 10px 0 25px;
+padding: 8px 5px 5px 15px;
+border-style: solid;
+border-width: 5px 0px 1px 0px;
+border-color:#efa600;
+font-size: 1.5em;
+zoom: 1;
+}
+
+h2.yellow{
+margin: 10px 0 15px;
+border-style: solid;
+border-width: 1px 1px 1px 5px;
+border-color:#efa600;
+font-size: 1.3em;
+padding: 5px 5px 4px 17px;
+zoom: 1;
+}
+
+h3.yellow{
+margin: 10px 0 0;
+font-size: 1.1em;
+border-left: 5px solid;
+border-bottom: 1px solid;
+border-color:#efa600;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h4.yellow{
+margin: 10px 0 0 0;
+font-size: 1.1em;
+border-left: 5px solid #efa600;
+border-bottom:1px dotted #999999;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h1.pink{
+margin: 10px 0 25px;
+padding: 8px 5px 5px 15px;
+border-style: solid;
+border-width: 5px 0px 1px 0px;
+border-color:#e2507f;
+font-size: 1.5em;
+zoom: 1;
+}
+
+h2.pink{
+margin: 10px 0 15px;
+border-style: solid;
+border-width: 1px 1px 1px 5px;
+border-color:#e2507f;
+font-size: 1.3em;
+padding: 5px 5px 4px 17px;
+zoom: 1;
+}
+
+h3.pink{
+margin: 10px 0 0;
+font-size: 1.1em;
+border-left: 5px solid;
+border-bottom: 1px solid;
+border-color:#e2507f;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h4.pink{
+margin: 10px 0 0 0;
+font-size: 1.1em;
+border-left: 5px solid #e2507f;
+border-bottom:1px dotted #999999;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h1.blue{
+margin: 10px 0 25px;
+padding: 8px 5px 5px 15px;
+border-style: solid;
+border-width: 5px 0px 1px 0px;
+border-color:#0095d3;
+font-size: 1.5em;
+zoom: 1;
+}
+
+h2.blue{
+margin: 10px 0 15px;
+border-style: solid;
+border-width: 1px 1px 1px 5px;
+border-color:#0095d3;
+font-size: 1.3em;
+padding: 5px 5px 4px 17px;
+zoom: 1;
+}
+
+h3.blue{
+margin: 10px 0 0;
+font-size: 1.1em;
+border-left: 5px solid;
+border-bottom: 1px solid;
+border-color:#0095d3;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h4.blue{
+margin: 10px 0 0 0;
+font-size: 1.1em;
+border-left: 5px solid #0095d3;
+border-bottom:1px dotted #999999;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h1.green{
+margin: 10px 0 25px;
+padding: 8px 5px 5px 15px;
+border-style: solid;
+border-width: 5px 0px 1px 0px;
+border-color:#89c054;
+font-size: 1.5em;
+zoom: 1;
+}
+
+h2.green{
+margin: 10px 0 15px;
+border-style: solid;
+border-width: 1px 1px 1px 5px;
+border-color:#89c054;
+font-size: 1.3em;
+padding: 5px 5px 4px 17px;
+zoom: 1;
+}
+
+h3.green{
+margin: 10px 0 0;
+font-size: 1.1em;
+border-left: 5px solid;
+border-bottom: 1px solid;
+border-color:#89c054;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h4.green{
+margin: 10px 0 0 0;
+font-size: 1.1em;
+border-left: 5px solid #89c054;
+border-bottom:1px dotted #999999;
+padding: 3px 5px 3px 17px;
+zoom: 1;
+}
+
+h5{
+margin: 10px 0 0 3px;
+padding: 3px 5px 3px 17px;
+font-size: 1em;
+border-bottom:1px dotted #999999;
+}
+
+img{
+border:none;
+}
+
+ul{
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+div#page{
+font-size:100%;
+color:#333333;
+width:970px;
+margin: 0px auto;
+padding:10px 0px 20px 0px;
+text-align:left;
+}
+
+div#head{
+width:940px;
+margin:0px 0px 0px 15px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div#head:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div#headimage{
+width:940px;
+height:200px;
+margin:0px 0px 15px 0px;
+padding:0px 0px 0px 0px;
+}
+
+div#headinfo{
+width:460px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 20px 0px;
+background: url(/images/shoshika/news_bg.jpg) left bottom no-repeat;
+float:left;
+}
+
+div#headinfo h2{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+}
+
+div#hi_l{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+width:460px;
+background: url(/images/shoshika/news_side_l.jpg) top left repeat-y;
+}
+
+div#hi_r{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+width:460px;
+background: url(/images/shoshika/news_side_r.jpg) top right repeat-y;
+}
+
+div#headinfo ul{
+margin:0px 0px 0px 0px;
+padding:0px 30px 0px 30px;
+}
+
+div#headinfo ul li{
+margin:0px 0px 0px 0px;
+padding:5px 0px 5px 0px;
+border-top:1px dotted #999999;
+}
+
+div#headinfo ul li:first-child{
+margin:0px 0px 0px 0px;
+padding:0px 0px 5px 0px;
+border-top:none;
+}
+
+div#pickup{
+width:460px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 8px 0px;
+background: url(/images/shoshika/pickup_bg.jpg) left bottom no-repeat;
+float:right;
+}
+
+div#pickup h2{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+}
+
+div#pu_l{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+width:460px;
+background: url(/images/shoshika/pickup_side_l.jpg) top left repeat-y;
+}
+
+div#pu_r{
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+width:460px;
+background: url(/images/shoshika/pickup_side_r.jpg) top right repeat-y;
+}
+
+div#pickup dl{
+margin:0px 30px 10px 20px;
+padding:0px 0px 0px 20px;
+}
+
+div#pickup dl.heart{
+background:url(/images/shoshika/heart.jpg) left top no-repeat;
+}
+
+div#pickup dl.smile{
+background:url(/images/shoshika/smile.jpg) left top no-repeat;
+}
+
+div#pickup dl dt{
+margin:0px 0px 0px 0px;
+padding:0px 0px 5px 0px;
+border-bottom:1px dotted #999999;
+}
+
+div#pickup dl dd{
+margin:0px 0px 0px 0px;
+padding:5px 0px 5px 0px;
+}
+
+div#wrap{
+width:970px;
+margin:10px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div#wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div#main{
+width:730px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+float:right;
+/zoom:1;
+}
+
+div#main:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.ks_ban_wrap{
+width:700px;
+margin:0px 0px 15px 15px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div.ks_ban_wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.ks_ban_wrap p{
+margin:0px 0px 0px 0px;
+padding:0px 10px 10px 10px;
+}
+
+div.ks_banner_l{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+background:#fff3c3 url(/images/shoshika/ks_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ks_banner_m{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#fff3c3 url(/images/shoshika/ks_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ks_banner_r{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#fff3c3 url(/images/shoshika/ks_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ks_banner_l2{
+width:220px;
+margin:30px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+background:#fff3c3 url(/images/shoshika/ks_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ks_banner_m2{
+width:220px;
+margin:30px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#fff3c3 url(/images/shoshika/ks_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ks_illust{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+div.ks_illust p{
+font-size:70%;
+text-align:right;
+}
+
+div.en_ban_wrap{
+width:700px;
+margin:0px 0px 15px 15px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div.en_ban_wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.en_ban_wrap p{
+margin:0px 0px 0px 0px;
+padding:0px 10px 10px 10px;
+}
+
+div.en_banner_l{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+background:#fbdceb url(/images/shoshika/en_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.en_banner_m{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#fbdceb url(/images/shoshika/en_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.en_banner_r{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#fbdceb url(/images/shoshika/en_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.wl_ban_wrap{
+width:700px;
+margin:0px 0px 15px 15px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div.wl_ban_wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.wl_ban_wrap p{
+margin:0px 0px 0px 0px;
+padding:0px 10px 10px 10px;
+}
+
+div.wl_banner_l{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+background:#d3edfa url(/images/shoshika/wl_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.wl_banner_m{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#d3edfa url(/images/shoshika/wl_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.wl_banner_r{
+width:220px;
+margin:0px 0px 0px 20px;
+padding:0px 0px 0px 0px;
+background:#d3edfa url(/images/shoshika/wl_ban_bg.jpg) left bottom no-repeat;
+color:black;
+float:left;
+}
+
+div.ot_ban_wrap{
+width:480px;
+margin:10px 0px 15px 115px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div.ot_ban_wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.ot_ban_wrap ul{
+margin:10px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+border-bottom:1px dotted #999999;
+}
+
+div.ot_ban_wrap ul li{
+margin:0px 0px 0px 0px;
+padding:5px 0px 5px 0px;
+border-top:1px dotted #999999;
+}
+
+div.ot_banner_l{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+div.ot_banner_r{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+float:right;
+}
+
+div.pr_ban_wrap{
+width:730px;
+margin:5px 0px 15px 0px;
+padding:0px 0px 0px 0px;
+/zoom:1;
+}
+
+div.pr_ban_wrap:after{
+content:'';
+display:block;
+clear:both;
+height:0;
+}
+
+div.pr_banner_l{
+width:234px;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+div.pr_banner_m{
+width:234px;
+margin:0px 0px 0px 14px;
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+div.pr_banner_r{
+width:234px;
+margin:0px 0px 0px 14px;
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+p.pr_about{
+marigin:0px 0px 10px 0px;
+text-align:right;
+}
+
+div#sub{
+width:220px;
+margin:0px 0px 0px 0px;
+padding:24px 0px 0px 0px;
+float:left;
+}
+
+div#sub p{
+margin:5px 0px 5px 0px;
+padding:0px 0px 0px 0px;
+}
+
+img#side_mail{
+margin:20px 0px 0px 0px;
+}
+
+img#hot_search{
+margin:10px 0px 0px 0px;
+}
+
+img#c_search{
+margin:10px 0px 20px 0px;
+}
+
+div#mobile_info{
+margin:10px 0px 10px 0px;
+padding:0px 0px 30px 0px;
+text-align:center;
+background: url(/images/shoshika/mobinfo_bg.gif) left bottom no-repeat ;
+}
+
+div#mobile_info p{
+margin:0px 0px 10px 0px;
+padding:0px 20px 0px 20px;
+line-height:140%;
+}
+
+img#blog_link{
+margin:10px 0px 0px 0px;
+}
+

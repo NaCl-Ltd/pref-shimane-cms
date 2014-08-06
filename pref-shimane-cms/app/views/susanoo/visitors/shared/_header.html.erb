@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" dir="ltr" lang="ja">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="X-FRAME-OPTIONS" content="SAMEORIGIN" />
+<meta name="Keywords" content="pref-shimane-cms,CMS,Ruby,Rails" />
+<meta name="Description" content="pref-shimane-cms" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/doc.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/bootstrap.css" media="all" />
+<% if @page_view.rss_create? && @page_view.rss_path && @page_view.page.try(:persisted?) -%>
+<link type="application/rss+xml" rel="alternate" href="<%= @page_view.rss_path %>" media="all" title="RSS" />
+<% end -%>
+<% if @page_view.edit -%>
+<%= stylesheet_link_tag 'editor.iframe', media: 'all' %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "editor.iframe" %>
+<% else -%>
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+<% end -%>

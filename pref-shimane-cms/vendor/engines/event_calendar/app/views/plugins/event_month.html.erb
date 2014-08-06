@@ -1,0 +1,58 @@
+<%
+  # 説明：イベント月ページを表示する
+  # 引数：event_calendarフォルダのパス, 表示する月
+  date = @args[1].split(/-/)
+  events, categories = PluginHelper.event_month(@args)
+  wdays = ["日", "月", "火", "水", "木", "金", "土"]
+-%>
+
+<% if @mobile -%>
+
+<p>&nbsp;</p>
+<h2 class="emg"><%= h(date[1]) %>月 <%= @genre.parent.title %></h2>
+<% unless categories.empty? -%>
+  <% for category in categories -%>
+    <a href="#<%= category %>"><%= category %></a><br />
+  <% end -%>
+  <% for category in categories -%>
+    <h3 class="news">&nbsp;<a name="<%= category %>"><%= h(category) %></a></h3><p>&nbsp;</p>
+    <ul>
+    <% for event in events["#{category}"] -%>
+      <% if event[0].split(//u).length > 16 -%>
+        <% htmlstr="<a href='#{event[1]}'>#{event[0].split(//u)[0..15]}...</a>" -%>
+      <% else -%>
+        <% htmlstr="<a href='#{event[1]}'>#{event[0]}</a>" -%>
+      <% end -%>
+      <% wday_number = Date.new(date[0].to_i, date[1].to_i, event[2]).wday -%>
+      <li><%= h(event[2]) %>日(<%= wdays[wday_number] %>)&nbsp;&nbsp;<%= htmlstr %></li>
+    <% end -%>
+    </ul><br />
+  <% end -%>
+<% else -%>
+  本月のイベントはありません
+  <br /><br />
+  <% raise Susanoo::VisitorsController::PageNotFound -%>
+<% end -%>
+
+<% else -%>
+
+<p>&nbsp;</p>
+<h1 class="emg"><%= h(date[1]) %>月 <%= @genre.parent.title %></h1>
+<% unless categories.empty? -%>
+  <% for category in categories -%>
+    <h2 class="news">&nbsp;<%= h(category) %></h2><p>&nbsp;</p>
+    <ul>
+    <% for event in events["#{category}"] -%>
+      <% htmlstr="<a href='#{event[1]}'>#{event[0]}</a>" %>
+      <% wday_number = Date.new(date[0].to_i, date[1].to_i, event[2]).wday -%>
+      <li><%= h(event[2]) %>日(<%= wdays[wday_number] %>)&nbsp;&nbsp;<%= htmlstr %></li>
+    <% end -%>
+    </ul><br />
+  <% end -%>
+<% else -%>
+  本月のイベントはありません  
+  <br /><br />
+  <% raise Susanoo::VisitorsController::PageNotFound -%>
+<% end -%>
+
+<% end -%>

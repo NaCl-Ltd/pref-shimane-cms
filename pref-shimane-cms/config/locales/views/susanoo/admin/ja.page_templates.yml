@@ -1,0 +1,61 @@
+#
+# 管理者向け機能 部局管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      page_templates:
+        index:
+          title: テンプレート一覧
+          new: 新規作成
+          search:
+            name: テンプレート名
+
+        new:
+          title: テンプレート新規作成
+
+        edit:
+          title: テンプレート編集
+
+        create:
+          success: "テンプレート'%{name}'を作成しました"
+
+        update:
+          success: "テンプレート'%{name}'を更新しました"
+
+        destroy:
+          success: "テンプレート'%{name}'を削除しました"
+
+        page_templates:
+          preview: プレビュー
+
+        edit_content:
+          title: テンプレートコンテンツ編集
+
+        check:
+          failure: アクセシビリティチェックに失敗しました
+
+        preview:
+          failure: プレビュー画面を出力できませんでした
+
+        convert:
+          failure: 機種依存文字の変換に失敗しました.
+
+        direct_html:
+          failure: HTMLの入力に失敗ました.
+
+        content_form:
+          label:
+            check: アクセシビリティチェック
+            preview: プレビュー
+            convert: 機種依存文字変換
+            direct_html: HTML入力
+
+          confirm:
+            cancel: 作業内容が破棄されますが、よろしいですか？
+
+        update_content:
+          success: "テンプレート'%{name}'を更新しました"
+
+        cancel:
+          success: "テンプレート'%{name}'のコンテンツの編集をキャンセルしました"

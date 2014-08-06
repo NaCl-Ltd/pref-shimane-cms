@@ -1,0 +1,7 @@
+user_admin:
+  section_id: 1
+  name      : 管理者
+  login     : admin
+  password  : <%= ::User.encrypt "password" %>
+  authority : 2
+  mail: admin@example.com

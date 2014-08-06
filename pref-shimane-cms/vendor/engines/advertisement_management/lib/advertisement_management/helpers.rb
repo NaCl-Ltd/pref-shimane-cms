@@ -1,0 +1,3 @@
+require 'advertisement_management/helpers/advertisements_helper'
+module AdvertisementManagement::Helpers
+end

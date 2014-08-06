@@ -1,0 +1,68 @@
+#footer_banner {
+  position: relative;
+  margin: 0 0 50px;
+  padding-top: 20px;
+  text-align: left;
+}
+
+#footer_banner div.round_corner {
+/*
+  margin-bottom: 24px;
+*/
+/* ここから追加 */
+        margin: 5px auto;
+        text-align: center;
+/* ここまで追加 */
+}
+
+#footer_banner h3 {
+  border: none;
+/* ここから追加 */
+          text-align: left;
+/* ここまで追加 */
+}
+
+#footer_banner p.about_banner {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  padding-right: 2em;
+  font-size: 0.9em;
+}
+
+#footer_banner ul {
+  padding: 0;
+/*
+  margin: 10px 0;
+*/
+  list-style: none;
+  text-align: center;
+/* ここから追加 */
+        width: 732px;
+        margin: 10px auto;
+/* ここまで追加 */
+}
+
+
+#footer_banner li {
+/*
+  display: inline;
+*/
+/* ここから追加 */
+        float: left;
+/* ここまで追加 */
+  width: 234px;
+  margin: 0px;
+  padding-right: 10px;
+}
+
+/* ここから追加 */
+#footer_banner li p {
+        text-align: left;
+}
+.footer_line {
+        clear: both;
+        height: 6px;
+        visibility: hidden;
+}
+/* ここまで追加 */

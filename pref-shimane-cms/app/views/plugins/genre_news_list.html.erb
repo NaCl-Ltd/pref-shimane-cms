@@ -1,0 +1,23 @@
+<%
+  # 説明：そのフォルダ以下の新着一覧を表示する
+  # 引数：最大表示数（無指定時は全て）, 最大表示日数（無指定時は全て）
+  # whether to show news title automatically.
+  @display_h = show_genre_news_title?(args)
+  # max number of news items to show.
+  max = max_count(args)
+  # all the news page under the genre
+  page_content_list = genre_news_list(args, @page_view.page.genre)
+-%>
+<% if @preview || page_content_list && !page_content_list.empty? -%>
+  <% if @display_h -%>
+    <h2>新着一覧</h2>
+  <% end -%>
+  <ul class="genre-news">
+    <% page_content_list[0..max].each do |content| -%>
+      <li><a href="<%= h(content.path) %>"><%= h(content.title) -%></a> （<%= h(news_strftime(content.begin_date)) -%>）</li>
+    <% end -%>
+    <% if @preview && page_content_list.empty? -%>
+      <li>サンプルページ（<%= h(news_strftime(Time.now)) %>）</li>
+  <% end -%>
+  </ul>
+<% end -%>

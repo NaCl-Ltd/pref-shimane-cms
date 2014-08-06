@@ -1,0 +1,25 @@
+<% if EngineMaster.enable?('advertisement_management') -%>
+  <div class="splash">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <%= render partial: "/susanoo/visitors/advertisement_management/top_ads" unless @page_view.edit %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end -%>
+  <div id="content-wrapper" class="container">
+    <div class="row">
+      <div class="span12">
+        <div id="honbun">
+          <!-- begin_content -->
+          <div id="page-content">
+            <%= render partial: '/susanoo/visitors/shared/content' %>
+          </div><!-- end page-content -->
+        </div><!-- end honbun -->
+      </div>
+    </div>
+    <%= render partial: "/susanoo/visitors/advertisement_management/corp_ads"  if EngineMaster.enable?('advertisement_management') && !@page_view.edit && !@corp_ads.empty? %>
+    <%= render partial: "/susanoo/visitors/advertisement_management/pref_ads"  if EngineMaster.enable?('advertisement_management') && !@page_view.edit && !@pref_ads.empty? %>
+  </div><!-- end content-wrapper -->

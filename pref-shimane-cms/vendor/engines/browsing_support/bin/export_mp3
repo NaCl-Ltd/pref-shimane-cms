@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# This command will automatically be run when you run "rails" with Rails 4 gems installed from the root of your application.
+
+ENGINE_ROOT = File.expand_path('../..', __FILE__)
+ENGINE_PATH = File.expand_path('../../lib/browsing_support/engine', __FILE__)
+
+APP_ROOT = File.expand_path('../../../../..', __FILE__)
+
+require File.expand_path('config/application', APP_ROOT)
+Rails.application.require_environment!
+
+BrowsingSupport::ExportMp3.logger = Logger.new(File.join(Rails.root.join('log'), 'export_mp3.log'))
+BrowsingSupport::ExportMp3.run

@@ -1,0 +1,73 @@
+<%= error_messages_for(@section)  %>
+<fieldset>
+  <div class="control-group">
+    <%= f.label :code, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :code %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :division_id, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :division_id, options_for_select_with_divisions(@divisions, @section.division_id) %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label"><%= t(".top_genre") %></label>
+    <div class="controls" style='padding-top: 5px;'>
+        <% if @section.new_record? || @section.destroyed?-%>
+          <label for="section_genre_id"><%= t(".create_section_top_genre") %>:</label><br/>
+          <%= text_field :genre, :name  %> <br/><br/>
+        <% end -%>
+        <label for="section_genre_id"><%= t(".assign_top_genre") %>:</label><br/>
+        <%= select :genre, :id, options_for_select_with_second_genres(@section.top_genre_id) %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :link, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :link, size: '60', class: "span6"  %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :ftp, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :ftp, size: '60', class: "span6"  %><br />
+      (<%= t("shared.example") %>: 「/contents/kochokoho/」)
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :feature, class: "control-label" %>
+    <div class="controls">
+      <%= f.label :feature, class: 'checkbox' do -%>
+        <% if @section.new_record? || !@section.susanoo? %>
+          <%= f.check_box(:feature, {}, '0', '1') %><%= t(".feature") %>
+        <% else %>
+          <input type='checkbox' checked disabled="disabled"><%= t(".feature") %>
+        <% end %>
+      <% end -%>
+      <div class="help-block" style='margin: 10px 0 0 15px'><%= t('.description.feature') %></div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :skip_accessibility_check, class: "control-label" %>
+    <div class="controls">
+      <%= f.label :skip_accessibility_check, class: 'checkbox' do -%>
+        <%= f.check_box(:skip_accessibility_check, {}, "1", "0") %><%= t(".skip_accessibility_check") %>
+      <% end -%>
+    </div>
+  </div>
+</fieldset>

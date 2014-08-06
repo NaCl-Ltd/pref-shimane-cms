@@ -1,0 +1,18 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+class Info
+  init: =>
+    # data-remoteでmodal-bodyの書き換えは1度しか有効にならなかったので、クリックするたび何度も書き換えるよう修正
+    $("[data-load-remote]").on "click", (e) ->
+      e.preventDefault()
+      $this = $(this)
+      remote = $this.data("load-remote")
+      $($this.data("remote-target")).load remote  if remote
+
+    # モーダルを閉じたときに、moda-bodyの中身を削除
+    $(document).on("hidden", "#modal-info-show", (e) ->
+      $("#modal-info-show .modal-body").html("")
+    )
+
+this.Susanoo ||= {}
+this.Susanoo.Info = new Info

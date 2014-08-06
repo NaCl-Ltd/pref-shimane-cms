@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pref-shimane-cms</title>
+  <%= stylesheet_link_tag "application", media: "all"%>
+  <%= stylesheet_link_tag('editor', media: 'all') %>
+  <%= stylesheet_link_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.css") %>
+  <%= content_for?(:stylesheet_contents) ? yield(:stylesheet_contents) : "" %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="<%= template_uniq_id %>">
+  <div id="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class='brand nav-title'>pref-shimane-cms</span>
+      </div>
+    </div>
+  </div>
+  <div id="wrap">
+    <div id="header" class="container-fluid">
+      <% if page_header_required? -%>
+        <div class="row-fluid page-title">
+          <div class="span3">
+            <h1><%= t('title', scope: template_scope ) %></h1>
+          </div>
+          <% if content_for?(:page_top_menu) -%>
+            <div class="span9 menu-top-right">
+              <%= yield(:page_top_menu) %>
+            </div>
+          <% end -%>
+        </div>
+      <% end -%>
+    </div>
+
+    <div id="editor-container" class="container-fluid container-main">
+      <% if page_header_required? -%>
+      <%= bootstrap_flash %>
+      <% end -%>
+      <%= yield %>
+    </div> <!-- /container -->
+  </div>
+
+  <%# プラグイン編集用のフォーム部品をインクルードする %>
+  <div id="form-plugin-sample" style="display:none;">
+    <% page_editor_all_plugins(@mobile_edit_mode ? :mobile : :pc).each do |plugin| -%>
+    <%= render("/plugins/form/#{plugin}") %>
+    <% end -%>
+  </div>
+
+  <%# wysiwygエディタ用モーダルダイアログ %>
+  <div id="modal-wysiwyg-editor" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="wysiwygEditorModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close modal-cancel">×</button>
+      <h3 id="wysiwygEditorModalLabel"><%= t(".modal.wysiwyg.title") %></h3>
+    </div>
+    <div class="modal-body">
+      <textarea cols="80" id="wysiwyg-editor" name="wysiwyg-editor" rows="20"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-small modal-save"><%= t("shared.save") %></button>
+      <button class="btn btn-primary btn-small modal-cancel"><%= t("shared.cancel") %></button>
+    </div>
+  </div>
+
+  <%# プラグインエディタ用モーダルダイアログ %>
+  <div id="modal-plugin-editor" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="pluginEditorModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close modal-cancel">×</button>
+      <h3 id="pluginEditorModalLabel"><%= t(".modal.plugin.title") %></h3>
+    </div>
+    <div class="modal-body" style="height:300px">
+      <div id="plugin-editor-body"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-small modal-save"><%= t("shared.save") %></button>
+      <button class="btn btn-primary btn-small modal-cancel"><%= t("shared.cancel") %></button>
+    </div>
+  </div>
+
+  <%# HTML直接入力用モーダルダイアログ %>
+  <div id="modal-html-editor" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="htmlEditorModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close modal-cancel">×</button>
+      <h3 id="htmlEditorModalLabel"><%= t(".modal.direct_html.title") %></h3>
+    </div>
+    <div class="modal-body" style="height:300px">
+      <textarea id='direct-html-textarea'></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-small modal-save"><%= t("shared.save") %></button>
+      <button class="btn btn-primary btn-small modal-cancel"><%= t("shared.cancel") %></button>
+    </div>
+  </div>
+
+
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "ckeditor/init" %>
+<%= javascript_include_tag_nodigest "ckeditor/ckeditor"%>
+<%= javascript_include_tag "ckeditor/config.toolbar" %>
+<%= javascript_include_tag "ckeditor/config.allowed_content" %>
+<%= javascript_include_tag "ckeditor/config.remove_empty_tags" %>
+<%= javascript_include_tag "ckeditor/config.language_list" %>
+<%= javascript_include_tag "bootstrap.ckeditor.modal.fix" %>
+<%= javascript_include_tag "editor" %>
+<%= javascript_tag do %>
+$(function () {
+  var wysiwyg_editor_options = {};
+  var mobile = false;
+
+  <% if Settings.wysiwyg_editor.present? -%>
+    <% if Settings.wysiwyg_editor.body_id.present? -%>
+      wysiwyg_editor_options['body_id'] = '<%= Settings.wysiwyg_editor.body_id %>'
+    <% end -%>
+    <% if Settings.wysiwyg_editor.body_class.present? -%>
+      wysiwyg_editor_options['body_class'] = '<%= Settings.wysiwyg_editor.body_class %>'
+    <% end -%>
+  <% end -%>
+
+  <% if @mobile_edit_mode -%>
+    mobile = true
+  <% end -%>
+
+  Susanoo.EditManager.init(mobile, wysiwyg_editor_options);
+});
+<% end %>
+<%= javascript_include_tag params[:controller] if Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+<%= content_for?(:javascript_contents) ? yield(:javascript_contents) : "" %>
+</body>
+</html>

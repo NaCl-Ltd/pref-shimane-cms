@@ -1,0 +1,39 @@
+<%
+  docroot = Settings.export.docroot
+
+  # 説明：イベント年ページを表示する（月フォルダへのリンク）
+  # 引数：event_calendarフォルダのパス, 表示する年
+  year = args[1]
+  path = "#{docroot}#{args[0]}#{args[1]}"
+  files = Array.new
+  Dir.open(path) do |dir|
+    while name = dir.read
+      files << name  unless Dir.glob("#{path}/#{name}/*").empty?
+    end
+  end
+  month_genres = files.select{ |file|
+    file =~ /.*(\d|\d\d)\z/
+  }
+  month_genres.collect!{ |genre|  File.basename(genre).to_i }
+  month_genres.sort!
+-%>
+
+<h1><%= year %>年 <%= @page_view.genre.parent.title %></h1>
+
+<% unless month_genres.empty? -%>
+  <ul class="genre_list">
+    <% icon_name = 'event_calendar/folder.png' -%>
+
+    <% month_genres.each do |month| -%>
+      <% month_path = "#{args[0]}#{args[1]}/#{month}/" %>
+      <li>
+        <img src="/images/folder.png" alt="" width="18" />
+        <a href="<%= month_path %>"><%= month %>月 <%= Genre.find_by_path(args[0]).title %></a>
+      </li>
+    <% end -%>
+  </ul>
+  <br />
+<% else -%>
+  <% raise Susanoo::VisitorsController::PageNotFound -%>
+<% end -%>
+

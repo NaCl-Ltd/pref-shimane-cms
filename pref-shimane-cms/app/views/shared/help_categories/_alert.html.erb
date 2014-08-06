@@ -1,0 +1,13 @@
+<div class="alert alert-<%= type %>">
+  <% if @help_category %>
+    <%= hidden_field_tag :help_category_id, @help_category.id %>
+    <%= hidden_field_tag :help_category_name, @help_category.name %>
+    <%= hidden_field_tag :help_category_parent_id, @help_category.parent_id %>
+  <% end %>
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <ul>
+    <% messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>

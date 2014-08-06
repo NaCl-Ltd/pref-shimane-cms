@@ -1,0 +1,33 @@
+<%
+# 説明：指定したジャンル以下のジャンルを3階層まで表示する
+# 引数：なし
+#  genres = @page_view.page.genre.children
+  genre_ary = Genre.where('path = ?', args.first)
+-%>
+<% unless genre_ary.empty? -%>
+<div class="sitemap_layout">
+  <% genre = genre_ary.first -%>
+  <h2><%= h(genre.title) %>（<a href="<%= h(genre.path) %>"><%= h(genre.title) %>ジャンルへ</a>）</h2>
+  <% genre.children.each do |genre| -%>
+    <ul class="parent_genre">
+    <% if genre.original_id -%>
+      <li><a href="<%= h(Genre.find(genre.original_id).path) %>"><%= h(genre.title) %></a>
+    <% else -%>
+      <li><a href="<%= h(genre.path) %>"><%= h(genre.title) %></a>
+    <% end -%>
+    <% if !genre.nil? -%>
+      <% genre.children.each do |g| -%>
+        <ul class="child_genre">
+        <% if g.original_id -%>
+          <li><a href="<%= h(Genre.find(g.original_id).path) %>"><%= h(g.title) %></a></li>
+        <% else -%>
+          <li><a href="<%= h(g.path) %>"><%= h(g.title) %></a></li>
+        <% end -%>
+        </ul>
+      <% end -%>
+    <% end -%>
+    </li>
+    </ul>
+  <% end -%>
+</div>
+<% end -%>

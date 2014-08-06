@@ -1,0 +1,111 @@
+<%
+  begin_date_options = {use_month_numbers: true, minute_step: 15}
+  begin_date_options[:disabled] = "disabled" if @page_content.begin_date.nil?
+  end_date_options = {use_month_numbers: true, minute_step: 15}
+  end_date_options[:disabled] = "disabled" if @page_content.end_date.nil?
+
+  end_date_enable_options = {}
+  end_date_enable_options[:checked]  = "checked"  if @page_content.begin_date && @page_content.end_date.nil?
+  end_date_enable_options[:disabled] = "disabled" if @page_content.begin_date.nil? && @page_content.end_date.nil?
+-%>
+
+<%= form_for(@page_content,
+  url: update_private_page_status_susanoo_page_content_path(@page_content),
+  html: {class: "form-horizontal"}) do |f| -%>
+
+  <div class="row-fluid">
+    <div class="span9">
+      <% if @page_content.errors.any? -%>
+        <%= error_messages_for(@page_content) %>
+      <% end -%>
+
+      <div class="well" style="padding-bottom: 0px;">
+        <div class="table-title"><%= t(".header.edit_status")%></div>
+        <table>
+          <tr>
+            <th><label class="control-label"><%= t(".label.current_status") %>:</label></th>
+            <td><%= @page_content.admission_local_label %></td>
+            <th><label class="control-label"><%= t(".label.change_status") %>:</label></th>
+            <td><%= private_admission_select(@page_content, "page_content[admission]") %></td>
+          </tr>
+          <tr>
+            <th><label class="control-label"><%= t(".label.user_name") %>:</label></th>
+            <td><%= f.text_field(:user_name, style: 'width:150px;') %></td>
+            <th><label class="control-label"><%= t(".label.tel") %>:</label></th>
+            <td><%= f.text_field(:tel, style: 'width:150px;') %></td>
+          </tr>
+          <tr>
+            <th><label class="control-label"><%= t(".label.email") %>:</label></th>
+            <td><%= f.text_field(:email, style: 'width:150px;') %>@<%= Settings.mail.domain %></td>
+            <th><label class="control-label"><%= t(".label.comment") %>:</label></th>
+            <td><%= f.text_field(:comment, style: 'width:300px;') %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="well" style="padding-bottom: 0px;">
+        <div class="table-title"><%= t(".header.term")%></div>
+        <table>
+          <tr>
+            <th><label class="control-label"><%= t(".label.term") %>:</label></th>
+            <td><%= check_box_tag('public_term[switch]', "on", (@page_content.begin_date || @page_content.end_date)) %>設定する</td>
+          </tr>
+          <tr>
+            <th><label class="control-label"><%= t(".label.begin_date") %>:</label></th>
+            <td><%= datetime_select(:page_content, 'begin_date', begin_date_options, {class: "input-small begin_date" }) %></td>
+          </tr>
+          <tr>
+            <th style="vertical-align: top;"><label class="control-label"><%= t(".label.end_date") %>:</label></th>
+            <td>
+              <%= datetime_select(:page_content, 'end_date', end_date_options, {class: "input-small end_date"}) %>
+              <label class="checkbox" style="margin-top:3px;">
+                <%= check_box_tag('public_term[end_date_enable]', 'on', (@page_content.begin_date && !@page_content.end_date), end_date_enable_options) %>公開終了日は設定しない
+              </label>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="well" style="padding-bottom: 0px;">
+        <div class="table-title"><%= t(".header.news")%></div>
+        <table>
+          <tr>
+            <th style="vertical-align: top;"><label class="control-label">新着一覧での見出し:</label></th>
+            <td>
+              <%= f.text_field('news_title', size: 50, class: 'input-xlarge') %>
+              <label class="checkbox" style="margin-top:5px;">
+                <%= f.check_box("section_news", {}, PageContent.section_news_status[:yes], PageContent.section_news_status[:no]) %> 新着掲載する
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>&nbsp;</th>
+            <td>
+              <p><%= t(".description1") %></p>
+              <p><%= t(".description2") %></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="control-group">
+        <%= f.submit t("shared.save"), class: "btn btn-primary btn-small" %>
+        <%= f.submit t("shared.cancel"), name: 'cancel', class: "btn btn-warning btn-small",
+          onclick: raw("return confirm('#{t(".confirm.cancel")}')") %>
+      </div>
+    </div>
+
+    <div class="span3">
+      <%= page_transitions_table(4) %>
+    </div>
+  </div>
+<% end -%>
+
+<% content_for :javascript_contents do -%>
+  <%= javascript_tag do %>
+    $(function () {
+      Susanoo.PageContent.EditPrivete.init()
+    });
+  <% end -%>
+<% end -%>
+

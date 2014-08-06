@@ -1,0 +1,9 @@
+<% if @page_view.page.blog_date? %>
+  <br /><hr />
+  <div>
+    <%= link_to("#{@page_view.page.genre.parent.name}年#{@page_view.page.genre.name}月フォルダへのリンク", @page_view.page.genre.path) %><br />
+    <%= link_to("#{@page_view.page.genre.parent.name}年フォルダへのリンク", @page_view.page.genre.parent.path) %><br />
+    <%= link_to("ブログフォルダへのリンク", @page_view.page.genre.parent.parent.path) %>
+  </div>
+  <br />
+<% end %>

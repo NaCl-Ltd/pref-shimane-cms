@@ -1,0 +1,46 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+#
+# フォーム用のクラス
+#
+class ImportForm
+  selected_genre: null,
+  button_folder_select: $("#button-folder-select"),
+
+  init: ->
+    # モーダルダイアログフォルダ選択ボタン
+    $(@button_folder_select).click( =>
+      if @selected_genre
+        $("#upload_file_genre_id").val(@selected_genre.id)
+        $("#selected-genre-name").html(@selected_genre.title)
+      $('#modal-folder-select').modal('hide')
+      return
+    ).attr("disabled", true)
+
+    $("#treeview").fancytree({
+      source: $.ajax({
+        url: "<%= url_helpers.treeview_susanoo_genres_path %>"
+      })
+      activate: (event, data) =>
+        node = data.node
+        if !node.data.no_permission
+          @selected_genre = { id: node.data.id, title: node.title }
+          $(@button_folder_select).attr("disabled", false)
+        else
+          @selected_genre = {}
+          $(@button_folder_select).attr("disabled", true)
+        return @selected_genre
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_susanoo_genres_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    return
+
+this.ImportPage ||= {}
+this.ImportPage.Import ||= {}
+this.ImportPage.Import.Form = new ImportForm

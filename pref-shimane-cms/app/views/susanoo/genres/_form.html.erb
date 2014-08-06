@@ -1,0 +1,73 @@
+<%= error_messages_for @genre %>
+<fieldset>
+  <% if @genre.new_record? %>
+    <div class="control-group">
+      <label class="control-label"><%= t('.label.topic_path') %></label>
+      <div class="controls" style="padding-top:5px;">
+        <%= genre_fullpath(@genre.parent) %>
+        <%= f.hidden_field :parent_id %>
+      </div>
+    </div>
+  <% else %>
+    <div class="control-group">
+      <%= f.label :parent_id, class: "control-label" %>
+      <div class="controls" style="padding-top:5px;">
+        <%= @genre.parent ? @genre.parent.title : ''%>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @genre.new_record? -%>
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+        <span class="help-block"><%= t(".description.name") %></span>
+      </div>
+    </div>
+  <% else -%>
+    <div class="control-group">
+      <%= f.label :name, class: "control-label" %>
+      <div class="controls" style="padding-top:5px;">
+        <%= @genre.name %>
+      </div>
+    </div>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :title, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :title %>
+      <span class="help-block"><%= t(".description.title") %></span>
+    </div>
+  </div>
+
+  <%# 運用管理者のみ設定可能 -%>
+  <% if current_user.admin? -%>
+    <div class="control-group">
+      <%= f.label :uri, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :uri, style: "width: 400px" %>
+        <span class="help-block"><%= t(".description.uri") %></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :section_id, class: "control-label" %>
+      <div class="controls">
+        <%= t(".division") %> : <%= select_tag "division_id", options_for_select(Division.order("number").map {|_| [_.name, _.id] }, @division.id) %>
+        <%= t(".section") %> : <%= f.select :section_id, options_for_select(@sections.map {|_| [_.name, _.id] }, @genre.section_id) %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :tracking_code, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_area :tracking_code,style: "width: 500px; height: 120px;" %>
+      </div>
+    </div>
+
+  <% end %>
+</fieldset>
+
+

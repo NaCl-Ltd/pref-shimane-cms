@@ -1,0 +1,76 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+class AdminHelpCategoryIndex
+
+  init: ->
+    image_tag = "<img src='<%= image_path('wakaba.png') %>' class='wakaba'/>"
+
+    $("#treeview").fancytree({
+      icons: false,
+      renderNode: (event, data) ->
+        node = data.node
+        if node.data
+          span = $(node.span).find('.fancytree-title')
+          if span.length > 0
+            if node.data.id
+              siblings = $(span).siblings()
+              tag = "<a class='delete-category' help_category_id='#{node.data.id}' href='/susanoo/admin/help_categories/#{node.data.id}'><i class='icon-remove-sign icon-white'></i></a>"
+              if !$(siblings).is('.delete-category')
+                $(span).after(tag)
+              if node.data.navigation == true
+                if !$(siblings).is('.wakaba')
+                  $(span).before(image_tag)
+              else
+                if $(siblings).is('.wakaba')
+                  $(siblings).remove('.wakaba')
+          return
+
+      source: $.ajax({
+        url: "<%= url_helpers.treeview_susanoo_admin_help_categories_path %>"
+      })
+      activate: (event, data) =>
+        node = data.node
+        if (node.data.id)
+          params = {}
+          params.parent_id = node.data.id
+          $.get("<%= url_helpers.new_susanoo_admin_help_category_path %>", params, (new_html) ->
+            $('#center-form-area').html(new_html);
+          )
+
+      lazyload: (event, data) ->
+        node = data.node
+        data.result = {
+          url: "<%= url_helpers.treeview_susanoo_admin_help_categories_path %>"
+          data: { id: node.data.id }
+        }
+    })
+
+    $(document).on('ajax:success', '#sort-help', (e, data, status, xhr)->
+      $("tbody#helps").html(data)
+    )
+
+    $(document).on('click', '.delete-category', (e)->
+      e.preventDefault;
+      if window.confirm('<%= I18n.t('shared.confirm.delete') %>')
+        $.ajax({
+          type: 'DELETE',
+          url: $(this).attr('href'),
+          dataType: 'script'
+        })
+      return false;
+    )
+
+    $('tbody#helps').sortable({
+      cursor: 'move',
+      opacity: 0.7,
+      handle: ".icon-align-justify",
+      update: () ->
+        $.post('<%= url_helpers.update_sort_susanoo_admin_helps_path %>', $(this).sortable('serialize'), (result) ->
+          if (result)
+            $('tbody#helps').effect( 'highlight', '', 2000 );
+        );
+    });
+
+Susanoo.Admin or= {}
+Susanoo.Admin.HelpCategory or= {}
+Susanoo.Admin.HelpCategory.Index = new AdminHelpCategoryIndex

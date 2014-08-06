@@ -1,0 +1,25 @@
+<h1>Listing susanoo_page_contents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @susanoo_page_contents.each do |susanoo_page_content| %>
+      <tr>
+        <td><%= link_to 'Show', susanoo_page_content %></td>
+        <td><%= link_to 'Edit', edit_susanoo_page_content_path(susanoo_page_content) %></td>
+        <td><%= link_to 'Destroy', susanoo_page_content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Page content', new_susanoo_page_content_path %>

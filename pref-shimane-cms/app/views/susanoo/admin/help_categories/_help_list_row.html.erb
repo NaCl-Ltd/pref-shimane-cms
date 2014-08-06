@@ -1,0 +1,16 @@
+<% if @helps.present? %>
+  <% @helps.each do |h| %>
+    <tr class="draggble" id=helps_<%= h.id %>>
+      <td>
+        <%= h.name %>
+        <i class='icon-align-justify pull-right icon-white'></i>
+      </td>
+    </tr>
+  <% end %>
+<% else %>
+  <tr>
+    <td colspan=2>
+      <%= render partial: "shared/help_categories/alert", locals: {type: :info, messages: [t('.nothing_data')]} %>
+    </td>
+  <tr>
+<% end %>

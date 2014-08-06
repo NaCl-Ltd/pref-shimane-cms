@@ -1,0 +1,48 @@
+<% if @published_contents.blank? -%>
+  <p><%= t('.no_history')%></p>
+<% else -%>
+  <% if @waiting_content -%>
+    <div class='alert'>
+      <%= t('.has_waiting_content')%>
+    </div>
+  <% elsif @request_content && current_user.editor? -%>
+    <div class='alert'>
+      <%= t('.has_request_content')%>
+    </div>
+  <% end %>
+
+  <h4><%= t('.index') %></h4>
+  <table class='table table-striped'>
+    <tr>
+      <th><%= PageContent.human_attribute_name(:last_modified) %></th>
+      <th><%= PageContent.human_attribute_name(:user_name) %></th>
+      <th><%= PageContent.human_attribute_name(:tel) %></th>
+      <th><%= PageContent.human_attribute_name(:email) %></th>
+      <th><%= PageContent.human_attribute_name(:comment )%></th>
+      <th><%= t('shared.preview') %></th>
+      <th style='text-align:center'><%= t('shared.label.operation') %></th>
+    </tr>
+    <% @published_contents.each do |content| -%>
+      <tr>
+        <td><%= public_term_strftime(content.last_modified) %></td>
+        <td><%= content.user_name %></td>
+        <td><%= content.tel %></td>
+        <td><%= content.email %></td>
+        <td><%= content.comment %></td>
+        <td><%= popup_link_to(t('shared.preview'), main_app.preview_susanoo_visitor_path(id: content.id)) %></td>
+        <td style='text-align:center'>
+          <% unless @unreflectable -%>
+            <%= link_to( t('.reflect'),
+              reflect_susanoo_page_path(@page, content_id: content.id),
+              data: { confirm: t('.confirm.reflect') },
+              class: 'btn btn-info' )%>
+          <% else -%>
+            <%= link_to( t('.reflect'), '#', disabled: true, class: 'btn btn-info disabled' )%>
+          <% end -%>
+        </td>
+      </tr>
+    <% end -%>
+  </table>
+<% end -%>
+
+<%= link_to_back(susanoo_page_path(@page)) %>

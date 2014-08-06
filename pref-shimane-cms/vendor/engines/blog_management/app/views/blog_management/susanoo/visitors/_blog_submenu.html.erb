@@ -1,0 +1,31 @@
+<!-- bigin sidemenu -->
+<div id="blogsubmenu">
+<div class="blogcalendar">
+<%=
+  calendar(:year => @calendar_year, :month => @calendar_month, :show_today => false,
+           :previous_month_text => link_to_unless(@prev_month_blog_genre.nil?, '前月', @prev_month_blog_genre.try(:path)),
+           :next_month_text => link_to_unless(@next_month_blog_genre.nil?, '次月', @next_month_blog_genre.try(:path))
+          ) do |d|
+    @month_blog_pages[d.day] ? link_to(d.day, @month_blog_pages[d.day].path) : d.day
+  end
+-%>
+</div>
+<div class="bloglist">
+<% case @blog_layout -%>
+<% when :top_index_layout -%>
+<h3>新着ページ一覧</h3>
+<% when :year_index_layout -%>
+<h3>当年ページ一覧</h3>
+<% when :month_index_layout -%>
+<h3>当月ページ一覧</h3>
+<% else -%>
+<h3>ページ一覧</h3>
+<% end -%>
+<ul>
+<% @blog_pages_with_content.each do |page, _| -%>
+<li><a href="<%= page.path %>"><%= strip_tags(extract_headings(page).first || page.title) %>&nbsp;(<%=h page.genre.name %>月<%=h page.name %>日)</a></li>
+<% end -%>
+</ul>
+</div>
+</div>
+<!-- end sidemenu -->

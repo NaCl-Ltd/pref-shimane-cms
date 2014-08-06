@@ -1,0 +1,20 @@
+<% if @emergency_info.persisted? && DateTime.now.between?(@emergency_info.display_start_datetime, @emergency_info.display_end_datetime) -%>
+<% content_for :page_top_menu do -%>
+  <%= link_to t('susanoo.admin.emergency_infos.edit.button.stop_public'),
+    main_app.stop_public_susanoo_admin_emergency_infos_path,
+    method: :patch,
+    class: 'btn btn-danger btn-small pull-right' %>
+<% end -%>
+<% end -%>
+
+<%# 作成画面テンプレートの描画 %>
+<%= render 'form' %>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Admin.EmergencyInfo.Form.init();
+});
+<% end -%>
+<% end -%>
+

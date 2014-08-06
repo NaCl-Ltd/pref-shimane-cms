@@ -1,0 +1,50 @@
+<%= form_for([:susanoo, :admin, @consult], html: {id: "consult-form", class: 'form-horizontal'}, remote: true) do |f| %>
+  <%= error_messages_for(@consult) %>
+
+  <div class="control-group">
+    <%= f.label :consult_categories, class: 'control-label' %>
+    <div class='controls'>
+      <% @c_ca.each do |c_ca| %>
+        <%= f.check_box :consult_category_ids, {name: 'consult[consult_category_ids][]'}, c_ca.id, nil %>
+        <%= c_ca.name %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name, class: 'control-label' %>
+    <div class='controls'>
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :link, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :link %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :work_content, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :work_content %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :contact, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :contact %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('shared.save'), class: 'btn btn-primary btn-small' %>
+      <% unless @consult.new_record? -%>
+      <%= link_to t('shared.cancel'), cancel_susanoo_admin_consults_path, remote: true, class: 'btn btn-danger btn-small' %>
+      <% end -%>
+    </div>
+  </div>
+<% end %>

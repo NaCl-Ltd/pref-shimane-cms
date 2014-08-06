@@ -1,0 +1,58 @@
+<%= form_for @upload_file, url: import_path, html: {class: 'form-horizontal well'} do |f| -%>
+  <% if @upload_file.errors.any? -%>
+    <%= error_messages_for(@upload_file) %>
+  <% end -%>
+
+  <div class="control-group">
+    <%= f.label :genre_id, class: "control-label" %>
+    <div class="controls">
+      <%= f.hidden_field :genre_id %>
+      <div style="margin:5px 0;">
+        <a href="#modal-folder-select" role="button" class="btn btn-small" data-toggle="modal"><%= t('.label.select_genre') %></a>
+        <span id="selected-genre-name" style="margin-left: 20px;">
+          <%= @upload_file.genre.try(:title) || t(".genre_not_select") %>
+        </span>
+      </div>
+      <span class="help-block"><%= t(".description.genre_id") %></span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :file, class: "control-label" %>
+    <div class="controls">
+      <%= f.file_field :file %>
+      <span class="help-block"><%= t(".description.file") %></span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('.label.upload'), class: "btn btn-primary" %>
+    </div>
+  </div>
+<%- end -%>
+
+<div id="modal-folder-select" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= t('.modal_folder_select.title') %></h3>
+  </div>
+  <div class="modal-body" style="height:300px;" >
+    <div id="treeview" class="treeview"></div>
+  </div>
+  <div class="modal-footer">
+    <button id="button-folder-select" class="btn btn-primary btn-small"><%= t('.modal_folder_select.label.submit') %></button>
+    <button class="btn btn-small" data-dismiss="modal" aria-hidden="true"><%= t('.modal_folder_select.label.close') %></button>
+  </div>
+</div>
+
+<% content_for :stylesheet_contents do -%>
+  <%= stylesheet_link_tag "treeview", media: "all" %>
+<% end -%>
+<% content_for :javascript_contents do -%>
+  <%= javascript_tag do %>
+    $(function () {
+      ImportPage.Import.Form.init()
+    });
+  <% end -%>
+<% end -%>

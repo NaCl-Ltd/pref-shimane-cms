@@ -1,0 +1,42 @@
+<% content_for :page_top_menu do -%>
+  <%= link_to main_app.action_configure_susanoo_admin_helps_path, class: 'btn btn-mute btn-small pull-right' do %>
+    <%= t('.button.action_configure') %>
+  <% end %>
+  <%= link_to main_app.susanoo_admin_help_categories_path, class: 'pull-right btn btn-warning btn-small' do %>
+    <%= t('.button.help_category') %>
+  <% end %>
+  <%= link_to_new main_app.new_susanoo_admin_help_path, pull_right: true %>
+<% end -%>
+
+<div class="form-search">
+  <%= select_tag :help_category_id, options_for_select(@help_categories.map{|h_c|[h_c.name, h_c.id]}, params[:help_category_id]), include_blank: true %>
+  <%= submit_tag(t(".submit.search"), class: "btn btn-info btn-small", id: "search_submit") %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="help-no"><%= t('.th.help_no') %></th>
+      <th class="help-name"><%= t('activerecord.attributes.help.name') %></th>
+      <th class="help-operation"><%= t('shared.label.operation') %></th>
+    </tr>
+  </thead>
+
+  <tbody id="helps">
+    <%= render partial: "index_row", locals: {help_contents: @help_contents} %>
+  </tbody>
+</table>
+
+<% content_for :javascript_contents do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#search_submit').on('click', function(){
+        help_category_id = $("#help_category_id").val();
+        $.get('<%= main_app.susanoo_admin_helps_path %>', {help_category_id: help_category_id}, function(ajax_html){
+          $("tbody#helps").html(ajax_html)
+        })
+        return false
+      })
+    })
+  </script>
+<% end %>

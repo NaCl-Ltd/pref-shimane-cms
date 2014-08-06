@@ -1,0 +1,21 @@
+<% args ||= [] %>
+<% news_list = SectionNews.by_section(@page_view.genre.section) %>
+<% if @preview || !news_list.empty? %>
+  <% if show_section_news_title?(args) %>
+    <h2>新着情報</h2>
+  <% end %>
+  <ul class="section-news">
+    <% max = max_count(args) %>
+    <% news_list[0..max].each do |news| %>
+      <li>
+        <a href="<%= news.path %>">
+          <%= news.title %>
+        </a>
+        （<%= news_strftime(news.begin_date) %>）
+      </li>
+    <% end %>
+    <% if @preview && news_list.empty? %>
+    <li> サンプルページ（<%= news_strftime(Time.now) %>）</li>
+  <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,18 @@
+<%= error_messages_for @division %>
+<fieldset>
+  <div class="control-group">
+    <%= f.label :name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+</fieldset>
+<br />
+<fieldset>
+  <div class="control-group">
+    <%= f.label :enable, class: "control-label" %>
+    <div class="controls">
+      <%= f.check_box(:enable, {}, '1', '0') %>
+    </div>
+  </div>
+</fieldset>

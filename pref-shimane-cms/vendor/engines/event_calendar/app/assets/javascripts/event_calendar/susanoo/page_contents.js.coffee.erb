@@ -1,0 +1,30 @@
+<% url_helpers = PrefShimaneCms::Application.routes.url_helpers %>
+
+class PageContentEditPrivete
+  init: =>
+    $('#public_term_switch').click((e) ->
+      if this.checked
+        $("select.begin_date").removeAttr("disabled")
+        $("select.end_date").removeAttr("disabled")
+        $("input#public_term_end_date_enable").removeAttr("disabled")
+        $("input#public_term_end_date_enable").attr("checked", false);
+      else
+        $("select.begin_date").attr("disabled", "disabled")
+        $("select.end_date").attr("disabled", "disabled")
+        $("input#public_term_end_date_enable").attr("disabled", "disabled")
+      return
+    )
+
+    $('#public_term_end_date_enable').click((e) ->
+      if this.checked
+        $("select.end_date").attr("disabled", "disabled")
+      else
+        $("select.end_date").removeAttr("disabled")
+      return
+    )
+    return
+
+
+this.Susanoo ||= {}
+this.Susanoo.PageContent ||= {}
+this.Susanoo.PageContent.EditPrivete = new PageContentEditPrivete

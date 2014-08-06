@@ -1,0 +1,85 @@
+<h2><%= t('.outsides_list') %></h2>
+
+<p><%= t('.outsides_description') %></p>
+
+<% if @outsides.empty? %>
+  <div class='alert alert-danger'>
+    <%= t('.no_lost_links') %>
+  </div>
+<% else %>
+  <table class='table table-striped table-bordered'>
+    <thead>
+      <tr>
+        <th><%= t('.no') %></th>
+        <th><%= t('shared.delete') %></th>
+        <th><%= t('.page_name') %></th>
+        <th><%= LostLink.human_attribute_name(:message) %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @outsides.each.with_index(1) do |link, count| %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= link_to_remove susanoo_lost_link_path(link) %></td>
+          <td>
+            <% if link.page %>
+              <% url = Settings.public_uri.chop + link.page.path %>
+              <%= link.page.title %>
+              (<%= link_to t('.public_page'), url %>)
+            <% end %>
+          </td>
+          <td>
+            <span style="color:red"><%= raw link.message %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbodY>
+  </table>
+<% end %>
+
+<h2><%= t('.insides_list') %></h2>
+
+<p><%= t('.insides_description') %></p>
+
+<% if @insides.empty? -%>
+  <div class='alert alert-danger'>
+    <%= t('.no_lost_links') %>
+  </div>
+<% else -%>
+  <table class='table table-striped table-bordered'>
+    <thead>
+      <tr>
+        <th><%= t('.no') %></th>
+        <th><%= t('shared.delete') %></th>
+        <th><%= t('.page_name') %></th>
+        <th><%= LostLink.human_attribute_name(:target) %></th>
+        <th><%= LostLink.human_attribute_name(:message) %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @insides.each.with_index(1) do |link, count| -%>
+        <tr>
+          <td><%= count %></td>
+          <td><%= link_to_remove susanoo_lost_link_path(link) %></td>
+          <td>
+            <% if link.page %>
+              <% url = Settings.public_uri.chop + link.page.path %>
+              <%= link.page.title %>
+              (<%= link_to t('.public_page'), url %>)
+            <% end %>
+          </td>
+          <td>
+            <% url = Settings.public_uri.chop + link.target %>
+            <%= link.target %>
+            (<%= link_to t('.public_page'), url %>)
+          </td>
+          <td>
+            <span style="color:red"><%= link.message %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

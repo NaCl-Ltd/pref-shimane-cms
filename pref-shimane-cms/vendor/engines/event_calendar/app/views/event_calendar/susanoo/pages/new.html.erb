@@ -1,0 +1,99 @@
+<div class="row-fluid">
+  <div class="span9 well">
+    <%= form_for(@page, url: susanoo_pages_path, html: {class: 'form-horizontal'}) do |f| %>
+      <% if @page.errors.any? -%>
+        <%= error_messages_for(@page) %>
+      <% end -%>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.top_folder") %></label>
+        <div class="controls">
+          <%= f.select :event_top_id,
+                       options_from_collection_for_select(@event_tops, :id, :title, @page.event_top_id.to_i),
+                       {},
+                       id: "event_top_id" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.category_folder") %></label>
+        <div class="controls">
+          <label class="radio inline">
+            <%= radio_button_tag :select_use_categroy_folder, "1", true %>
+            <%= t(".description.use_categroy_folder") %>
+          </label>&nbsp;&nbsp;&nbsp;
+          <%= f.select :genre_id,
+                       options_from_collection_for_select(@category_folders, :id, :title, @page.genre_id),
+                       {},
+                       id: "category_folder_id" %>
+          <br />
+          <label class="radio">
+            <%= radio_button_tag :select_use_categroy_folder, "2", params[:select_use_categroy_folder] == "2" %>
+            <%= t(".description.not_use_categroy_folder") %>
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :title, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :title, class: "input-xlarge" %>
+          <span class="help-block"><%= t(".description.title") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :name, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :name, class: "input-xlarge" %>
+          <span class="help-block"><%= t(".description.name") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :begin_event_date, class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :begin_event_date, {}, style: "width: 80px;" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :end_event_date, class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :end_event_date, {}, style: "width: 80px;" %>
+          <span class="help-block"><%= t(".description.event_date") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label"><%= t(".label.template") %></label>
+        <div class="controls">
+          <%= f.select :template_id,
+            options_for_select(PageTemplate.all.order("name").map{|s| [s.name, s.id]}, @page.template_id),
+            {include_blank: true} %>
+          <a id="link-template-preview" href="#"  class="btn btn-info btn-small"><%= t(".label.preview") %></a>
+          <span class="help-block" style="margin-top:5px;"><%= t(".description.template_id") %></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit t('.next'), class: "btn btn-primary btn-small" %>
+          <%= link_to_back susanoo_pages_path, confirm: t(".confirm.back") %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+
+  <div class="span3">
+    <%= page_transitions_table(1) %>
+  </div>
+</div>
+
+<% content_for :javascript_contents do -%>
+<%= javascript_tag do %>
+$(function () {
+  Susanoo.Page.Form.init()
+});
+<% end %>
+<% end -%>

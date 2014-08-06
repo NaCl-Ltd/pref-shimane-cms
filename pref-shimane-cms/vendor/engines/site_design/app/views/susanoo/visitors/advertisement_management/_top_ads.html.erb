@@ -1,0 +1,31 @@
+<%
+  # topページの広告を表示
+  # * 公開順に１つをメインに大きく
+  # * ２−４番目はサイドに表示
+  toppage_ads =::Advertisement.toppage_published
+  main_toppage_ads = toppage_ads.first
+  sub_toppage_ads = toppage_ads[1..3]
+-%>
+
+<% if main_toppage_ads -%>
+<div id="topbar">
+  <div id ="tbcontent" class="clearfix">
+    <div class="pickup-img">
+      <%= link_to main_toppage_ads.url do -%>
+        <%= image_tag ad_image_path(main_toppage_ads.image), alt: main_toppage_ads.alt -%>
+        <% end -%>
+    </div>
+    <div class="pickup-bnr">
+      <ul>
+        <% sub_toppage_ads.each do |ads| -%>
+          <li>
+            <%= link_to ads.url, target: '_blank' do %>
+              <%= image_tag ad_image_path(ads.image), alt: ads.alt %>
+            <% end %>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end -%>

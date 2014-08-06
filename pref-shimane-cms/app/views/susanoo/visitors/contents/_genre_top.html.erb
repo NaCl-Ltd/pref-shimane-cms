@@ -1,0 +1,10 @@
+<%# genreのトップ画面を表示する(Indexページが作成されていない場合) %>
+<h1><%= @page_view.title %></h1>
+
+<%= render template: 'plugins/page_list' %>
+
+<br />
+
+<% if @page_view.genre.children.present? %>
+  <%= render template: 'plugins/sub_genre_list', locals: {genre: @page_view.genre, page: @page_view.page} %>
+<% end %>

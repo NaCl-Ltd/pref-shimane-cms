@@ -1,0 +1,279 @@
+#
+# 画面・コントローラのメッセージ
+#
+ja:
+  engines:
+    blog_management: ブログ管理
+
+  # コンテンツプラグインの設定
+  widgets:
+    items:
+      blog_index: ブログページ一覧
+
+  plugins:
+    descriptions:
+      blog_index: ブログページ一覧を表示します
+
+  blog_management:
+    susanoo:
+      blogs:
+        index:
+          title: ブログページ一覧
+
+        pages:
+          new_genre: ブログフォルダ作成
+          new: ブログページ作成
+          search:
+            keyword: キーワード
+            blog_date: 日付
+            admission: 状態
+            recursive: サブフォルダを検索に含める
+          label:
+            blog_folders: ブログフォルダ
+
+        page_list:
+          latest: 公開ページ
+          private: 編集ページ
+          begin_date: 開始日
+          end_date: 終了日
+          title: タイトル
+          name: 名称
+          creator: 作成者
+          last_modified: 更新日
+          admission: 状態
+          found: "%{count}件見つかりました."
+          not_found: ページが見つかりません.
+          blog_date: 日付
+          blog_genre: ブログフォルダ
+          preview: プレビュー
+
+      genres:
+        new:
+          title: ブログフォルダ新規作成
+
+        form:
+          division: 部局
+          section: 所属
+          description:
+            name: 半角英数字で入力してください. フォルダ名はURLの一部になります.
+            title: 日本語で入力してください.
+            uri: 移行前のサイトへのリンクを自動で生成する場合に指定してください.
+        create:
+          success: ブログフォルダを作成しました
+        reject_blog_genre:
+          title: ブログフォルダ操作エラー
+
+      pages:
+        reject_blog_page:
+          title: ブログページ操作エラー
+        new:
+          title: ブログページ新規作成
+          next: 次へ
+          description:
+            title: 日本語で入力してください.
+            template_id: ページ作成に利用するテンプレートを選択してください.
+          label:
+            genre_name: ブログフォルダ
+            title: タイトル
+            blog_date: 日付
+            template: テンプレート
+            preview: プレビュー
+          confirm:
+            back: 入力した内容が破棄されます。よろしいですか？
+
+        show:
+          title: ブログページ詳細
+
+          basic:
+            title: 基本情報
+            folder: フォルダ
+            page_title: タイトル
+            date: 日付
+            url: URL
+
+          page_title:
+            edit: タイトル変更
+
+          public:
+            title: 公開ページ
+            show: 公開ページプレビュー
+            edit: ページ編集
+            edit_status: 状態の変更
+            history: 公開履歴
+            stop_request: 公開停止依頼
+            stop_request_confirm: 情報提供責任者にページの公開停止依頼を行いますか？
+            admission: 公開ページの状況
+            term: 公開期間
+            mobile: 携帯向けページ
+            news: 新着掲載
+            user: 担当者連絡先
+            comment: コメント
+
+          unpublished:
+            title: 非公開ページ
+            edit_status: 状態の変更
+            show: 編集ページプレビュー
+            edit: ページ編集
+            history: 編集履歴
+            admission: 未公開ページの状況
+            mobile: 携帯向けページ
+            news: 新着掲載
+            user: 担当者連絡先
+            comment: コメント
+          mobile:
+            show: 携帯ページ
+            edit: 携帯ページ編集
+            exist: あり
+            not_exist: なし
+          unlock:
+            force: "編集中状態の解除"
+            request: "別ユーザの方が編集中です。情報提供責任者、又は運用管理者へ連絡し、編集中状態の解除を依頼してください"
+            confirm: "このページの編集中の状態を解除します。本当に解除しますか？"
+
+        edit:
+          title: ページ編集
+          submit: 保存
+          description:
+            title: 日本語で入力してください.
+
+        update:
+          success: "ページタイトルを変更しました"
+
+        destroy:
+          success: ページ'%{name}'を削除しました.
+          failure: ページ'%{name}'の削除に失敗しました.
+          not_deletable: ページ'%{name}'は削除できません。
+
+        revisions:
+          title: ページ編集履歴
+          label:
+            user: 担当者
+            updated_at: 更新日時
+            deleted_user: 削除済みユーザ
+
+        histories:
+          title: ページ公開履歴
+          no_history: 公開ページはありません。
+          index: 公開ページ履歴一覧
+          reflect: 編集ページに反映
+          has_waiting_content: 現在、公開待ちのページが存在するため、過去の公開ページを編集ページに反映できません
+          has_request_content: 現在、公開依頼中のページが存在するため、過去の公開ページを編集ページに反映できません
+          confirm:
+            reflect: 現在の編集ページを破棄して、この公開ページに置き換えますか？
+
+        reflect:
+          success: 過去の公開ページを編集ページに反映しました.
+          failure: 過去の公開ページの反映に失敗しました.
+
+      page_contents:
+        form:
+          label:
+            check: アクセシビリティチェック
+            preview: 読み上げ順序確認プレビュー
+            copy: PC向けコンテンツから変換
+            convert: 機種依存文字変換
+            direct_html: HTML入力
+
+          confirm:
+            cancel: 作業内容が破棄されますが、よろしいですか？
+
+        check:
+          failure: "アクセシビリティチェックに失敗しました"
+
+        preview:
+          failure: "プレビュー画面を出力できませんでした"
+
+        convert:
+          failure: "機種依存文字の変換に失敗しました."
+
+        direct_html:
+          failure: "HTMLの入力に失敗ました."
+
+        create_mobile:
+          success: "携帯ページを作成しました"
+
+        update_mobile:
+          success: "携帯ページを編集しました"
+
+        new:
+          title: "ページコンテンツ新規登録"
+
+        edit:
+          title: "ページコンテンツ編集"
+
+        create:
+          success: "ページを作成しました"
+
+        update:
+          success: "ページを編集しました"
+
+        cancel_request:
+          success: "公開停止依頼を行いました"
+          failure: "公開停止依頼ができませんでした"
+
+        edit_private_page_status:
+          title: 編集ページの設定変更
+          header:
+            edit_status: ページの状態の設定
+            term: ページの公開期間
+            news: 新着掲載
+          label:
+            current_status: 現在の状態
+            change_status: 状態を変更する
+            user_name: 担当者
+            tel: 電話番号
+            email: メールアドレス
+            comment: コメント
+            term: 公開期間
+            begin_date: 公開開始日
+            end_date: 公開終了日
+          confirm:
+            cancel: "編集ページの設定変更処理をキャンセルします。よろしいですか？"
+          description1: "※新着情報に掲載したページは、自動的にフォルダの新着情報にも表示されます。"
+          description2: "※新着掲載の表示は、「【所属名】○○○について掲載（更新）しました」と記入してください。"
+
+        edit_public_page_status:
+          title: 公開ページの設定変更
+          confirm:
+            cancel: "公開ページの状態の変更処理をキャンセルします。よろしいですか？"
+          to_publish: 承認
+          to_reject: 却下
+          header:
+            current_term: 現在の公開期間
+            set_admission: ページの状態の設定
+            set_date: ページの更新日時の設定
+            set_user: 担当者情報の設定
+            admission: 公開状態
+          label:
+            term: 公開期間
+            begin_date: 公開開始日
+            end_date: 公開終了日
+            term_not_input: 設定されていません
+            current_admission: 現在の公開状態
+            updated_at: 更新日時
+            user_name: 担当者
+            tel: 電話番号
+            email: メールアドレス
+            comment: コメント
+            reviewing: 公開審査中です
+
+        update_private_page_status:
+          success: 公開状態を%{name}に変更しました.
+
+        update_public_page_status:
+          success: 公開ページの設定を変更しました
+
+        destroy_public_term:
+          success: 公開期間を解除しました
+
+  activerecord:
+    errors:
+      models:
+        page:
+          move:
+            blog_page_or_index: ブログページの移動はできません
+            dest_blog_folder: ブログフォルダへの移動はできません
+        genre:
+          move:
+            src_blog_folder: ブログフォルダの移動はできません
+            dest_blog_folder: ブログフォルダへの移動はできません

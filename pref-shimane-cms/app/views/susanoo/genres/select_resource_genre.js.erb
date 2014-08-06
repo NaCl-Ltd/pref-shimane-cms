@@ -1,0 +1,4 @@
+<% if @genre.present? -%>
+  var right  = "<%= escape_javascript(render(partial: "genre")) %>"
+  $(".col-right > .col-content").html(right);
+<% end -%>

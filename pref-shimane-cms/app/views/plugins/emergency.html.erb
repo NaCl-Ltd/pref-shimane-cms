@@ -1,0 +1,37 @@
+<%
+  # 説明：トップページの緊急情報を表示する
+  # 引数：最大表示数（無指定時は全て）
+  #
+  args ||= []
+  max = args[0].to_i - 1
+  genre = Genre.find_by_path(Settings.emergency_path)
+  if genre
+    news_list = SectionNews.like_path("#{genre.path}%")
+    if args[1] && !args[1].to_i.zero?
+      max_date = args[1].to_i * 60 * 60 * 24
+      news_list.reject! do |n|
+        (Time.now - n.begin_date) > max_date
+      end
+    end
+  end
+-%>
+<% if news_list && !news_list.empty? -%>
+<div id="att-on">
+  <div class="content-border-bottom"><h2><span>災害・緊急情報</span></h2></div>
+  <div class="urgent">
+    <ul>
+    <% news_list[0..max].each do |news| -%>
+      <li>
+        <%= link_to news.title, news.path %>
+        （<%= news_strftime(news.begin_date) %>）
+      </li>
+    <% end -%>
+    </ul>
+<% else -%>
+<div id="att-off">
+  <div class="content-border-bottom"><h2><span>災害・緊急情報</span></h2></div>
+  <div class="urgent">
+    <p>現在、緊急情報はございません。</p>
+<% end -%>
+  </div>
+</div>

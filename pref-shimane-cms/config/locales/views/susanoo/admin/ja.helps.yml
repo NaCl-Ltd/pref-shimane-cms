@@ -1,0 +1,95 @@
+#
+# 管理者向け機能 ヘルプ管理機能ロケールファイル
+#
+ja:
+  susanoo:
+    admin:
+      helps:
+        index:
+          new: ヘルプ作成
+          title: ヘルプ一覧
+          submit:
+            search: カテゴリの表示
+          th:
+            help_no: 'No.'
+          button:
+            help_category: ヘルプカテゴリメンテナンス
+            action_configure: ヘルプ参照設定
+
+        index_row:
+          button:
+            configure: 設定
+
+        new:
+          title: ヘルプ作成
+
+        edit:
+          title: ヘルプ編集
+
+        create:
+          success: ヘルプを作成しました
+
+        update:
+          success: ヘルプの更新に成功しました
+
+        destroy:
+          success: ヘルプの削除に成功しました
+
+        configure:
+          title: 見出しの設定
+          label:
+            help_no: 'NO.'
+            public: 公開
+            private: 非公開
+          button:
+            remove: 削除
+            public: 公開
+            private: 非公開
+            public_confirm: 公開しますか?
+            private_confirm: 非公開にしますか?
+            helps: ヘルプ一覧へ
+          new: 見出しの作成
+          success: 見出しを保存しました
+          select:
+            prompt: 指定なし
+
+        action_configure:
+          title: ヘルプ参照機能設定
+          new: アクションの作成
+          button:
+            confirmation: 確認
+            helps: ヘルプ一覧へ
+          label:
+            help_action_no: 'No.'
+          select:
+            prompt: 指定なし
+          success: アクションを保存しました
+
+        edit_action:
+          label:
+            big_category: 大カテゴリ
+            middle_category: 中カテゴリ
+            small_category: 小カテゴリ
+          select:
+            prompt: 指定なし
+          edit_title: アクションの編集
+          new_title: アクションの作成
+
+        destroy_action:
+          success: アクションを削除しました
+
+        edit_caption:
+          label:
+            big_category: 大カテゴリ
+            middle_category: 中カテゴリ
+            small_category: 小カテゴリ
+          select:
+            prompt: 指定なし
+          edit_title: 見出しの編集
+          new_title: 見出しの作成
+
+        save_caption:
+          success: 見出しを保存しました
+
+        destroy_caption:
+          success: 見出しを削除しました

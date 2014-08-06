@@ -1,0 +1,20 @@
+<% if word && word.errors.size > 0 %>
+  <%= error_messages(word.errors.full_messages.map(&:html_safe)) %>
+<% end %>
+
+<!--[form:word]-->
+<div class="control-group">
+  <label class="control-label" for="word_base"><%= Word.human_attribute_name(:base) %></label>
+  <div class="controls">
+    <%= text_field 'word', 'base' %>
+    <span class="help-block"><%= t('.description.base') %></span>
+  </div>
+</div>
+<div class="control-group">
+  <label class="control-label" for="word_text"><%= Word.human_attribute_name(:text) %></label>
+  <div class="controls">
+    <%= text_field 'word', 'text' %>
+    <span class="help-block"><%= t('.description.text') %></span>
+  </div>
+</div>
+<!--[eoform:word]-->

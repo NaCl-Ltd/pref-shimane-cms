@@ -1,0 +1,21 @@
+#
+# 広告フォーム管理クラス
+#
+class AdvertisementForm
+  init: ->
+    $('input[name="reupload_image"]:radio').change( (e) ->
+      if this.value == "1"
+        $("#advertisement_image").attr("disabled", "disabled")
+      else
+        $("#advertisement_image").removeAttr("disabled")
+    )
+    $('document').ready( (e) ->
+      if $('input[name="reupload_image"]:checked').val() == "1"
+        $("#advertisement_image").attr("disabled", "disabled")
+      else
+        $("#advertisement_image").removeAttr("disabled")
+    )
+
+this.Susanoo ||= {}
+this.Susanoo.Advertisement ||= {}
+Susanoo.Advertisement.Form = new AdvertisementForm

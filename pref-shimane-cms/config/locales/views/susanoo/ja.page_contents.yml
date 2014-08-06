@@ -1,0 +1,111 @@
+#
+# トップページ(ダッシュボード)用ロケールファイル
+#
+ja:
+  susanoo:
+    page_contents:
+      new:
+        title: "ページコンテンツ新規登録"
+
+      edit:
+        title: "ページコンテンツ編集"
+
+      create:
+        success: "ページを作成しました"
+
+      update:
+        success: "ページを編集しました"
+
+      cancel_request:
+        success: "公開停止依頼を行いました"
+        failure: "公開停止依頼ができませんでした"
+
+      edit_private_page_status:
+        title: 編集ページの設定変更
+        header:
+          edit_status: ページの状態の設定
+          term: ページの公開期間
+          news: 新着掲載
+        label:
+          current_status: 現在の状態
+          change_status: 状態を変更する
+          user_name: 担当者
+          tel: 電話番号
+          email: メールアドレス
+          comment: コメント
+          term: 公開期間
+          begin_date: 公開開始日
+          end_date: 公開終了日
+          news_title: 新着一覧での見出し
+          publish_news: 新着掲載する
+          no_begin_date: 公開終了日は設定しない
+          set_publish_date: 設定する
+        confirm:
+          cancel: "編集ページの設定変更処理をキャンセルします。よろしいですか？"
+        description1: "※新着情報に掲載したページは、自動的にフォルダの新着情報にも表示されます。"
+        description2: "※新着掲載の表示は、「【所属名】○○○について掲載（更新）しました」と記入してください。"
+        not_editable: 編集ページの設定変更はできません。
+
+      edit_public_page_status:
+        title: 公開ページの設定変更
+        confirm:
+          cancel: "公開ページの状態の変更処理をキャンセルします。よろしいですか？"
+        to_publish: 承認
+        to_reject: 却下
+        header:
+          current_term: 現在の公開期間
+          set_admission: ページの状態の設定
+          set_date: ページの更新日時の設定
+          set_user: 担当者情報の設定
+          admission: 公開状態
+        label:
+          term: 公開期間
+          begin_date: 公開開始日
+          end_date: 公開終了日
+          term_not_input: 設定されていません
+          current_admission: 現在の公開状態
+          updated_at: 更新日時
+          user_name: 担当者
+          tel: 電話番号
+          email: メールアドレス
+          comment: コメント
+          reviewing: 公開審査中です
+
+      update_private_page_status:
+        success: 公開状態を%{name}に変更しました.
+        not_editable: 編集ページの設定変更はできません。
+
+      update_public_page_status:
+        success: 公開ページの設定を変更しました
+
+      destroy_public_term:
+        success: 公開期間を解除しました
+
+      new_mobile:
+        title: "携帯ページコンテンツ新規登録"
+
+      edit_mobile:
+        title: "携帯ページコンテンツ編集"
+
+      form:
+        label:
+          check: アクセシビリティチェック
+          preview: 読み上げ順序確認プレビュー
+          copy: PC向けコンテンツから変換
+          convert: 機種依存文字変換
+          direct_html: HTML入力
+
+        confirm:
+          cancel: 作業内容が破棄されますが、よろしいですか？
+
+      check:
+        failure: "アクセシビリティチェックに失敗しました"
+
+      preview:
+        failure: "プレビュー画面を出力できませんでした"
+
+      convert:
+        failure: "機種依存文字の変換に失敗しました."
+
+      direct_html:
+        failure: "HTMLの入力に失敗ました."
