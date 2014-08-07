@@ -1,0 +1,367 @@
+#
+# Susanoo の設定ファイル
+# Rails.env 毎に設定を変更したい場合は、config/settings/#{Rails.env}.yml で
+# 設定値を上書きしてください
+#
+
+# CMSサーバのURI
+#
+# CMSサーバ上のコンテンツにリンクする時に使用します
+base_uri    : 'http://localhost/'
+
+# 公開サーバのURI
+#
+# 公開サーバ上のコンテンツにリンクする時に使用します
+public_uri  : 'http://localhost/'
+
+# CMSサーバのURI
+#
+# 本設定値はアクセス統計機能で使用します
+contents_uri: 'http://localhost/'
+
+# ページをリンクする際、ローカルとして扱うドメインをリスト形式で指定します
+# 本設定以外のドメインは外部へのリンクとして判定されます
+local_domains:
+  - localhost
+  - localhost2
+
+# CMS管理者のメールアドレスを指定します
+# メール通知を行う時の送信者として使用されます
+super_user_mail: 'webmaster@localhost'
+
+# メール通知に関する設定
+mail:
+
+  # CMSで利用するメールアドレスのドメインを指定します
+  # ユーザを登録する際、本設定値のドメインを持つメールアドレスしか登録できなくなります
+  domain: 'example.com'
+
+  # メール本文で用いるSusanooのURIを指定します
+  # メール本文内でのページリンクは本設定値が使用されます
+  uri   : 'http://localhost/'
+
+# ActionMailerの設定
+#
+# 本設定値はActionMailer::Base.smtp_settings に設定されます
+mail_config:
+  enable_starttls_auto: true
+  address             : mail.localhost.localdomain
+  domain              : localdomain
+  port                : '25'
+  authentication      : :plain
+
+# メールマガジンに関する設定
+mailmagazine:
+
+  # メールマガジンで使用するドメインを指定します
+  # メールマガジン作成時のメールアドレスのドメインに使用されます
+  domain        : 'example.com'
+
+  # メールマガジンのデフォルトの送信者のメールアドレスを指定します
+  # メールマガジンを配送する際、メールマガジンを作成した所属の情報提供責任者のメールアドレスが使用されますが、
+  # メールアドレスが設定されていない場合、は本設定値のアドレスが使用されます
+  default_e_mail: 'example@localhost'
+
+# 所属に関する設定
+section:
+  # CMS管理者が所属する所属の所属コードを指定します
+  # 所属を削除された場合、削除された所属が持つフォルダは本設定値が指す所属に所有者が変更されます
+  admin_code: '100000'
+
+  # 所属が使用可能な機能
+  features:
+    susanoo: 0
+    classic: 1
+
+# ページコンテンツに関する設定
+page_content:
+
+  # ページコンテンツを挿入するdiv要素のID属性値を指定します
+  # 本設定値を変更した場合は assets の再コンパイルが必要になります
+  wrapper_id: 'page-content'
+
+  # ページ公開履歴の保持数を指定します
+  # 本設定値を超えるページコンテンツは古い順から削除されます
+  limit: 10
+
+  # ページコンテンツ保存時のアクセシビリティチェックの強制の有無を指定します
+  # 本設定を true に設定しますと、下記のユーザはアクセシビリティチェックを
+  # 実行しなくてもページコンテンツを保存することができます
+  #
+  #  * 運用管理者の権限を持つユーザ
+  #  * クセシビリティチェックのスキップを設定した所属に属しているユーザ
+  #
+  unchecked: true
+
+  #
+  # ページコンテンツ編集時にページコンテンツ中の不要なクラスを削除します
+  #
+#  remove_class:
+#    - selector: 'div'
+#      value   :
+#        - 'test1'
+#        - 'test2'
+
+# ページ編集履歴に関する設定
+page_revision:
+
+  # ページ編集履歴の最大保持数を指定します
+  # 本設定値を超えるページ編集履歴は古い順から削除されます
+  limit: 10
+
+# ページの画像トータルサイズ
+#
+# 1ページにアップロードできる画像の合計サイズをバイト単位で指定します
+max_upload_image_total_size: <%= 3.megabyte %>
+
+# ページの最大画像サイズ
+#
+# アップロードできる画像の最大サイズをバイト単位で指定します
+# このサイズを超える画像は本設定値より小さいサイズになるようリサイズを行いますが、
+# リサイズしても設定値以下にならない場合はアップロードに失敗します
+max_upload_image_size: <%= 300.kilobyte %>
+
+# wysiwyg エディターに関する設定
+wysiwyg_editor:
+
+  # wysiwyg エディターで使用されるbody要素のID属性値を指定します
+  body_id   : 'content-wrapper'
+
+  # wysiwyg エディターで使用されるbody要素のCLASS属性値を指定します
+  body_class: ''
+
+# micheckerのアプリケーション情報
+accessibility:
+
+  # michecker との通信に https を利用するか否かを指定します
+  # 本設定に trueを指定しますと、micheker との通信には https が使われます
+  https: false
+
+  # michecker が動作しているサーバのホスト名を指定します
+  host : localhost
+
+  # michecker が待ち受けているポートの番号を指定します
+  port : 8080
+
+  # アクセスビリティチェックAPIのパスを指定します
+  api  : '/api/validate'
+
+# 緊急情報に関するページが保存されているフォルダのパスを指定します
+# 本設定値は緊急情報プラグインで使用されます
+# 本フォルダ配下のページの新着ニュースが緊急情報として扱われます
+emergency_path: '/emergency/'
+
+# 新着情報ページとして扱うページのパスを指定します
+# 本設定値で指定されたページは、新着掲載のページが公開されるごとに更新されるようになります
+top_news_page: '/top_news.html'
+
+# 過去の新着情報ページとして扱うページのパスを指定します
+# 本設定値で指定されたページは、新着掲載のページが公開されるごとに更新されるようになります
+top_all_news_page: '/all_top_news.html'
+
+# 新着情報ページ（その他）として扱うページのパスを指定します
+# 本設定値で指定されたページは、新着掲載のページが公開されるごとに更新されるようになります
+other_news_page: '/other_news.html'
+
+# 過去の新着情報ページ（その他）として扱うページのパスを指定します
+# 本設定値で指定されたページは、新着掲載のページが公開されるごとに更新されるようになります
+other_all_news_page: '/all_other_news.html'
+
+# 指定した新着情報用のフォルダの配下のページが新着掲載ありで公開された場合、
+# 指定したページを更新させる設定になります
+# 本設定では最新の新着情報を扱います
+#
+# 次のような設定になります
+#
+#     <新着情報用のフォルダ名>: <更新させるページのパス>
+#
+news_pages:
+  bousai_info: '/bousai_news.html'
+  life       : '/life_news.html'
+  environment: '/environment_news.html'
+  industry   : '/industry_news.html'
+  infra      : '/infra_news.html'
+  admin      : '/admin_news.html'
+
+# 指定した新着情報用のフォルダの配下のページが新着掲載ありで公開された場合、
+# 指定したページを更新させる設定になります
+# 本設定では過去の新着情報を扱います
+#
+# 次のような設定になります
+#
+#     <新着情報用のフォルダ名>: <更新させるページのパス>
+#
+all_news_pages:
+  bousai_info: '/all_bousai_news.html'
+  life       : '/all_life_news.html'
+  environment: '/all_environment_news.html'
+  industry   : '/all_industry_news.html'
+  infra      : '/all_infra_news.html'
+  admin      : '/all_admin_news.html'
+
+# 新着情報に関する設定
+section_news:
+
+  # top_news_page, top_all_news_page に関する設定
+  top:
+    # top_news_page, top_all_news_page から除外するページ、フォルダのパスを指定します
+    except:
+      - '/bid_info/'
+
+  # other_news_page, other_all_news_page に関する設定
+  other:
+    # other_news_page, other_all_news_page から除外するページ、フォルダのパスを指定します
+    except:
+      - '/bousai_info/'
+      - '/life/'
+      - '/environment/'
+      - '/industry/'
+      - '/infra/'
+      - '/admin/'
+      - '/emergency/'
+      - '/bid_info/'
+
+# 公開ページ用の asset が格納されているディレクトリのパスを指定します
+# 公開ページでは、本設定の配下にある asset を使用します
+visitor_path: susanoo/visitors
+
+# ページコンテンツ編集時にアップロードしたファイルの保存先のパスを指定します
+visitor_data_path: <%= Rails.root.join('files', Rails.env) %>
+
+# アクセスカウンタに関する設定
+counter:
+
+  # アクセスカウンタCGI までのパスをURIで指定します
+  url     : http://localhost/cgi-bin/pref-shimane-counter/
+
+  # アクセスカウンタを保存するディレクトリ名を指定します
+  # RAILS_ROOT/<本設定値>/ にアクセスカウンタプラグインで指定された初期値を持つアクセスカウンタが保存されます
+  data_dir: counter
+
+# Exportに関する設定
+export:
+
+  # ウェブから見えるドキュメントツリーのルートとなるディレクトリを指定します
+  # 本設定値に公開ページの静的ページを出力します
+  docroot              : <%= Rails.root.join('public.') %>
+
+  # 静的ページを同期させるサーバをリスト形式で指定します
+  # 本設定値のサーバ全てに静的ページを同期させます
+  #servers:
+  #  - localhost
+
+  # 静的ページ、アクセスカウンタの同期で使用するユーザを指定します
+  # 本設定のユーザは静的ページの同期先サーバに存在している必要があります
+  user                 : www-data
+
+  # 静的ページの同期を制御するファイルを指定します
+  # 本設定値で指定したファイルが存在する間、静的ページを同期します
+  sync_enable_file_path: <%= Rails.root.join('do_sync') %>
+
+  # 静的ページの同期先のディレクトリを指定します
+  # 同期元は export.docroot になります
+  #
+  # 本設定値のディレクトリは同期先サーバに存在する必要があります
+  sync_dest_dir        : /var/www/cms
+
+  # アクセスカウンタの同期先のディレクトリを指定します
+  # 同期元は counter.data_dir になります
+  #
+  # 本設定値のディレクトリは同期先サーバに存在する必要があります
+  sync_counter_dir     : /var/share/counter/
+
+  # アクセスカウンタを同期先のサーバをリスト形式で指定します
+  # 本設定値のサーバ全てにアクセスカウンタを同期させます
+  #sync_counter_servers:
+  #  - localhost
+
+  # 同期に失敗した静的ページを記録するファイルを指定します
+  sync_failed_page_list: <%= Rails.root.join('log/sync_failed_pages.txt') %>
+
+  # docroot から削除したページを記録するファイルを保存するフォルダを指定します
+  remove_page_list_dir : /log/
+
+  # アクセス制限機能で設定したウェブモニタ一覧を保存するディレクトリを指定します
+  local_htpasswd_dir   : <%= Rails.root.join('files/htpasswd/', Rails.env) %>
+
+  # ウェブモニタ一覧の同期先のディレクトリを指定します
+  # 同期元は counter.local_htpasswd_dir になります
+  # 同期先サーバは静的ページと同じです
+  #
+  # 本設定値のディレクトリは同期先サーバに存在する必要があります
+  public_htpasswd_dir  : /var/www/htpasswd
+
+# プラグインに関する設定
+plugins:
+
+  editor:
+
+    # PC用ページコンテンツ用プラグイン
+    pc:
+
+      # ページコンテンツ用プラグイン一覧
+      #
+      # ページコンテンツに埋め込むプラグインをリスト形式で指定します
+      # 本項目で設定したプラグインはページコンテンツ編集画面の「プラグイン」項目に表示されます
+      plugin: &plugins_editor_pc_plugin
+        - page_list
+        - genre_list
+        - section_news
+        - section_news_by_path
+        - emergency
+        - genre_down_list
+        - genre_news_list
+        - genre_news_list_truncate
+        - section
+        - section_top_list
+        - sitemap
+        - sub_genre_list
+        - counter
+
+    # モバイルページ用プラグイン
+    mobile:
+      plugin: *plugins_editor_pc_plugin
+
+    # テンプレートページ用プラグイン
+    template:
+      plugin: *plugins_editor_pc_plugin
+
+    # 非表示にするページコンテンツ用プラグイン一覧
+    #
+    # ページコンテンツ編集画面の「プラグイン」項目から削除するプラグインをリスト形式で指定します
+    # 本項目で指定したプラグインはページコンテンツ編集画面の「プラグイン」項目に表示されなくなります
+    hidden:
+      - counter
+
+    # カテゴリアイコンの設定
+    category_icon:
+      plugin: icon-wrench
+      enquete: icon-pencil
+
+  # RSS用プラグイン一覧
+  #
+  # RSSを提供するプラグインをリスト形式で指定します
+  # 本項目で設定されたプラグインを持つページがExportされた時、RSSファイルが作成されます
+  rss:
+    - news
+    - genre_news_list
+    - genre_news_list_truncate
+    - dl_genre_news_list_truncate
+    - section_news
+    - section_news_by_path
+
+# アンチウィルスに関する設定
+#
+# ウィルススキャンをコマンドとオプションをリスト形式で指定します
+# コマンドを設定しますとファイルアップロード時にスキャンを行います
+#
+#anti_virus:
+#  - 'fsav'
+
+
+#
+auth:
+  # 認証パスワード用のSalt
+  salt: DVVP0kZAM0L7NARK6DmpNTn5J2mNVkWHMnYmUe05
+
+
