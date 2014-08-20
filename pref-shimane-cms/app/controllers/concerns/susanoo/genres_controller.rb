@@ -236,11 +236,11 @@ module Concerns::Susanoo::GenresController
 
       # Only allow a trusted parameter "white list" through.
       def genre_params
-        params.require(:genre).permit(:name, :title, :parent_id, :section_id, :tracking_code)
+        params.require(:genre).permit(:name, :title, :parent_id, :section_id, :tracking_code, :uri)
       end
 
       def genre_params_as_update
-        params.require(:genre).permit(:title, :section_id, :tracking_code)
+        params.require(:genre).permit(:title, :section_id, :tracking_code, :uri)
       end
 
     #
