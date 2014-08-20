@@ -117,15 +117,15 @@ $(function () {
 
   <% if Settings.wysiwyg_editor.present? -%>
     <% if Settings.wysiwyg_editor.body_id.present? -%>
-      wysiwyg_editor_options['body_id'] = '<%= Settings.wysiwyg_editor.body_id %>'
+      wysiwyg_editor_options['body_id'] = '<%= Settings.wysiwyg_editor.body_id %>';
     <% end -%>
     <% if Settings.wysiwyg_editor.body_class.present? -%>
-      wysiwyg_editor_options['body_class'] = '<%= Settings.wysiwyg_editor.body_class %>'
+      wysiwyg_editor_options['body_class'] = '<%= Settings.wysiwyg_editor.body_class %>';
     <% end -%>
   <% end -%>
 
   <% if @mobile_edit_mode -%>
-    mobile = true
+    mobile = true;
   <% end -%>
 
   Susanoo.EditManager.init(mobile, wysiwyg_editor_options);

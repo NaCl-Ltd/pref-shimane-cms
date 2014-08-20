@@ -635,7 +635,12 @@ describe PageContent do
     describe "save_with_normalization" do
       let(:c) { PageContent.editable_class }
       let(:user) { create(:user) }
-      let(:page_content) { create(:page_content_publish) }
+      let(:page_content) {
+        create(:page_content_publish,
+          content: %Q(<div class="#{c[:field]}"><%= plugin('page_list', '1', '2') %></div>),
+          mobile: %Q(<div class="#{c[:field]}"><%= plugin('page_list', '1', '2') %></div>)
+        )
+      }
       subject{ page_content.save_with_normalization(user) }
 
       it "trueが返ること" do
@@ -655,10 +660,22 @@ describe PageContent do
         expect(page_content.content.gsub("\n", "")).to eq(%Q(<div class="#{c[:field]}"><%= plugin('page_list', '1', '2') %></div>))
       end
 
-      it "replace_links_with_core メソッドを正しく呼び出すこと" do
-        expect(page_content).to receive(:replace_links_with_core)
+      it "PC用コンテンツのみ変更する場合、携帯用コンテンツが変更されないこと" do
+        before_mobile = page_content.mobile
+        page_content.content = %Q(<div class="#{c[:field]}"><button class="editable data-type-plugin" name="page_list" value="1,2">#{I18n.t('widgets.items.page_list')}</button></div>)
         subject
+        expect(page_content.content.gsub("\n", "")).to eq(%Q(<div class="#{c[:field]}"><%= plugin('page_list', '1', '2') %></div>))
+        expect(page_content.mobile).to eq(before_mobile)
       end
+
+      it "携帯用コンテンツのみ変更する場合、PC用コンテンツが変更されないこと" do
+        before_content = page_content.content
+        page_content.mobile = %Q(<div class="#{c[:field]}"><button class="editable data-type-plugin" name="page_list" value="1,2">#{I18n.t('widgets.items.page_list')}</button></div>)
+        subject
+        expect(page_content.mobile.gsub("\n", "")).to eq(%Q(<div class="#{c[:field]}"><%= plugin('page_list', '1', '2') %></div>))
+        expect(page_content.content).to eq(before_content)
+      end
+
     end
 
     describe "page_view" do

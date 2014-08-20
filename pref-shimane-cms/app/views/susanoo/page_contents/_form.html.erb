@@ -141,8 +141,11 @@
         <%= hidden_field_tag :template_id, @template_id %>
         <%= hidden_field_tag :mode, @mode %>
         <%= hidden_field_tag :iframe_path, _iframe_path %>
-        <%= f.hidden_field :content %>
-        <%= f.hidden_field :mobile  %>
+        <% if mobile -%>
+          <%= f.hidden_field :mobile  %>
+        <% else -%>
+          <%= f.hidden_field :content %>
+        <% end -%>
         <%= f.hidden_field :page_id %>
       <% end %>
     </div>

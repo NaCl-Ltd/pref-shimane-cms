@@ -359,27 +359,32 @@ module Concerns::PageContent::Method
     def save_with_normalization(user)
 
       # 機種依存文字変換失敗時に挿入されるタグを削除する
-      self.content = remove_tmp_tags(content) if content.present?
-      self.mobile = remove_tmp_tags(mobile) if mobile.present?
+      self.content = remove_tmp_tags(content) if content.present? && self.content_changed?
+      self.mobile = remove_tmp_tags(mobile) if mobile.present? && self.mobile_changed?
 
       self.content ||= ""
       self.mobile ||= ""
 
       begin
         self.transaction do
-          self.content = content.split("\n").inject("") {|s, l| s += l.strip}
           self.admission = page_status[:editing]
           self.top_news = top_news_status[:no]
           self.format_version = current_format_version
           self.last_modified = Time.zone.now
-          normalize_pc!
-          normalize_mobile!
-          create_page_links
-          replace_links_with_core
-          @edit_style_content = content.dup
-          @edit_style_mobile_content = mobile.dup
-          self.content = plugin_tag_to_erb(content)
-          self.mobile = plugin_tag_to_erb(mobile)
+
+          if self.content_changed?
+            self.content = content.split("\n").inject("") {|s, l| s += l.strip}
+            normalize_pc!
+            create_page_links
+            replace_links_with_core
+            self.content = plugin_tag_to_erb(content)
+          end
+
+          if self.mobile_changed?
+            normalize_mobile!
+            self.mobile = plugin_tag_to_erb(mobile)
+          end
+
           self.save!
           revision = ::PageRevision.new(last_modified: self.last_modified, user_id: user.id)
           page.new_revision(revision)

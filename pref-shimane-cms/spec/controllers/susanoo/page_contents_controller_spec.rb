@@ -161,15 +161,20 @@ describe Susanoo::PageContentsController do
 
     describe "PATCH update" do
       let!(:page) { create(:page_editing, genre: @genre) }
-      let!(:page_content) { page.contents.first }
+      let!(:page_content) {
+        c = page.contents.first
+        c.content = %Q(<h1>1</h1>\n<%= plugin('page_list', '1', '2') %>)
+        c.mobile = %Q(<h1>1</h1>\n<%= plugin('page_list', '1', '2') %>)
+        c.save
+        c
+      }
       let!(:post_parameters) { {id: page_content.id, page_content: page_content_attributes} }
       subject { xhr :patch, :update, post_parameters }
 
       describe "正常系" do
         let(:page_content_attributes) {
           {
-            content: %Q(<div class="editable data-type-h"><h1>1</h1></div><button class="editable data-type-plugin" name="page_list" value="1,2">plugin</button>),
-            mobile: %Q(<div class="editable data-type-h"><h1>1</h1></div><button class="editable data-type-plugin" name="page_list" value="1,2">plugin</button>),
+            content: %Q(<div class="editable data-type-h"><h1>1</h1></div><button class="editable data-type-plugin" name="page_list" value="3,4">plugin</button>)
           }
         }
 
@@ -177,12 +182,42 @@ describe Susanoo::PageContentsController do
           expect(subject).to render_template(:create)
         end
 
-        it "コンテンツが更新されること" do
-          expect_content = %Q(<h1>1</h1>\n<%= plugin('page_list', '1', '2') %>)
-          subject
-          new_page_content = PageContent.find(page.contents.first.id)
-          expect(new_page_content.content).to eq(expect_content)
-          expect(new_page_content.mobile).to eq(expect_content)
+        context "PCページ編集の場合" do
+          it "PC用コンテンツが更新されること" do
+            expect_content = %Q(<h1>1</h1>\n<%= plugin('page_list', '3', '4') %>)
+            subject
+            new_page_content = PageContent.find(page.contents.first.id)
+            expect(new_page_content.content).to eq(expect_content)
+          end
+
+          it "携帯用コンテンツが更新されないこと" do
+            expect_content = %Q(<h1>1</h1>\n<%= plugin('page_list', '3', '4') %>)
+            subject
+            new_page_content = PageContent.find(page.contents.first.id)
+            expect(new_page_content.mobile).to eq(page_content.mobile)
+          end
+        end
+
+        context "携帯ページ編集の場合" do
+          let(:page_content_attributes) {
+            {
+              mobile: %Q(<div class="editable data-type-h"><h1>1</h1></div><button class="editable data-type-plugin" name="page_list" value="3,4">plugin</button>)
+            }
+          }
+
+          it "携帯用コンテンツが更新されること" do
+            expect_content = %Q(<h1>1</h1>\n<%= plugin('page_list', '3', '4') %>)
+            subject
+            new_page_content = PageContent.find(page.contents.first.id)
+            expect(new_page_content.mobile).to eq(expect_content)
+          end
+
+          it "PC用コンテンツが更新されないこと" do
+            expect_content = %Q(<h1>1</h1>\n<%= plugin('page_list', '3', '4') %>)
+            subject
+            new_page_content = PageContent.find(page.contents.first.id)
+            expect(new_page_content.content).to eq(page_content.content)
+          end
         end
 
         context "一時保存されたページコンテンツ" do
