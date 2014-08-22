@@ -474,6 +474,16 @@ describe "Susanoo::AccessibilityChecker" do
               expect(subject).to eq(result_html(%Q!<div><p>あいうえお</p></div>!))
             end
           end
+
+          context "<p>&nbsp;</p>の場合" do
+            let(:target) { html(%Q!<div><p>&nbsp;</p></div>!) }
+
+            it_behaves_like("検証結果正常")
+
+            it "空白が除去されないこと" do
+              expect(subject).to eq(result_html(%Q!<div><p>&nbsp;</p></div>!))
+            end
+          end
         end
 
         describe "span タグの lang 属性" do

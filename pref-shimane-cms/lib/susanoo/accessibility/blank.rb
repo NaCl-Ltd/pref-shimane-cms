@@ -23,7 +23,7 @@ module Susanoo
             # 言語指定されていない要素内のテキストをチェックする
             # また、テキストが空白のみの場合はチェックしない
             if e.ancestors('span[lang]').blank?
-              if !e.text.gsub('&nbsp;', '').blank?
+              if !(e.text.gsub(nbsp, '').empty? && e.parent.try(:name) == 'p')
                 if first_text_pointer_id
                   if first_text_pointer_id == e.pointer_id
                     e.content = remove_space(e.content)
