@@ -52,6 +52,9 @@ PrefShimaneCms::Application.routes.draw do
 
         # 順番変更
         get :move_order
+
+        # サイト構造のCSVダウンロード
+        get :csv_download
       end
 
       collection do

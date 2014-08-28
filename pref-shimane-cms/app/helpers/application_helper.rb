@@ -401,6 +401,7 @@ module ApplicationHelper
       items.each do |item|
         li += content_tag(:li,
           t(item[:name], scope: "widgets.items"),
+          "id"           => "jquery-ui-effect_" + item[:name],
           "name"         => item[:name],
           "class"        => "widget-item",
           "data-type"    => item[:type],

@@ -44,6 +44,7 @@ ja:
           keyword: タイトルまたはフォルダ名
         not_found: フォルダ、ページが見つかりませんでした。
         move_order: 表示順変更
+        csv_download: サイトの構成をCSVでダウンロード
 
       genre:
         title: タイトル

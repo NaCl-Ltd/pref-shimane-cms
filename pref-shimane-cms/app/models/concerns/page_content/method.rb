@@ -728,7 +728,7 @@ module Concerns::PageContent::Method
 
       # contentをコピーする
       # CMS内の画像へのリンク(aタグのhref要素、imgタグのsrc要素)は自身のページのファイルを見るよう置換する
-      doc = Nokogiri::HTML(from_page_content.content)
+      doc = Nokogiri::HTML(plugin_erb_to_tag(from_page_content.content))
       re_from = Regexp.new("^#{from_page_content.page.url_base_path}")
       [["img", "src"], ["a", "href"]].each do |tag, attr|
         doc.xpath("//#{tag}").each do |node|
@@ -739,7 +739,7 @@ module Concerns::PageContent::Method
         end
       end
 
-      self.content = doc.to_html
+      self.content = plugin_tag_to_erb(doc.to_html)
     end
 
     private

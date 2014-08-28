@@ -91,6 +91,36 @@ module Concerns::Section::Method
       id == @_super_section.id
     end
 
+    #
+    #=== 所属が持つフォルダ、ページの一覧をCSV形式で抽出する
+    #
+    def generate_pages_csv
+      csv_string = ""
+      csv = CSV.new(csv_string, encoding: 'Windows-31J')
+      self.genres.order("path").each do |genre|
+        # フォルダ
+        str = []
+        str_count = 0
+        genre.ancestors.sort_by { |d| d.path}.each do |g|
+          title = !g.title.nil? ? g.title : "フォルダタイトル不明"
+          str << title
+          str_count += 1
+        end
+        title = !genre.title.nil? ? genre.title : "フォルダタイトル不明"
+        str << title
+        csv << str
+        # ページ
+        genre.pages.sort.each do |page|
+          str2 = []
+          1..(str_count + 1).times do |b| str2 << "" end
+          title = !page.title.nil? ? page.title : "ページタイトル不明"
+          str2 << title
+          csv << str2
+        end
+      end
+      return NKF::nkf('-Ws', csv.string)
+    end
+
   end
 
   module ClassMethods

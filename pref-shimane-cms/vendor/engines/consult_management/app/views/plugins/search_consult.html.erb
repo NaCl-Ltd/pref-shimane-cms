@@ -1,4 +1,4 @@
-<div id="<%= 'search-form' unless @mobile %>" style="width: 20%; float: left; margin: 5px;">
+<div id="<%= 'search-form' unless @mobile %>" style="width: 320px; float: left; margin: 5px;">
   <% url = @mobile ? "#{Settings.consult_management.data.dir}#{Settings.consult_management.data.cgi.path}" : '' %>
   <%= form_tag(url, id: 'search-consult-form') do %>
     <h3>キーワード入力</h3>
@@ -30,14 +30,14 @@
 </div>
 
 <% unless @mobile %>
-  <div id="search-result" style="display: none; width: 70%; float: left; margin-top: 5px;">
+  <div id="search-result" style="display: none; width: 65%; float: left; margin-top: 5px;">
     <h3>検索結果</h3>
     <br />
     <table id="search-result-table" style="width: 100%">
       <thead>
         <tr>
-          <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:name) %></th>
-          <th style="text-align: center;"> <%= ConsultManagement::Consult.human_attribute_name(:link) %></th>
+          <th style="text-align: center; width: 140px;"><%= ConsultManagement::Consult.human_attribute_name(:name) %></th>
+          <th style="text-align: center; width: 100px;"> <%= ConsultManagement::Consult.human_attribute_name(:link) %></th>
           <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:work_content) %></th>
           <th style="text-align: center;"><%= ConsultManagement::Consult.human_attribute_name(:contact) %></th>
         </tr>
@@ -69,6 +69,11 @@
         var keyword = $('#consult_keyword').val()
 
         var find_consults = searchConsults(ids, keyword);
+
+        find_consults.sort(sort_by('name', false, function(a){ 
+          return a.toUpperCase();
+        }));
+
         appendResult(find_consults);
         $("#search-result").show()
 
@@ -86,6 +91,20 @@
       return select_ids;
     }
 
+    var sort_by = function(prop_name, reverse, primer){
+      reverse = (reverse) ? -1 : 1;
+      return function(a,b){
+        a = a[prop_name];
+        b = b[prop_name];
+        if (typeof(primer) != 'undefined'){
+          a = primer(a);
+          b = primer(b);
+        }
+        if (a < b) return reverse * -1;
+        if (a > b) return reverse * 1;
+        return 0;
+      }
+    }
 
     function searchConsults(ids, keyword){
       var find_consults = []
@@ -109,17 +128,27 @@
       return $.unique(find_consults);
     }
 
-
-
     function appendResult(consults){
       $("#search-result-table > tbody").empty()
       $.each(consults, function(){
+        var link_text = "";
+        var host = location.host;
+        var regexp = new RegExp(host);
+        if (this.link.match(regexp)) {
+          if (this.link.match(/pdf/)) {
+            link_text = "詳細ファイル";
+          } else {
+            link_text = "詳細ページ";
+          }
+        } else {
+          link_text = "外部サイト";
+        }
         $("#search-result-table > tbody").append(
             $("<tr></tr>")
                 .append($("<td></td>").text(this.name))
-                .append($("<td></td>").append($("<a></a>").text('詳細ページ').attr('href', this.link)))
+                .append($("<td></td>").append($("<a></a>").text(link_text).attr('href', this.link)))
                 .append($("<td></td>").text(this.work_content))
-                .append($("<td></td>").text(this.contact))
+                .append($("<td></td>").append($("<pre></pre>").text(this.contact)))
         );
       })
     }

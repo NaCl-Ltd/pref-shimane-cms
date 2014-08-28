@@ -1,5 +1,6 @@
 <div id="file-index-field">
   <div class="panel-folder">
+    <%= link_to t('.csv_download'), main_app.csv_download_susanoo_genre_path(@genre), class: "btn btn-small btn-success" %>
     <%= genre_fullpath(@genre) %>
   </div>
 

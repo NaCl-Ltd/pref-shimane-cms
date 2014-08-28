@@ -499,6 +499,22 @@ class EditManager
       Susanoo.EventTimer = setTimeout(@col_resize, 300)
     )
 
+    # 編集画面左メニューのコンポーネントをクリックした際のハイライトオン
+    $("[id^=jquery-ui-effect_]").click(
+      (e) =>
+        menu_id = $(e.target).attr('id');
+        $("#" + menu_id).css("background-color", "#8DC4E9");
+    )
+
+    # 編集画面のモーダルで保存ボタン、または×、キャンセルボタンを押した際のハイライトオフ
+    $("[id^=editor-modal-save], [id^=editor-modal-cancel]").click(
+      (e) =>
+        $("[id^=jquery-ui-effect_]").each( (i, f) =>
+          menu_id = $(f).attr('id');
+          $("#" + menu_id).css("background-color", "#222222");
+        )
+    )
+
     return
 
   #

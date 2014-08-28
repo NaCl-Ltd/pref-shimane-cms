@@ -215,6 +215,17 @@ module Concerns::Susanoo::GenresController
       @pages  = @search_form.search_pages(@genre)
     end
 
+    #
+    # GET /susanoo/genres/csv_download
+    #=== フォルダとページのCSV出力
+    #
+    def csv_download
+      file_name = "#{current_user.section.name}_#{Time.now.strftime("%Y%M%d")}_ページ一覧.csv"
+      file_name = ERB::Util.url_encode(file_name) if /MSIE/ =~ request.user_agent
+      csv_data = current_user.section.generate_pages_csv
+      send_data(csv_data, :type => 'text/csv', :filename => file_name)
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_genre

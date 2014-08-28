@@ -189,5 +189,36 @@ describe Section do
 
     end
 
+    describe "#generate_pages_csv" do
+      let!(:division) { create(:division) }
+      let!(:section1) { create(:section, division: division) }
+      let!(:section2) { create(:section, division: division) }
+      let!(:root)  { create(:top_genre) }
+      let!(:genre1) { create(:genre, parent: root, section: section1, deletable: true) }
+      let!(:g1_page1)  { create(:page_editing, genre: genre1) }
+      let!(:g1_page2)  { create(:page_editing, genre: genre1) }
+      let!(:child)  { create(:genre, parent: genre1, section: section1, deletable: true) }
+      let!(:child_page1)  { create(:page_editing, genre: child) }
+      let!(:child_page2)  { create(:page_editing, genre: child) }
+      let!(:genre2) { create(:genre, parent: root, section: section2, deletable: true) }
+      let!(:genre3) { create(:genre, parent: root, section: section1, deletable: true) }
+      let!(:child_genre1) { create(:genre, parent: genre1, section: section1, deletable: true) }
+      let!(:child_genre2) { create(:genre, parent: genre1, section: section2, deletable: true) }
+
+      it "CSVファイルが出力されること" do
+        str = []
+        count = 1
+        CSV.parse(section1.generate_pages_csv) do |row|
+          str << row
+          expect(row.last).to eq("title1") if count == 4
+          expect(row.size).to eq(3) if count == 4
+          expect(row.last).to eq("title3") if count == 5
+          expect(row.size).to eq(3) if count == 5
+          count += 1
+        end
+        expect(str.size).to eq(19)
+      end
+    end
+
   end
 end
