@@ -107,6 +107,15 @@ module Susanoo
 
           diff_level = level - current_heading_level
 
+          # 最初の見出しレベルのチェック
+          if Settings.accessibility.accessibility_h_level
+            Settings.accessibility.accessibility_h_level.each do |h_level|
+              if level == h_level && current_heading_level == 0
+                diff_level = 1
+              end
+            end
+          end
+
           if diff_level == 0
             # 見出しレベルが同じ場合、見出し間に本文がないとエラー
             error('E_1_7', node, nil) unless has_content
