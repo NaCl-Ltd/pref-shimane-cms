@@ -22,7 +22,9 @@
         <td><%= idx %></td>
         <% c_name = c_ca ? c_ca.name : consult.consult_categories.pluck(:name).join("\n") %>
         <td><%= simple_format(c_name) %></td>
-        <td><%= consult.name %></td>
+
+        <%= raw lost_link_check_td_tag(consult) %>
+
         <td class='link truncate'><%= link_to consult.link, consult.link %></td>
         <td><%= consult.work_content %></td>
         <td><%= consult.contact %></td>
