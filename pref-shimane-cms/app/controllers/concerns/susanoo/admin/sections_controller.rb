@@ -123,7 +123,8 @@ module Concerns::Susanoo::Admin::SectionsController
       #= リクエストパラメータチェック
       #
       def section_params
-        params[:section].permit(:name, :code, :ftp, :link, :division_id, :skip_accessibility_check, :feature)
+        params[:section].permit(:name, :code, :ftp, :link, :division_id,
+                                :skip_accessibility_check, :feature, :domain_part)
       end
   end
 end

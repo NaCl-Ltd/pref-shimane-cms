@@ -36,7 +36,7 @@
           </tr>
           <tr>
             <th><label class="control-label"><%= t(".label.email") %>:</label></th>
-            <td><%= f.text_field(:email, style: 'width:150px;') %>@<%= Settings.mail.domain %></td>
+            <td><%= f.text_field(:email, style: 'width:150px;') %>@<%= display_mail_domain %></td>
             <th><label class="control-label"><%= t(".label.comment") %>:</label></th>
             <td><%= f.text_field(:comment, style: 'width:300px;') %></td>
           </tr>

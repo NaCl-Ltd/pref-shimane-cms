@@ -26,6 +26,7 @@ ja:
         approval_level: 承認フロー数
         link: 組織別情報で外部サイトへリンクするURL
         ftp: FTP領域フォルダ名
+        domain_part: メールアドレスドメインパート（@の右側部分)
         info: 連絡先
         feature: 機能
         skip_accessibility_check: アクセシビリティ

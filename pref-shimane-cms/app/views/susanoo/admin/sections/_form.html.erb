@@ -49,6 +49,14 @@
   </div>
 
   <div class="control-group">
+    <%= f.label :domain_part, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :domain_part, size: '60', class: "span6"  %><br />
+      (<%= t("shared.example") %>: 「example.com」)
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :feature, class: "control-label" %>
     <div class="controls">
       <%= f.label :feature, class: 'checkbox' do -%>

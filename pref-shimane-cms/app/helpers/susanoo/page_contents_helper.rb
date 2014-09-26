@@ -27,4 +27,9 @@ module Susanoo::PageContentsHelper
     select_tag(name, options_for_select(collection, selected: page_content.admission_local)).html_safe
   end
 
+  def display_mail_domain
+    return Settings.mail.domain if current_user.section.domain_part.blank?
+    return current_user.section.domain_part
+  end
+
 end

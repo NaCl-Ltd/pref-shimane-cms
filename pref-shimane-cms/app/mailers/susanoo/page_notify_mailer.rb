@@ -37,7 +37,7 @@ module Susanoo
       subject = I18n.t("mail.page_notify.publish_reject.subject")
       to_mail = Array.new
       if page_content.email.present?
-        to_mail << page_content.email + DOMAIN
+        to_mail << page_content.email + set_domain_part(@section)
         create_mail_body(page_content, subject, to_mail)
       else
         # メール送信を行わない場合にセットする。
@@ -53,7 +53,7 @@ module Susanoo
       subject = I18n.t("mail.page_notify.publish.subject")
       to_mail = ""
       if page_content.email.present?
-        to_mail = page_content.email + DOMAIN
+        to_mail = page_content.email + set_domain_part(@section)
         create_mail_body(page_content, subject, to_mail)
       else
         # メール送信を行わない場合にセットする。
@@ -84,7 +84,7 @@ module Susanoo
       @section = page_content.page.genre.section
       to_mail = @section.users.select(&:authorizer?).map(&:mail)
       if page_content.email.present?
-        to_mail << page_content.email + DOMAIN
+        to_mail << page_content.email + set_domain_part(@section)
       end
       if to_mail.empty?
         # メール送信を行わない場合にセットする。
@@ -102,7 +102,7 @@ module Susanoo
       @section = page_content.page.genre.section
       to_mail = @section.users.select(&:authorizer?).map(&:mail)
       if page_content.email.present?
-        to_mail << page_content.email + DOMAIN
+        to_mail << page_content.email + set_domain_part(@section)
       end
       if to_mail.empty?
         # メール送信を行わない場合にセットする。
@@ -131,6 +131,14 @@ module Susanoo
         date: @time,
         encoding: 'iso-2022-jp'
       )
+    end
+
+    #
+    #=== メールアドレスのドメインパート設定
+    #
+    def set_domain_part(section)
+      return DOMAIN if section.domain_part.blank?
+      return "@" + section.domain_part
     end
   end
 end
