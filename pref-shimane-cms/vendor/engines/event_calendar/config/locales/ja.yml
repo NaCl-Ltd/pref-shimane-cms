@@ -76,6 +76,8 @@ ja:
             template_id: ページ作成に利用するテンプレートを選択してください.
           confirm:
             back: 入力した内容が破棄されます。よろしいですか？
+          select_event_folder:
+            イベントを作成可能なフォルダを選択してください
 
         show:
           title: イベントページ詳細

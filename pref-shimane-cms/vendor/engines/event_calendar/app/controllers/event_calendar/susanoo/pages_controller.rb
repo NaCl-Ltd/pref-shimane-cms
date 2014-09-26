@@ -5,7 +5,6 @@ module EventCalendar
     before_action :enable_engine_required
     before_action :set_page, only: %i(show edit update destroy revisions reflect histories private_page_unlock)
     before_action :page_permission_required, only: %i(edit update destroy)
-    before_action :set_event_tops_and_category_folders, only: %i(new)
     before_action :genre_required, only: %i(index)
 
     helper ::Susanoo::PagesHelper
@@ -39,7 +38,10 @@ module EventCalendar
 
     # GET /event_calendar/susanoo/pages/new
     def new
-      @page = ::Page.new(begin_event_date: Date.today, end_event_date: Date.today)
+      @page = ::Page.new(begin_event_date: Date.today, end_event_date: Date.today, genre_id: params[:genre_id])
+      if !@page.genre || !@page.event?
+        return redirect_to susanoo_pages_path, flash: { error: t(".select_event_folder") }
+      end
       render 'new'
     end
 
@@ -50,12 +52,6 @@ module EventCalendar
     # POST /event_calendar/susanoo/pags/create
     def create
       @page = ::Page.new(page_params)
-      # カテゴリフォルダを使用する、とした場合にカテゴリフォルダが選択されていないことは許可しない
-      if params[:select_use_categroy_folder] == "1" && @page.genre_id.blank?
-        @page.errors.add(:base, :select_event_category_folder)
-        set_event_tops_and_category_folders
-        return render action: "new"
-      end
 
       begin
         page_content = nil
@@ -74,7 +70,6 @@ module EventCalendar
           template_id: @page.template_id,
           mode: 'new_page')
       rescue => e
-        set_event_tops_and_category_folders
         render action: 'new'
       end
     end
@@ -204,19 +199,6 @@ module EventCalendar
         params[:page].permit(:title, :begin_event_date, :end_event_date)
       else
         params[:page].permit(:title, :name, :genre_id, :event_top_id, :begin_event_date, :end_event_date, :template_id)
-      end
-    end
-
-    def set_event_tops_and_category_folders
-      @event_tops = ::Genre.event_top_in_section(current_user.section).order(:id)
-      unless @event_tops.count.zero?
-        if @page.try(:event_top_id).present?
-          @category_folders = ::Genre.find(@page.event_top_id).children
-        else
-          @category_folders = @event_tops.first.children
-        end
-      else
-        @category_folders = []
       end
     end
   end

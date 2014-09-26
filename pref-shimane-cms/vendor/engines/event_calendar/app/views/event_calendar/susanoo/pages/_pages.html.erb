@@ -2,7 +2,7 @@
 <div class="panel-folder">
   <%= genre_fullpath(@genre) %>
   <div class="pull-right">
-    <%= link_to_new new_susanoo_page_path, id: "new-page-button" %>
+    <%= link_to_new new_susanoo_page_path(genre_id: @genre.id), id: "new-page-button" %>
     <%= link_to_new new_susanoo_genre_path(parent_id: @genre.id, mode: "top"), label: t(".new_top_genre"), class: "btn btn-success" %>
     <%= link_to_new new_susanoo_genre_path(parent_id: @genre.id, mode: "category"), label: t(".new_category_genre"), class: "btn btn-success" %>
   </div>

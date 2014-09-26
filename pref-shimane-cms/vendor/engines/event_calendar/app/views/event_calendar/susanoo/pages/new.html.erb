@@ -6,33 +6,12 @@
       <% end -%>
 
       <div class="control-group">
-        <label class="control-label"><%= t(".label.top_folder") %></label>
+        <label class="control-label"><%= Page.human_attribute_name(:genre_id) %></label>
         <div class="controls">
-          <%= f.select :event_top_id,
-                       options_from_collection_for_select(@event_tops, :id, :title, @page.event_top_id.to_i),
-                       {},
-                       id: "event_top_id" %>
+          <%= genre_fullpath(@page.genre) %>
         </div>
       </div>
-
-      <div class="control-group">
-        <label class="control-label"><%= t(".label.category_folder") %></label>
-        <div class="controls">
-          <label class="radio inline">
-            <%= radio_button_tag :select_use_categroy_folder, "1", true %>
-            <%= t(".description.use_categroy_folder") %>
-          </label>&nbsp;&nbsp;&nbsp;
-          <%= f.select :genre_id,
-                       options_from_collection_for_select(@category_folders, :id, :title, @page.genre_id),
-                       {},
-                       id: "category_folder_id" %>
-          <br />
-          <label class="radio">
-            <%= radio_button_tag :select_use_categroy_folder, "2", params[:select_use_categroy_folder] == "2" %>
-            <%= t(".description.not_use_categroy_folder") %>
-          </label>
-        </div>
-      </div>
+      <%= f.hidden_field :genre_id %>
 
       <div class="control-group">
         <%= f.label :title, class: "control-label" %>
