@@ -89,13 +89,9 @@ module Susanoo
     #
     #=== ソート順を返す
     #
+    # 子クラスでオーバーライドすること
+    #
     def order_by
-      order_option = ''
-      if self.order_column
-        direction = self.order_direction || 'ASC'
-        order_option = "#{self.order_column} #{direction}"
-      end
-      order_option.present? ? order_option : @@default_order
     end
 
     private
