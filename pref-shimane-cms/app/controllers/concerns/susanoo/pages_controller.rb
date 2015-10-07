@@ -254,7 +254,6 @@ module Concerns::Susanoo::PagesController
           super
         end
 
-
         #
         #=== 検索を実施する
         #
@@ -278,7 +277,43 @@ module Concerns::Susanoo::PagesController
             false
           end
         end
+
+        #
+        #=== ソート順を返す
+        #
+        def order_by
+          order_option = ''
+          if valid_order_params?
+            direction = self.order_direction || 'ASC'
+            order_option = "#{self.order_column} #{direction}"
+          end
+          order_option.present? ? order_option : @@default_order
+        end
+
+        #
+        #=== ソートパラメータを検証する
+        #
+        def valid_order_params?
+          if self.order_column.blank?
+            return false
+          end
+
+          permit_column_params = ['pages.name', 'page_contents.last_modified']
+          permit_dir_params = ['ASC', 'DESC']
+
+          unless permit_column_params.include?(self.order_column)
+            return false
+          end
+
+          if self.order_direction.present? &&
+            !permit_dir_params.include?(self.order_direction.upcase)
+            return false
+          end
+
+          return true
+        end
       end
+
   end
 end
 
