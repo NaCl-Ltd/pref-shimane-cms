@@ -56,20 +56,30 @@ module Concerns::Susanoo::PageAssetsController
       end
 
       def respond_with_asset(asset)
+        func_num = nil
+        if params[:CKEditorFuncNum].present? && params[:CKEditorFuncNum] =~ /^[0-9]+$/
+          func_num = params[:CKEditorFuncNum].to_i
+        end
+
         file = params[:CKEditor].blank? ? params[:qqfile] : params[:upload]
         asset.data = Ckeditor::Http.normalize_param(file, request)
 
-        if asset.save
-          json = {id: asset.id, type: asset.content_type, page_id: asset.page.id}.to_json
-          body = params[:CKEditor].blank? ? json : %Q"<script type='text/javascript'>
-            window.parent.CKEDITOR.tools.callFunction(#{params[:CKEditorFuncNum]}, '#{Ckeditor::Utils.escape_single_quotes(asset.url_content)}');
-          </script>"
+        if func_num
+          if asset.save
+            json = {id: asset.id, type: asset.content_type, page_id: asset.page.id}.to_json
+              body = params[:CKEditor].blank? ? json : %Q"<script type='text/javascript'>
+                window.parent.CKEDITOR.tools.callFunction(#{func_num}, '#{Ckeditor::Utils.escape_single_quotes(asset.url_content)}');
+              </script>"
+          else
+            body = %Q"<script type='text/javascript'>
+              alert('#{asset.messages.join('<br>')}');
+              window.parent.CKEDITOR.tools.callFunction(#{func_num}, '');
+            </script>"
+          end
         else
-          body = %Q"<script type='text/javascript'>
-            alert('#{asset.messages.join('<br>')}')
-            window.parent.CKEDITOR.tools.callFunction(#{params[:CKEditorFuncNum]}, '');
-          </script>"
+          body = nil
         end
+
         render text: body
       end
   end
