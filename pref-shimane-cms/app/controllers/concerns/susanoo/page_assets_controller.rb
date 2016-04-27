@@ -57,7 +57,7 @@ module Concerns::Susanoo::PageAssetsController
 
       def respond_with_asset(asset)
         func_num = nil
-        if params[:CKEditorFuncNum].present? && params[:CKEditorFuncNum] =~ /^[0-9]+$/
+        if params[:CKEditorFuncNum].present? && params[:CKEditorFuncNum] =~ /\A[0-9]+\z/
           func_num = params[:CKEditorFuncNum].to_i
         end
 
