@@ -482,6 +482,30 @@ describe Susanoo::Export do
         export.create_all_section_page(section.id)
       end
     end
+
+    describe "#remove_attachment" do
+      let(:genre) { create(:genre, path: 'export_test') }
+      let(:page) { create(:page, genre: genre, name: 'index') }
+      let(:file_path) { Rails.root.join(Settings.export.docroot, genre.path, "#{page.name}.data") }
+      before do
+        FileUtils.mkdir_p file_path
+        FileUtils.cp File.join(Rails.root, "spec/files/rails.png"), file_path
+      end
+      after do
+        FileUtils.rm_rf file_path
+      end
+
+      it "remove_attachmentメソッドを呼び出していること" do
+        expect_any_instance_of(Susanoo::Export).to receive(:remove_attachment).with(file_path.join("rails.png"))
+        export.remove_attachment(file_path.join("rails.png"))
+      end
+
+      it "添付ファイルが削除されること" do
+        export.remove_attachment(file_path.join("rails.png"))
+        expect(file_path.join("rails.png")).not_to exist
+      end
+    end
+
   end
 end
 

@@ -6,6 +6,7 @@ module Susanoo
     include Exports::Helpers::Actionable
     include Exports::Helpers::JobHelper
     include Exports::Sync::Rsync
+    include Exports::Helpers::PathHelper
 
     class_attribute :lock_file
     self.lock_file = File.join(Dir.tmpdir, 'export.lock')
@@ -274,10 +275,19 @@ module Susanoo
     #
     #=== remove_attachment
     #
-    # 何もしない。旧CMSのジョブを無視するためにメソッドを実装した
+    # Jobのアクションに'remove_attachment'が入っている時に、sendにより呼び出される
+    # 添付ファイルを削除する
     #
     def remove_attachment(path)
-
+      remove_file_path = export_path(path)
+      if File.exist?(remove_file_path)
+        log("Remove: #{remove_file_path}")
+        FileUtils.rm(remove_file_path, {force: true})
+        data_dir = remove_file_path.parent
+        if data_dir.exist? && Dir.entries(data_dir).join == "..."
+          FileUtils.rmdir(data_dir)
+        end
+      end
     end
 
     #
