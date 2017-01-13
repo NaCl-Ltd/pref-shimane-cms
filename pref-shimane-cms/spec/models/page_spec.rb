@@ -1051,5 +1051,51 @@ describe Page do
         end
       end
     end
+
+    describe "#clear_duplication_latest" do
+      subject{ page.clear_duplication_latest }
+
+      describe '正常系' do
+        let(:page) {create(:page_publish_with_waiting)}
+
+        it '(前提) latest: true のコンテンツが2つあること' do
+          expect(page.contents.where(latest: true).count).to eq 2
+        end
+
+        context 'ページが公開中で公開待ちコンテンツがある場合' do
+          it 'latest: true のコンテンツが2つのままであること' do
+            subject
+            expect(page.contents.where(latest: true).count).to eq 2
+          end
+        end
+
+        context 'ページが公開中で公開待ちコンテンツが公開中になった場合' do
+          let!(:waiting_one){ page.contents.eq_waiting.first }
+          let!(:publish_one){ page.contents.eq_published.first }
+
+          before do
+            waiting_one.update_columns(begin_date: Time.now - 1.days)
+          end
+
+          it '公開待ちだったコンテンツが latest: true であること' do
+            subject 
+            expect(waiting_one.reload.latest).to eq true
+          end
+
+          it '以前公開中だったコンテンツ latest: false であること' do
+            subject 
+            expect(publish_one.reload.latest).to eq false
+          end
+        end
+      end
+
+      describe '異常系' do
+        let(:page) {create(:page_editing)}
+
+        it '処理対象ではないページでも処理が問題なく終了すること' do
+          expect(subject).to eq nil
+        end
+      end
+    end
   end
 end

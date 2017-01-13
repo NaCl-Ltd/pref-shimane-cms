@@ -571,6 +571,24 @@ module Concerns::Page::Method
       genre.try(:analytics_code_also_parent)
     end
 
+    #
+    #=== latest: true のコンテンツを最新のものだけにする
+    # 公開待ちコンテンツがある状態は latest: true が重複するが、
+    # 公開待ちコンテンツが公開中になった際は重複を解除する必要がある
+    #
+    def clear_duplication_latest
+      _latests = original_contents
+        .where(latest: true)
+        .eq_published
+        .order(id: :desc)
+        .to_a
+      _is_correct = (_latests.size <= 1)
+      return  if _is_correct
+      _latests[1..-1].each do |content|
+        content.update_columns(latest: false)
+      end
+    end
+
     private
 
       #

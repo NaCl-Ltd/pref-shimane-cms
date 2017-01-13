@@ -110,11 +110,11 @@ module Susanoo
 
       sn_after = SectionNews.exists?(page_id: page.id)
       sn_changed = sn_before ^ sn_after
-
       add_jobs_for_ancestors(page)    if maked
       add_jobs_for_section_news(page) if sn_changed
       add_jobs_for_top_news(page)     if page.visitor_content.try(:top_news?)
       disable_remove_attachment(page.path) unless maked
+      page.clear_duplication_latest   if maked
     end
 
     #

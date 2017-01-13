@@ -173,6 +173,11 @@ describe Susanoo::Export do
           expect_any_instance_of(Susanoo::Export).to_not receive(:disable_remove_attachment)
           export.create_page(page.id)
         end
+
+        it "Page#clear_duplication_latestメソッドを呼び出すこと" do
+          expect_any_instance_of(Page).to receive(:clear_duplication_latest)
+          export.create_page(page.id)
+        end
       end
 
       context "makeに失敗した場合" do
@@ -187,6 +192,11 @@ describe Susanoo::Export do
 
         it "disable_remove_attachmentメソッドを呼び出すこと" do
           expect_any_instance_of(Susanoo::Export).to receive(:disable_remove_attachment).with(page.path)
+          export.create_page(page.id)
+        end
+
+        it "Page#clear_duplication_latestメソッドを呼び出さないこと" do
+          expect_any_instance_of(Page).to_not receive(:clear_duplication_latest)
           export.create_page(page.id)
         end
       end

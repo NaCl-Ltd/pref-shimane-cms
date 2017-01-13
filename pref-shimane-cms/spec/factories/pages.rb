@@ -36,6 +36,10 @@ FactoryGirl.define do
       contents {[create(:page_content_finished), create(:page_content_editing)].reverse}
     end
 
+    trait :publish_with_waiting do
+      contents {[create(:page_content_publish) , create(:page_content_waiting)].reverse}
+    end
+
     trait :publish_without_private do
       contents {[create(:page_content_publish)]}
     end
@@ -73,6 +77,7 @@ FactoryGirl.define do
     factory :page_cancel  , traits: [:cancel]
     factory :page_waiting , traits: [:waiting]
     factory :page_finished, traits: [:finished]
+    factory :page_publish_with_waiting, traits: [:publish_with_waiting]
     factory :page_publish_without_private, traits: [:publish_without_private]
     factory :page_waiting_without_private, traits: [:waiting_without_private]
     factory :page_publish_top_news, traits: [:publish_top_news]
