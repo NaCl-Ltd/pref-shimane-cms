@@ -45,8 +45,8 @@ module BrowsingSupport
           next
         end
         rubi = Filter.k2h(rubi)
-        if /[亜-遙]/ =~ orig
-          split_okurigana(orig, rubi).each do |(_orig, _rubi)|
+        if /[一-龠々]/ =~ orig
+            split_okurigana(orig, rubi).each do |(_orig, _rubi)|
             if _rubi
               result << %{<ruby>#{_orig}<rp>(</rp><rt>#{_rubi}</rt><rp>)</rp></ruby>}
             else
@@ -68,7 +68,7 @@ module BrowsingSupport
 
       text_parts = text.split(/(#{OKURIGANA_PATTERN}+)/u)
       text_parts.shift if text_parts.first.blank?
-      # 送り仮名が無い場合は、そのまま返す 
+      # 送り仮名が無い場合は、そのまま返す
       return result unless text_parts.length > 1
 
       hiragana_text_parts = text_parts.map {|i| Filter.k2h(i) }
